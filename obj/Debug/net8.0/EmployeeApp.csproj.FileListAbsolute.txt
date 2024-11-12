@@ -1,0 +1,7 @@
+C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\WinForms.Form1.resources
+C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.csproj.GenerateResource.cache
+C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.AssemblyInfoInputs.cache
+C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.AssemblyInfo.cs
+C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.csproj.CoreCompileInputs.cache
+C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.sourcelink.json
