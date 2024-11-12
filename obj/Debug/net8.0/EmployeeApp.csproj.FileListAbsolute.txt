@@ -5,3 +5,4 @@ C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeA
 C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.AssemblyInfo.cs
 C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.csproj.CoreCompileInputs.cache
 C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.sourcelink.json
+C:\Users\Doms\Documents\GitHub\AuctionSemesterProject\obj\Debug\net8.0\EmployeeApp.WindowsForms.Properties.Resources.resources
