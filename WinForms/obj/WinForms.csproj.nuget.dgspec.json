@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< Updated upstream:WinForms/obj/WinForms.csproj.nuget.dgspec.json
     "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\WinForms\\WinForms.csproj": {}
   },
   "projects": {
@@ -12,12 +13,25 @@
         "projectPath": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\WinForms\\WinForms.csproj",
         "packagesPath": "C:\\Users\\Doms\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\WinForms\\obj\\",
+=======
+    "C:\\Users\\morte\\source\\repos\\AuctionSemesterProject\\WinFormsApp\\WinFormsApp.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\morte\\source\\repos\\AuctionSemesterProject\\WinFormsApp\\WinFormsApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\morte\\source\\repos\\AuctionSemesterProject\\WinFormsApp\\WinFormsApp.csproj",
+        "projectName": "WinFormsApp",
+        "projectPath": "C:\\Users\\morte\\source\\repos\\AuctionSemesterProject\\WinFormsApp\\WinFormsApp.csproj",
+        "packagesPath": "C:\\Users\\morte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\morte\\source\\repos\\AuctionSemesterProject\\WinFormsApp\\obj\\",
+>>>>>>> Stashed changes:WinFormsApp/obj/WinFormsApp.csproj.nuget.dgspec.json
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Doms\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\morte\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

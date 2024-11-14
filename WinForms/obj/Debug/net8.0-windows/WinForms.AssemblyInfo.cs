@@ -14,9 +14,15 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WinForms")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< Updated upstream:WinForms/obj/Debug/net8.0-windows/WinForms.AssemblyInfo.cs
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+727044e529c8db7ca533c09eae61976bf35b0fc1")]
 [assembly: System.Reflection.AssemblyProductAttribute("WinForms")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WinForms")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1991307920997b633f6af9e1db9daa95c63e4736")]
+[assembly: System.Reflection.AssemblyProductAttribute("WinFormsApp")]
+[assembly: System.Reflection.AssemblyTitleAttribute("WinFormsApp")]
+>>>>>>> Stashed changes:WinFormsApp/obj/Debug/net8.0-windows/WinFormsApp.AssemblyInfo.cs
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]

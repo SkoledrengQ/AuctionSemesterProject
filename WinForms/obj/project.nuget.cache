@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< Updated upstream:WinForms/obj/project.nuget.cache
   "dgSpecHash": "t1RhYXRKok8=",
   "success": true,
   "projectFilePath": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\WinForms\\WinForms.csproj",
+=======
+  "dgSpecHash": "BKyvApRQ/Gg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\morte\\source\\repos\\AuctionSemesterProject\\WinFormsApp\\WinFormsApp.csproj",
+>>>>>>> Stashed changes:WinFormsApp/obj/project.nuget.cache
   "expectedPackageFiles": [],
   "logs": []
 }

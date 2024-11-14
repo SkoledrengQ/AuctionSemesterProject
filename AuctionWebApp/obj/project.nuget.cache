@@ -1,10 +1,16 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
   "dgSpecHash": "sigSAw9Tyy0=",
   "success": true,
   "projectFilePath": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\AuctionWebApp.csproj",
+=======
+  "dgSpecHash": "+dWBfZE1/SQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\morte\\source\\repos\\AuctionSemesterProject\\AuctionWebApp\\AuctionWebApp.csproj",
+>>>>>>> Stashed changes
   "expectedPackageFiles": [
-    "C:\\Users\\Doms\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.21.0\\microsoft.visualstudio.azure.containers.tools.targets.1.21.0.nupkg.sha512"
+    "C:\\Users\\morte\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.21.0\\microsoft.visualstudio.azure.containers.tools.targets.1.21.0.nupkg.sha512"
   ],
   "logs": []
 }
