@@ -99,23 +99,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Doms\\.nuget\\packages\\": {},
+    "C:\\Users\\morte\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\AuctionSemesterProject\\AuctionWebApp\\AuctionWebApp.csproj",
+      "projectUniqueName": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\AuctionWebApp.csproj",
       "projectName": "AuctionWebApp",
-      "projectPath": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\AuctionSemesterProject\\AuctionWebApp\\AuctionWebApp.csproj",
-      "packagesPath": "C:\\Users\\Doms\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\AuctionSemesterProject\\AuctionWebApp\\obj\\",
+      "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\AuctionWebApp.csproj",
+      "packagesPath": "C:\\Users\\morte\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Doms\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\morte\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -124,7 +124,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -141,9 +140,8 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+        "auditMode": "direct"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -173,7 +171,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
