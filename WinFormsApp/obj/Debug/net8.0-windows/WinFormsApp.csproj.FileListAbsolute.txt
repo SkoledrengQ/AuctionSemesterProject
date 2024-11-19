@@ -1,0 +1,8 @@
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.Form1.resources
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.Form2.resources
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.csproj.GenerateResource.cache
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.AssemblyInfoInputs.cache
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.AssemblyInfo.cs
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.csproj.CoreCompileInputs.cache
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.sourcelink.json
