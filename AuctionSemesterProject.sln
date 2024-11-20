@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionWebApp", "AuctionWebApp\AuctionWebApp.csproj", "{07459BEE-5A6C-4A3A-84A7-C9BEEAD586C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionWebApp", "AuctionWebApp\AuctionWebApp.csproj", "{07459BEE-5A6C-4A3A-84A7-C9BEEAD586C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsApp", "WinFormsApp\WinFormsApp.csproj", "{41F53E07-182A-4BC8-ABFC-3FEF1CE8C013}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsApp", "WinFormsApp\WinFormsApp.csproj", "{41F53E07-182A-4BC8-ABFC-3FEF1CE8C013}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseTest", "DatabaseTest\DatabaseTest.csproj", "{ACEA2A40-472D-4C46-A1BD-A27DB775B993}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{41F53E07-182A-4BC8-ABFC-3FEF1CE8C013}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41F53E07-182A-4BC8-ABFC-3FEF1CE8C013}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41F53E07-182A-4BC8-ABFC-3FEF1CE8C013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACEA2A40-472D-4C46-A1BD-A27DB775B993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACEA2A40-472D-4C46-A1BD-A27DB775B993}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACEA2A40-472D-4C46-A1BD-A27DB775B993}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACEA2A40-472D-4C46-A1BD-A27DB775B993}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3992D51-57A2-4316-8C09-36268FAB7CE7}
 	EndGlobalSection
 EndGlobal
