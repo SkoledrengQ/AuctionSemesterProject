@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wLhoJGEBWRc=",
+  "dgSpecHash": "Ka3DBy6M2DM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\domsb\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\AuctionWebApp.csproj",
+  "projectFilePath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\AuctionWebApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\domsb\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.21.0\\microsoft.visualstudio.azure.containers.tools.targets.1.21.0.nupkg.sha512"
+    "C:\\Users\\morte\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.21.0\\microsoft.visualstudio.azure.containers.tools.targets.1.21.0.nupkg.sha512"
   ],
   "logs": []
 }
