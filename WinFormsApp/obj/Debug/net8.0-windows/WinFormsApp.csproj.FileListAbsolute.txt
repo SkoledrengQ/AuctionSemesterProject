@@ -6,3 +6,14 @@ C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-window
 C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.AssemblyInfo.cs
 C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.csproj.CoreCompileInputs.cache
 C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.sourcelink.json
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\bin\Debug\net8.0-windows\WinFormsApp.exe
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\bin\Debug\net8.0-windows\WinFormsApp.deps.json
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\bin\Debug\net8.0-windows\WinFormsApp.runtimeconfig.json
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\bin\Debug\net8.0-windows\WinFormsApp.dll
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\bin\Debug\net8.0-windows\WinFormsApp.pdb
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.Properties.Resources.resources
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.dll
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\refint\WinFormsApp.dll
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.pdb
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\WinFormsApp.genruntimeconfig.cache
+C:\Users\morte\GitHub\AuctionSemesterProject\WinFormsApp\obj\Debug\net8.0-windows\ref\WinFormsApp.dll
