@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using AuctionWebApp.Models;
-using System.Collections.Generic;
+using AuctionWebApp.Data;
 using System.Linq;
-
 
 namespace AuctionWebApp.Controllers
 {
@@ -10,65 +10,105 @@ namespace AuctionWebApp.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        // Temp list to store books, comics & manga
-        private static List<Products> Products = new List<Products>
-        {
-            new Products { ID = 1, Title = "The Bible", Author = "God", Genre = "Religion", ISBN = "1234567890", CurrentHighestBid = 0.00M, Description = "The Bible is a collection of religious and sacred texts or scriptures", Type = "Book" },
-            new Products { ID = 2, Title = "The Art of War", Author = "Sun Tzu", Genre = "Military", ISBN = "0987654321", CurrentHighestBid = 0.00M, Description = "The Art of War is an ancient Chinese military treatise dating from the Late Spring and Autumn Period", Type = "Book"}
-       };
+        private readonly AuctionDbContext _context;
 
+        public ProductsController(AuctionDbContext context)
+        {
+            _context = context;
+        }
 
         // GET: api/Products
         [HttpGet]
-        public IActionResult GetAll([FromQuery] string? type = null)
+        public IActionResult GetAll([FromQuery] string? type = null, [FromQuery] bool onlyActiveAuctions = false)
         {
-            if (string.IsNullOrEmpty(type))
+            var query = _context.Products.AsQueryable(); // Query from database
+
+            if (!string.IsNullOrEmpty(type))
             {
-                return Ok(Products); // Return all products if no type is specified
+                query = query.Where(p => p.Type.Equals(type, StringComparison.OrdinalIgnoreCase));
             }
 
-            var filteredProducts = Products
-                .Where(p => p.Type.Equals(type, StringComparison.OrdinalIgnoreCase)) //Makes the search non-sensitive to capital letters
-                .ToList();
-
-            if (!filteredProducts.Any())
+            if (onlyActiveAuctions)
             {
-                return NotFound(new { Message = $"No products found of type '{type}'." });
+                query = query.Where(p =>
+                    (!p.AuctionStartDate.HasValue || p.AuctionStartDate <= DateTime.UtcNow) &&
+                    (!p.AuctionEndDate.HasValue || p.AuctionEndDate > DateTime.UtcNow));
             }
 
-            return Ok(filteredProducts);
+            var productsWithCountdown = query.Select(p => new
+            {
+                p.ID,
+                p.Title,
+                p.Author,
+                p.Genre,
+                p.ISBN,
+                p.Description,
+                p.Type,
+                p.CurrentHighestBid,
+                AuctionStartDate = p.AuctionStartDate,
+                AuctionEndDate = p.AuctionEndDate,
+                RemainingTime = p.AuctionEndDate.HasValue
+                    ? (double?)(p.AuctionEndDate.Value - DateTime.UtcNow).TotalSeconds
+                    : null
+            }).ToList();
+
+            if (!productsWithCountdown.Any())
+            {
+                return NotFound(new { Message = "No matching products found." });
+            }
+
+            return Ok(productsWithCountdown);
         }
 
-
-
-        // GET: api/Products/1
+        // GET: api/Products/{id}
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var product = Products.FirstOrDefault(p => p.ID == id);
-            if (product == null) return NotFound();
-            return Ok(product);
-        }
+            var product = _context.Products
+                .Include(p => p.Bids) // Include related bids
+                .FirstOrDefault(p => p.ID == id);
+            if (product == null)
+            {
+                return NotFound(new { Message = $"Product with ID {id} not found." });
+            }
 
+            var productWithCountdown = new
+            {
+                product.ID,
+                product.Title,
+                product.Author,
+                product.Genre,
+                product.ISBN,
+                product.Description,
+                product.Type,
+                product.CurrentHighestBid,
+                AuctionStartDate = product.AuctionStartDate,
+                AuctionEndDate = product.AuctionEndDate,
+                RemainingTime = product.AuctionEndDate.HasValue
+                     ? (double?)(product.AuctionEndDate.Value - DateTime.UtcNow).TotalSeconds
+                     : null
+            };
+
+            return Ok(productWithCountdown);
+        }
 
         // POST: api/Products
         [HttpPost]
         public IActionResult Create([FromBody] Products product)
         {
-            product.ID = Products.Count + 1; // Automatically assign a new ID
-            Products.Add(product);
+            _context.Products.Add(product); // Adds product to database
+            _context.SaveChanges(); // Saves the changes
             return CreatedAtAction(nameof(Get), new { id = product.ID }, product);
         }
-
 
         // PUT: api/Products/1
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Products updatedProduct)
         {
-            var product = Products.FirstOrDefault(p => p.ID == id);
+            var product = _context.Products.FirstOrDefault(p => p.ID == id);
             if (product == null) return NotFound();
 
-            // Updates the product's properties
+            // Update the product's properties
             product.Title = updatedProduct.Title;
             product.Author = updatedProduct.Author;
             product.ISBN = updatedProduct.ISBN;
@@ -76,46 +116,75 @@ namespace AuctionWebApp.Controllers
             product.Description = updatedProduct.Description;
             product.Type = updatedProduct.Type;
 
+            _context.SaveChanges(); // Saves the changes
             return Ok(product);
         }
-
 
         // DELETE: api/Products/1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var product = Products.FirstOrDefault(p => p.ID == id);
+            var product = _context.Products.FirstOrDefault(p => p.ID == id);
             if (product == null) return NotFound();
 
-            Products.Remove(product);
+            _context.Products.Remove(product); // Remove from database
+            _context.SaveChanges(); // Saces the changes
             return NoContent();
         }
 
-
+        // POST: api/Products/{id}/bids
         [HttpPost("{id}/bids")]
         public IActionResult PlaceBid(int id, [FromBody] Bid bid)
         {
-            var product = Products.FirstOrDefault(p => p.ID == id); // Find product by ID
-            if (product == null) return NotFound();
-
-            // Check if the new bid is higher than the current highest bid
-            if (bid.BidAmount <= product.CurrentHighestBid)
+            if (bid == null || bid.BidAmount <= 0)
             {
-                return BadRequest(new { Message = "Bid must be higher than the current highest bid." });
+                return BadRequest(new { Message = "Invalid bid. Bid amount must be greater than zero." });
             }
 
-            // Update the product's current highest bid
+            var product = _context.Products.Include(p => p.Bids).FirstOrDefault(p => p.ID == id);
+            if (product == null)
+            {
+                return NotFound(new { Message = $"Product with ID {id} not found." });
+            }
+
+            // Additional auction checks
+
             product.CurrentHighestBid = bid.BidAmount;
 
-            // Add the bid to the product's bid history
             bid.ProductID = id;
-            bid.ID = product.Bids.Count + 1; // Assigns an ID to the bid
             product.Bids.Add(bid);
 
+            _context.SaveChanges(); // Saves the changes
             return Ok(new { Message = "Bid placed successfully", Product = product });
         }
 
+        [HttpGet("{id}/bids")]
+        public IActionResult GetBids(int id)
+        {
+            // Fetch the product along with its bids
+            var product = _context.Products
+                .Include(p => p.Bids) // Include related bids
+                .FirstOrDefault(p => p.ID == id);
 
+            if (product == null)
+            {
+                return NotFound(new { Message = $"Product with ID {id} not found." });
+            }
+
+            // Orders bids by amount in descending order
+            var sortedBids = product.Bids
+                .OrderByDescending(b => b.BidAmount)
+                .Select(b => new
+                {
+                    b.BidID,
+                    b.ProductID,
+                    b.Bidder,
+                    b.BidAmount
+                })
+                .ToList();
+
+            return Ok(sortedBids); // Returns the sorted bids
+        }
 
     }
 }

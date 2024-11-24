@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AuctionWebApp.Models
 {
     public class Products
     {
-        public int ID { get; set; }
+        [Key]
+        public int ID { get; set; } // Primary key
 
         [Required]
         [MaxLength(100)]
@@ -24,6 +26,10 @@ namespace AuctionWebApp.Models
 
         public string Type { get; set; }
         public decimal CurrentHighestBid { get; set; }
-    }
+        public DateTime? AuctionStartDate { get; set; }
+        public DateTime? AuctionEndDate { get; set; }
 
+        // Navigation for related bids
+        public List<Bid> Bids { get; set; } = new List<Bid>();
+    }
 }

@@ -1,4 +1,6 @@
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using AuctionWebApp.Data;
 
 namespace AuctionWebApp
 {
@@ -8,8 +10,14 @@ namespace AuctionWebApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Services to the container.
             builder.Services.AddControllers();
+
+            // DbContext with SQL Server
+            builder.Services.AddDbContext<AuctionDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Swagger for API documentation
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -27,7 +35,6 @@ namespace AuctionWebApp
             app.MapControllers();
 
             app.Run();
-
         }
     }
 }
