@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WinFormsApp1\\WinFormsApp1.csproj",
-      "projectName": "WinFormsApp1",
-      "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WinFormsApp1\\WinFormsApp1.csproj",
+      "projectUniqueName": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WinFormsApp1\\WinFormsApp.csproj",
+      "projectName": "WinFormsApp",
+      "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WinFormsApp1\\WinFormsApp.csproj",
       "packagesPath": "C:\\Users\\morte\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WinFormsApp1\\obj\\",
       "projectStyle": "PackageReference",
