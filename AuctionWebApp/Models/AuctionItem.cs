@@ -1,35 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace AuctionWebApp.Models
+public class AuctionItem
 {
-    public class Products
-    {
-        [Key]
-        public int ID { get; set; } // Primary key
+    [Key]
+    public int ItemID { get; set; }
 
-        [Required]
-        [MaxLength(100)]
-        public string Title { get; set; }
+    [StringLength(100)]
+    public string? Title { get; set; }
 
-        [MaxLength(50)]
-        public string Author { get; set; }
+    [DataType(DataType.Date)]
+    public DateTime? ReleaseDate { get; set; }
 
-        [MaxLength(20)]
-        public string ISBN { get; set; }
+    [StringLength(100)]
+    public string? Author { get; set; }
 
-        [MaxLength(30)]
-        public string Genre { get; set; }
+    [StringLength(50)]
+    public string? Genre { get; set; }
 
-        [MaxLength(500)]
-        public string Description { get; set; }
+    public string? Description { get; set; }
 
-        public string Type { get; set; }
-        public decimal CurrentHighestBid { get; set; }
-        public DateTime? AuctionStartDate { get; set; }
-        public DateTime? AuctionEndDate { get; set; }
-
-        // Navigation for related bids
-        public List<Bid> Bids { get; set; } = new List<Bid>();
-    }
+    [StringLength(50)]
+    public string? ItemType { get; set; }
 }

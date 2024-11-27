@@ -1,6 +1,16 @@
-﻿namespace AuctionWebApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+public class Address
 {
-    public class Address
-    {
-    }
+    [Key]
+    public int AddressID { get; set; }
+
+    [StringLength(100)]
+    public string? StreetName { get; set; }
+
+    [StringLength(50)]
+    public string? City { get; set; }
+
+    [StringLength(10)]
+    public string? ZipCode { get; set; }
 }
