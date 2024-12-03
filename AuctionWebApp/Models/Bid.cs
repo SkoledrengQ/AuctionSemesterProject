@@ -1,17 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AuctionWebApp.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AuctionWebApp.Models
+public class Bid
 {
-    public class Bid
-    {
-        [Key]
-        public int BidID { get; set; }
+    [Required]
+    [Column(TypeName = "decimal(18, 2)")]
+    public decimal Amount { get; set; }
 
-        [ForeignKey("Products")]
-        public int ProductID { get; set; } // Foreign key to Products
+    [Key]
+    [Required]
+    public int MemberID_FK { get; set; }
 
-        public string Bidder { get; set; }
-        public decimal BidAmount { get; set; }
-    }
+    [Key]
+    [Required]
+    public int AuctionID_FK { get; set; }
+
+    [ForeignKey(nameof(MemberID_FK))]
+    public virtual Member? Member { get; set; }
+
+    [ForeignKey(nameof(AuctionID_FK))]
+    public virtual Auction? Auction { get; set; }
 }
