@@ -13,16 +13,19 @@ namespace WebApp.Controllers
             _logger = logger;
         }
 
+        // Index action - returns the homepage view
         public IActionResult Index()
         {
             return View();
         }
 
+        // Privacy action - returns the privacy page view
         public IActionResult Privacy()
         {
             return View();
         }
 
+        // Error handling - returns the error view with an error model
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
