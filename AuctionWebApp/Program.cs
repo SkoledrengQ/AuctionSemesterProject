@@ -1,6 +1,4 @@
 using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
-using AuctionWebApp.Data;
 
 namespace AuctionWebApp
 {
@@ -10,12 +8,8 @@ namespace AuctionWebApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Services to the container.
-            builder.Services.AddControllers();
-
-            // DbContext with SQL Server
-            builder.Services.AddDbContext<AuctionDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            // Add services to the container.
+            builder.Services.AddControllersWithViews(); // Enable MVC for views
 
             // Swagger for API documentation
             builder.Services.AddEndpointsApiExplorer();
@@ -30,10 +24,24 @@ namespace AuctionWebApp
                 app.UseSwaggerUI();
             }
 
+            // Redirect HTTP to HTTPS
             app.UseHttpsRedirection();
-            app.UseAuthorization();
-            app.MapControllers();
 
+            // Authorization middleware
+            app.UseAuthorization();
+
+            // Static files (CSS, JS, etc.)
+            app.UseStaticFiles();
+
+            // MVC routing configuration
+            app.UseRouting();
+
+            // Configure default controller route
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}"); // Default route to HomeController/Index
+
+            // Run the application
             app.Run();
         }
     }

@@ -1,190 +1,143 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AuctionWebApp.Models;
-using AuctionWebApp.Data;
-using System.Linq;
+﻿using AuctionWebApp.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace AuctionWebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class AuctionItemController : ControllerBase
     {
-        private readonly AuctionDbContext _context;
+        private readonly string _connectionString;
 
-        public ProductsController(AuctionDbContext context)
+        public AuctionItemController(IConfiguration configuration)
         {
-            _context = context;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // GET: api/Products
+        // GET: api/AuctionItem
         [HttpGet]
-        public IActionResult GetAll([FromQuery] string? type = null, [FromQuery] bool onlyActiveAuctions = false)
+        public IActionResult GetAllItems()
         {
-            var query = _context.Products.AsQueryable(); // Query from database
+            List<AuctionItem> items = new List<AuctionItem>();
 
-            if (!string.IsNullOrEmpty(type))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                query = query.Where(p => p.Type.Equals(type, StringComparison.OrdinalIgnoreCase));
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT * FROM AuctionItem", connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    items.Add(new AuctionItem
+                    {
+                        ItemID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ReleaseDate = reader.GetDateTime(2),
+                        Author = reader.GetString(3),
+                        Genre = reader.GetString(4),
+                        Description = reader.GetString(5),
+                        ItemType = reader.GetString(6)
+                    });
+                }
             }
 
-            if (onlyActiveAuctions)
-            {
-                query = query.Where(p =>
-                    (!p.AuctionStartDate.HasValue || p.AuctionStartDate <= DateTime.UtcNow) &&
-                    (!p.AuctionEndDate.HasValue || p.AuctionEndDate > DateTime.UtcNow));
-            }
-
-            var productsWithCountdown = query.Select(p => new
-            {
-                p.ID,
-                p.Title,
-                p.Author,
-                p.Genre,
-                p.ISBN,
-                p.Description,
-                p.Type,
-                p.CurrentHighestBid,
-                AuctionStartDate = p.AuctionStartDate,
-                AuctionEndDate = p.AuctionEndDate,
-                RemainingTime = p.AuctionEndDate.HasValue
-                    ? (double?)(p.AuctionEndDate.Value - DateTime.UtcNow).TotalSeconds
-                    : null
-            }).ToList();
-
-            if (!productsWithCountdown.Any())
-            {
-                return NotFound(new { Message = "No matching products found." });
-            }
-
-            return Ok(productsWithCountdown);
+            return Ok(items);
         }
 
-        // GET: api/Products/{id}
+        // GET: api/AuctionItem/{id}
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetItemById(int id)
         {
-            var product = _context.Products
-                .Include(p => p.Bids) // Include related bids
-                .FirstOrDefault(p => p.ID == id);
-            if (product == null)
+            AuctionItem item = null;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                return NotFound(new { Message = $"Product with ID {id} not found." });
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT * FROM AuctionItem WHERE itemID = @id", connection);
+                command.Parameters.AddWithValue("@id", id);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    item = new AuctionItem
+                    {
+                        ItemID = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        ReleaseDate = reader.GetDateTime(2),
+                        Author = reader.GetString(3),
+                        Genre = reader.GetString(4),
+                        Description = reader.GetString(5),
+                        ItemType = reader.GetString(6)
+                    };
+                }
             }
 
-            var productWithCountdown = new
-            {
-                product.ID,
-                product.Title,
-                product.Author,
-                product.Genre,
-                product.ISBN,
-                product.Description,
-                product.Type,
-                product.CurrentHighestBid,
-                AuctionStartDate = product.AuctionStartDate,
-                AuctionEndDate = product.AuctionEndDate,
-                RemainingTime = product.AuctionEndDate.HasValue
-                     ? (double?)(product.AuctionEndDate.Value - DateTime.UtcNow).TotalSeconds
-                     : null
-            };
+            if (item == null)
+                return NotFound();
 
-            return Ok(productWithCountdown);
+            return Ok(item);
         }
 
-        // POST: api/Products
+        // POST: api/AuctionItem
         [HttpPost]
-        public IActionResult Create([FromBody] Products product)
+        public IActionResult CreateItem([FromBody] AuctionItem item)
         {
-            _context.Products.Add(product); // Adds product to database
-            _context.SaveChanges(); // Saves the changes
-            return CreatedAtAction(nameof(Get), new { id = product.ID }, product);
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("INSERT INTO AuctionItem (title, releaseDate, author, genre, description, itemType) VALUES (@title, @releaseDate, @author, @genre, @description, @itemType)", connection);
+                command.Parameters.AddWithValue("@title", item.Title);
+                command.Parameters.AddWithValue("@releaseDate", item.ReleaseDate);
+                command.Parameters.AddWithValue("@author", item.Author);
+                command.Parameters.AddWithValue("@genre", item.Genre);
+                command.Parameters.AddWithValue("@description", item.Description);
+                command.Parameters.AddWithValue("@itemType", item.ItemType);
+
+                command.ExecuteNonQuery();
+            }
+
+            return CreatedAtAction(nameof(GetItemById), new { id = item.ItemID }, item);
         }
 
-        // PUT: api/Products/1
+        // PUT: api/AuctionItem/{id}
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Products updatedProduct)
+        public IActionResult UpdateItem(int id, [FromBody] AuctionItem item)
         {
-            var product = _context.Products.FirstOrDefault(p => p.ID == id);
-            if (product == null) return NotFound();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("UPDATE AuctionItem SET title = @title, releaseDate = @releaseDate, author = @author, genre = @genre, description = @description, itemType = @itemType WHERE itemID = @id", connection);
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@title", item.Title);
+                command.Parameters.AddWithValue("@releaseDate", item.ReleaseDate);
+                command.Parameters.AddWithValue("@author", item.Author);
+                command.Parameters.AddWithValue("@genre", item.Genre);
+                command.Parameters.AddWithValue("@description", item.Description);
+                command.Parameters.AddWithValue("@itemType", item.ItemType);
 
-            // Update the product's properties
-            product.Title = updatedProduct.Title;
-            product.Author = updatedProduct.Author;
-            product.ISBN = updatedProduct.ISBN;
-            product.Genre = updatedProduct.Genre;
-            product.Description = updatedProduct.Description;
-            product.Type = updatedProduct.Type;
+                command.ExecuteNonQuery();
+            }
 
-            _context.SaveChanges(); // Saves the changes
-            return Ok(product);
-        }
-
-        // DELETE: api/Products/1
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var product = _context.Products.FirstOrDefault(p => p.ID == id);
-            if (product == null) return NotFound();
-
-            _context.Products.Remove(product); // Remove from database
-            _context.SaveChanges(); // Saces the changes
             return NoContent();
         }
 
-        // POST: api/Products/{id}/bids
-        [HttpPost("{id}/bids")]
-        public IActionResult PlaceBid(int id, [FromBody] Bid bid)
+        // DELETE: api/AuctionItem/{id}
+        [HttpDelete("{id}")]
+        public IActionResult DeleteItem(int id)
         {
-            if (bid == null || bid.BidAmount <= 0)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                return BadRequest(new { Message = "Invalid bid. Bid amount must be greater than zero." });
+                connection.Open();
+                SqlCommand command = new SqlCommand("DELETE FROM AuctionItem WHERE itemID = @id", connection);
+                command.Parameters.AddWithValue("@id", id);
+
+                command.ExecuteNonQuery();
             }
 
-            var product = _context.Products.Include(p => p.Bids).FirstOrDefault(p => p.ID == id);
-            if (product == null)
-            {
-                return NotFound(new { Message = $"Product with ID {id} not found." });
-            }
-
-            // Additional auction checks
-
-            product.CurrentHighestBid = bid.BidAmount;
-
-            bid.ProductID = id;
-            product.Bids.Add(bid);
-
-            _context.SaveChanges(); // Saves the changes
-            return Ok(new { Message = "Bid placed successfully", Product = product });
+            return NoContent();
         }
-
-        [HttpGet("{id}/bids")]
-        public IActionResult GetBids(int id)
-        {
-            // Fetch the product along with its bids
-            var product = _context.Products
-                .Include(p => p.Bids) // Include related bids
-                .FirstOrDefault(p => p.ID == id);
-
-            if (product == null)
-            {
-                return NotFound(new { Message = $"Product with ID {id} not found." });
-            }
-
-            // Orders bids by amount in descending order
-            var sortedBids = product.Bids
-                .OrderByDescending(b => b.BidAmount)
-                .Select(b => new
-                {
-                    b.BidID,
-                    b.ProductID,
-                    b.Bidder,
-                    b.BidAmount
-                })
-                .ToList();
-
-            return Ok(sortedBids); // Returns the sorted bids
-        }
-
     }
 }
