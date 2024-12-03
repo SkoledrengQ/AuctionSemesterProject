@@ -69,3 +69,4 @@ C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\ne
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\ref\API.dll
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\bin\Debug\net8.0\AuctionModels.dll
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\bin\Debug\net8.0\AuctionModels.pdb
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs

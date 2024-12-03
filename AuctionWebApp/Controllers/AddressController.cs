@@ -14,7 +14,8 @@ namespace AuctionSemesterProject.Controllers
 
         public AddressController(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+                  ?? throw new InvalidOperationException("Connection string not found.");
         }
 
         // GET: api/Address
@@ -48,7 +49,7 @@ namespace AuctionSemesterProject.Controllers
         [HttpGet("{id}")]
         public IActionResult GetAddressById(int id)
         {
-            Address address = null;
+            Address ? address = null;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

@@ -248,22 +248,6 @@
   },
   {
     "ContainingType": "AuctionSemesterProject.Controllers.BidController",
-    "Method": "CreateBid",
-    "RelativePath": "api/Bid",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "bid",
-        "Type": "AuctionSemesterProject.AuctionModels.Bid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "AuctionSemesterProject.Controllers.BidController",
     "Method": "GetBidById",
     "RelativePath": "api/Bid/{id}",
     "HttpMethod": "GET",
@@ -311,6 +295,32 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuctionSemesterProject.Controllers.BidController",
+    "Method": "CreateBid",
+    "RelativePath": "api/Bid/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newBid",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "auctionID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "memberID",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

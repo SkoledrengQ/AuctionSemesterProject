@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Data;
 
 namespace AuctionSemesterProject.Controllers
 {
@@ -14,7 +15,8 @@ namespace AuctionSemesterProject.Controllers
 
         public BidController(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+                  ?? throw new InvalidOperationException("Connection string not found.");
         }
 
         // GET: api/Bid
@@ -47,7 +49,7 @@ namespace AuctionSemesterProject.Controllers
         [HttpGet("{id}")]
         public IActionResult GetBidById(int id)
         {
-            Bid bid = null;
+            Bid ? bid = null;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -74,25 +76,35 @@ namespace AuctionSemesterProject.Controllers
         }
 
         // POST: api/Bid
-        [HttpPost]
-        public IActionResult CreateBid([FromBody] Bid bid)
+        [HttpPost("create")]
+        public IActionResult CreateBid(decimal newBid, int auctionID, int memberID)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO Bid (amount, memberID_FK, auctionID_FK) VALUES (@amount, @memberID_FK, @auctionID_FK)", connection);
-                command.Parameters.AddWithValue("@amount", bid.Amount);
-                command.Parameters.AddWithValue("@memberID_FK", bid.MemberID_FK);
-                command.Parameters.AddWithValue("@auctionID_FK", bid.AuctionID_FK);
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
 
-                command.ExecuteNonQuery();
+                    SqlCommand command = new SqlCommand("PlaceBid", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@newBid", newBid);
+                    command.Parameters.AddWithValue("@auctionID", auctionID);
+                    command.Parameters.AddWithValue("@memberID", memberID);
+
+                    command.ExecuteNonQuery();
+                }
+
+                return Ok(new { Message = "Bid placed successfully!" });
             }
-
-            return CreatedAtAction(nameof(GetBidById), new { id = bid.AuctionID_FK }, bid);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while placing the bid.", Error = ex.Message });
+            }
         }
-
-        // PUT: api/Bid/{id}
-        [HttpPut("{id}")]
+    
+    // PUT: api/Bid/{id}
+    [HttpPut("{id}")]
         public IActionResult UpdateBid(int id, [FromBody] Bid bid)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))

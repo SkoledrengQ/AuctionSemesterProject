@@ -14,7 +14,8 @@ namespace AuctionSemesterProject.Controllers
 
         public MemberController(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+                  ?? throw new InvalidOperationException("Connection string not found.");
         }
 
         // GET: api/Member
@@ -51,7 +52,7 @@ namespace AuctionSemesterProject.Controllers
         [HttpGet("{id}")]
         public IActionResult GetMemberById(int id)
         {
-            Member member = null;
+            Member ? member = null;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

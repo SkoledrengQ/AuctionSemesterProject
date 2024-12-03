@@ -14,7 +14,8 @@ namespace AuctionSemesterProject.Controllers
 
         public EmployeeController(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+                  ?? throw new InvalidOperationException("Connection string not found.");
         }
 
         // GET: api/Employee
@@ -49,7 +50,7 @@ namespace AuctionSemesterProject.Controllers
         [HttpGet("{id}")]
         public IActionResult GetEmployeeById(int id)
         {
-            Employee employee = null;
+            Employee ? employee = null;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
