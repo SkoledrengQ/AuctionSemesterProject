@@ -1,0 +1,12 @@
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\obj\Debug\net8.0\AuctionModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\obj\Debug\net8.0\AuctionModels.AssemblyInfoInputs.cache
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\obj\Debug\net8.0\AuctionModels.AssemblyInfo.cs
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\obj\Debug\net8.0\AuctionModels.csproj.CoreCompileInputs.cache
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\obj\Debug\net8.0\AuctionModels.sourcelink.json
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\bin\Debug\net8.0\AuctionModels.deps.json
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\bin\Debug\net8.0\AuctionModels.dll
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\bin\Debug\net8.0\AuctionModels.pdb
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\obj\Debug\net8.0\AuctionModels.dll
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\obj\Debug\net8.0\refint\AuctionModels.dll
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\obj\Debug\net8.0\AuctionModels.pdb
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\Model\obj\Debug\net8.0\ref\AuctionModels.dll
