@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "AuctionWebApp.Controllers.AddressController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AddressController",
     "Method": "GetAllAddresses",
     "RelativePath": "api/Address",
     "HttpMethod": "GET",
@@ -10,7 +10,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AddressController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AddressController",
     "Method": "CreateAddress",
     "RelativePath": "api/Address",
     "HttpMethod": "POST",
@@ -19,14 +19,14 @@
     "Parameters": [
       {
         "Name": "address",
-        "Type": "Address",
+        "Type": "AuctionSemesterProject.AuctionModels.Address",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AddressController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AddressController",
     "Method": "GetAddressById",
     "RelativePath": "api/Address/{id}",
     "HttpMethod": "GET",
@@ -42,7 +42,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AddressController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AddressController",
     "Method": "UpdateAddress",
     "RelativePath": "api/Address/{id}",
     "HttpMethod": "PUT",
@@ -56,14 +56,14 @@
       },
       {
         "Name": "address",
-        "Type": "Address",
+        "Type": "AuctionSemesterProject.AuctionModels.Address",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AddressController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AddressController",
     "Method": "DeleteAddress",
     "RelativePath": "api/Address/{id}",
     "HttpMethod": "DELETE",
@@ -79,7 +79,86 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionItemController",
+    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "Method": "GetAllAuctions",
+    "RelativePath": "api/Auction",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "Method": "CreateAuction",
+    "RelativePath": "api/Auction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "auction",
+        "Type": "AuctionSemesterProject.AuctionModels.Auction",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "Method": "GetAuctionById",
+    "RelativePath": "api/Auction/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "Method": "UpdateAuction",
+    "RelativePath": "api/Auction/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "auction",
+        "Type": "AuctionSemesterProject.AuctionModels.Auction",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "Method": "DeleteAuction",
+    "RelativePath": "api/Auction/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
     "Method": "GetAllItems",
     "RelativePath": "api/AuctionItem",
     "HttpMethod": "GET",
@@ -89,7 +168,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionItemController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
     "Method": "CreateItem",
     "RelativePath": "api/AuctionItem",
     "HttpMethod": "POST",
@@ -98,14 +177,14 @@
     "Parameters": [
       {
         "Name": "item",
-        "Type": "AuctionItem",
+        "Type": "AuctionSemesterProject.AuctionModels.AuctionItem",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionItemController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
     "Method": "GetItemById",
     "RelativePath": "api/AuctionItem/{id}",
     "HttpMethod": "GET",
@@ -121,7 +200,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionItemController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
     "Method": "UpdateItem",
     "RelativePath": "api/AuctionItem/{id}",
     "HttpMethod": "PUT",
@@ -135,14 +214,14 @@
       },
       {
         "Name": "item",
-        "Type": "AuctionItem",
+        "Type": "AuctionSemesterProject.AuctionModels.AuctionItem",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionItemController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
     "Method": "DeleteItem",
     "RelativePath": "api/AuctionItem/{id}",
     "HttpMethod": "DELETE",
@@ -158,7 +237,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.BidController",
+    "ContainingType": "AuctionSemesterProject.Controllers.BidController",
     "Method": "GetAllBids",
     "RelativePath": "api/Bid",
     "HttpMethod": "GET",
@@ -168,7 +247,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.BidController",
+    "ContainingType": "AuctionSemesterProject.Controllers.BidController",
     "Method": "CreateBid",
     "RelativePath": "api/Bid",
     "HttpMethod": "POST",
@@ -177,14 +256,14 @@
     "Parameters": [
       {
         "Name": "bid",
-        "Type": "Bid",
+        "Type": "AuctionSemesterProject.AuctionModels.Bid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.BidController",
+    "ContainingType": "AuctionSemesterProject.Controllers.BidController",
     "Method": "GetBidById",
     "RelativePath": "api/Bid/{id}",
     "HttpMethod": "GET",
@@ -200,7 +279,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.BidController",
+    "ContainingType": "AuctionSemesterProject.Controllers.BidController",
     "Method": "UpdateBid",
     "RelativePath": "api/Bid/{id}",
     "HttpMethod": "PUT",
@@ -214,14 +293,14 @@
       },
       {
         "Name": "bid",
-        "Type": "Bid",
+        "Type": "AuctionSemesterProject.AuctionModels.Bid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.BidController",
+    "ContainingType": "AuctionSemesterProject.Controllers.BidController",
     "Method": "DeleteBid",
     "RelativePath": "api/Bid/{id}",
     "HttpMethod": "DELETE",
@@ -237,7 +316,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.EmployeeController",
+    "ContainingType": "AuctionSemesterProject.Controllers.EmployeeController",
     "Method": "GetAllEmployees",
     "RelativePath": "api/Employee",
     "HttpMethod": "GET",
@@ -247,7 +326,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.EmployeeController",
+    "ContainingType": "AuctionSemesterProject.Controllers.EmployeeController",
     "Method": "CreateEmployee",
     "RelativePath": "api/Employee",
     "HttpMethod": "POST",
@@ -256,14 +335,14 @@
     "Parameters": [
       {
         "Name": "employee",
-        "Type": "Employee",
+        "Type": "AuctionSemesterProject.AuctionModels.Employee",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.EmployeeController",
+    "ContainingType": "AuctionSemesterProject.Controllers.EmployeeController",
     "Method": "GetEmployeeById",
     "RelativePath": "api/Employee/{id}",
     "HttpMethod": "GET",
@@ -279,7 +358,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.EmployeeController",
+    "ContainingType": "AuctionSemesterProject.Controllers.EmployeeController",
     "Method": "UpdateEmployee",
     "RelativePath": "api/Employee/{id}",
     "HttpMethod": "PUT",
@@ -293,14 +372,14 @@
       },
       {
         "Name": "employee",
-        "Type": "Employee",
+        "Type": "AuctionSemesterProject.AuctionModels.Employee",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.EmployeeController",
+    "ContainingType": "AuctionSemesterProject.Controllers.EmployeeController",
     "Method": "DeleteEmployee",
     "RelativePath": "api/Employee/{id}",
     "HttpMethod": "DELETE",
@@ -316,7 +395,17 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.MemberController",
+    "ContainingType": "AuctionSemesterProject.Controllers.HomeController",
+    "Method": "GetStatus",
+    "RelativePath": "api/Home",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuctionSemesterProject.Controllers.MemberController",
     "Method": "GetAllMembers",
     "RelativePath": "api/Member",
     "HttpMethod": "GET",
@@ -326,7 +415,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.MemberController",
+    "ContainingType": "AuctionSemesterProject.Controllers.MemberController",
     "Method": "CreateMember",
     "RelativePath": "api/Member",
     "HttpMethod": "POST",
@@ -335,14 +424,14 @@
     "Parameters": [
       {
         "Name": "member",
-        "Type": "Member",
+        "Type": "AuctionSemesterProject.AuctionModels.Member",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.MemberController",
+    "ContainingType": "AuctionSemesterProject.Controllers.MemberController",
     "Method": "GetMemberById",
     "RelativePath": "api/Member/{id}",
     "HttpMethod": "GET",
@@ -358,7 +447,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.MemberController",
+    "ContainingType": "AuctionSemesterProject.Controllers.MemberController",
     "Method": "UpdateMember",
     "RelativePath": "api/Member/{id}",
     "HttpMethod": "PUT",
@@ -372,14 +461,14 @@
       },
       {
         "Name": "member",
-        "Type": "Member",
+        "Type": "AuctionSemesterProject.AuctionModels.Member",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.MemberController",
+    "ContainingType": "AuctionSemesterProject.Controllers.MemberController",
     "Method": "DeleteMember",
     "RelativePath": "api/Member/{id}",
     "HttpMethod": "DELETE",

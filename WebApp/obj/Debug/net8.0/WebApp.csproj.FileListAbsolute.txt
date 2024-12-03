@@ -29,7 +29,7 @@ C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\re
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\WebApp.pdb
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\WebApp.genruntimeconfig.cache
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\ref\WebApp.dll
-C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\Models.dll
-C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\Models.pdb
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\WebApp.csproj.AssemblyReference.cache
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\WebApp.csproj.Up2Date
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\AuctionModels.dll
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\AuctionModels.pdb

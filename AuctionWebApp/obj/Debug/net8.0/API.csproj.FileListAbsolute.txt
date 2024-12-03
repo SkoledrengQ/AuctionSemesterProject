@@ -51,7 +51,6 @@ C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\ne
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\API.AssemblyInfoInputs.cache
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\API.AssemblyInfo.cs
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\API.csproj.CoreCompileInputs.cache
-C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\API.sourcelink.json
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\staticwebassets.build.json
@@ -68,3 +67,5 @@ C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\ne
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\API.pdb
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\API.genruntimeconfig.cache
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\ref\API.dll
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\bin\Debug\net8.0\AuctionModels.dll
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\bin\Debug\net8.0\AuctionModels.pdb

@@ -14,7 +14,8 @@ namespace AuctionWebApp.Controllers
 
         public AuctionController(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+               ?? throw new InvalidOperationException("Connection string not found.");
         }
 
         // GET: api/Auction
@@ -54,7 +55,7 @@ namespace AuctionWebApp.Controllers
         [HttpGet("{id}")]
         public IActionResult GetAuctionById(int id)
         {
-            Auction auction = null;
+            Auction? auction = null;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
