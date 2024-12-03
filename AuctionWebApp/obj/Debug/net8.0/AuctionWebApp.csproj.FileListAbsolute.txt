@@ -350,3 +350,13 @@ C:\Users\morte\GitHub\AuctionSemesterProject\AuctionWebApp\bin\Debug\net8.0\runt
 C:\Users\morte\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.csproj.AssemblyReference.cache
 C:\Users\morte\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\morte\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionW.CA76F9CA.Up2Date
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.csproj.AssemblyReference.cache
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.AssemblyInfoInputs.cache
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.AssemblyInfo.cs
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.csproj.CoreCompileInputs.cache
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.RazorAssemblyInfo.cache
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.RazorAssemblyInfo.cs
+C:\Users\dehns\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\AuctionWebApp.sourcelink.json
