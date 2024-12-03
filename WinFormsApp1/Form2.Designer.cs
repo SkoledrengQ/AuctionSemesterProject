@@ -51,6 +51,8 @@
             label10 = new Label();
             richTextBox1 = new RichTextBox();
             label11 = new Label();
+            textBox5 = new TextBox();
+            label12 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -258,11 +260,29 @@
             label11.TabIndex = 25;
             label11.Text = "summery";
             // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(205, 347);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(100, 23);
+            textBox5.TabIndex = 26;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(188, 329);
+            label12.Name = "label12";
+            label12.Size = new Size(59, 15);
+            label12.TabIndex = 27;
+            label12.Text = "start price";
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label12);
+            Controls.Add(textBox5);
             Controls.Add(label11);
             Controls.Add(richTextBox1);
             Controls.Add(label10);
@@ -319,5 +339,7 @@
         private Label label10;
         private RichTextBox richTextBox1;
         private Label label11;
+        private TextBox textBox5;
+        private Label label12;
     }
 }
