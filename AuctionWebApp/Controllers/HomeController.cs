@@ -1,8 +1,8 @@
 using System.Diagnostics;
-using AuctionWebApp.Models;
+using AuctionSemesterProject.AuctionModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuctionWebApp.Controllers
+namespace AuctionSemesterProject.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+namespace AuctionSemesterProject.AuctionModels;
 public class Address
 {
     [Key]

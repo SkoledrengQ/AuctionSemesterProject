@@ -682,6 +682,16 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
+      },
+      "AuctionModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/AuctionModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AuctionModels.dll": {}
+        }
       }
     }
   },
@@ -2187,10 +2197,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "AuctionModels/1.0.0": {
+      "type": "project",
+      "path": "../Model/AuctionModels.csproj",
+      "msbuildProject": "../Model/AuctionModels.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "AuctionModels >= 1.0.0",
       "Microsoft.Data.SqlClient >= 5.2.2",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.21.0",
       "Swashbuckle.AspNetCore >= 7.0.0"
@@ -2223,7 +2239,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
+              "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

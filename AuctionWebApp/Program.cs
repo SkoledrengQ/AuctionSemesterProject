@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Models;
 
-namespace AuctionWebApp
+namespace AuctionSemesterProject
 {
     public class Program
     {

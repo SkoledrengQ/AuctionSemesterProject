@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseTest", "DatabaseTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsApp", "WinFormsApp1\WinFormsApp.csproj", "{FD7C6AE2-BFFA-431C-822F-A00386EB9998}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{D0283073-AC14-4584-B3D6-E8C67EF8C528}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{D0283073-AC14-4584-B3D6-E8C67EF8C528}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionModels", "Model\AuctionModels.csproj", "{8D8048F7-683D-4BCD-BFD9-5E3968D2EF90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D0283073-AC14-4584-B3D6-E8C67EF8C528}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0283073-AC14-4584-B3D6-E8C67EF8C528}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0283073-AC14-4584-B3D6-E8C67EF8C528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D8048F7-683D-4BCD-BFD9-5E3968D2EF90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D8048F7-683D-4BCD-BFD9-5E3968D2EF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D8048F7-683D-4BCD-BFD9-5E3968D2EF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D8048F7-683D-4BCD-BFD9-5E3968D2EF90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

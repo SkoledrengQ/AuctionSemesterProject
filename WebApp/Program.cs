@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApp.Models;
 
-namespace AuctionWebApp
+namespace AuctionSemesterProject
 {
     public class Program
     {
