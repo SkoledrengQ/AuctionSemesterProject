@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            checkBox1 = new CheckBox();
-            checkBox2 = new CheckBox();
-            checkBox3 = new CheckBox();
+            BookGenre = new CheckBox();
+            mangaGenre = new CheckBox();
+            ComicGenre = new CheckBox();
             pictureBox1 = new PictureBox();
             listBox1 = new ListBox();
             button1 = new Button();
@@ -56,35 +56,38 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // checkBox1
+            // BookGenre
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(19, 47);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(83, 19);
-            checkBox1.TabIndex = 1;
-            checkBox1.Text = "checkBox1";
-            checkBox1.UseVisualStyleBackColor = true;
+            BookGenre.AutoSize = true;
+            BookGenre.Location = new Point(19, 47);
+            BookGenre.Name = "BookGenre";
+            BookGenre.Size = new Size(56, 19);
+            BookGenre.TabIndex = 1;
+            BookGenre.Text = "genre";
+            BookGenre.UseVisualStyleBackColor = true;
+            BookGenre.CheckedChanged += checkBox1_CheckedChanged;
             // 
-            // checkBox2
+            // mangaGenre
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(19, 87);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(83, 19);
-            checkBox2.TabIndex = 2;
-            checkBox2.Text = "checkBox2";
-            checkBox2.UseVisualStyleBackColor = true;
+            mangaGenre.AutoSize = true;
+            mangaGenre.Location = new Point(19, 87);
+            mangaGenre.Name = "mangaGenre";
+            mangaGenre.Size = new Size(57, 19);
+            mangaGenre.TabIndex = 2;
+            mangaGenre.Text = "Genre";
+            mangaGenre.UseVisualStyleBackColor = true;
+            mangaGenre.CheckedChanged += checkBox2_CheckedChanged;
             // 
-            // checkBox3
+            // ComicGenre
             // 
-            checkBox3.AutoSize = true;
-            checkBox3.Location = new Point(19, 128);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(83, 19);
-            checkBox3.TabIndex = 3;
-            checkBox3.Text = "checkBox3";
-            checkBox3.UseVisualStyleBackColor = true;
+            ComicGenre.AutoSize = true;
+            ComicGenre.Location = new Point(19, 128);
+            ComicGenre.Name = "ComicGenre";
+            ComicGenre.Size = new Size(56, 19);
+            ComicGenre.TabIndex = 3;
+            ComicGenre.Text = "genre";
+            ComicGenre.UseVisualStyleBackColor = true;
+            ComicGenre.CheckedChanged += checkBox3_CheckedChanged;
             // 
             // pictureBox1
             // 
@@ -180,6 +183,7 @@
             domainUpDown1.Size = new Size(120, 23);
             domainUpDown1.TabIndex = 16;
             domainUpDown1.Text = "domainUpDown1";
+            domainUpDown1.SelectedItemChanged += domainUpDown1_SelectedItemChanged;
             // 
             // label6
             // 
@@ -303,9 +307,9 @@
             Controls.Add(button1);
             Controls.Add(listBox1);
             Controls.Add(pictureBox1);
-            Controls.Add(checkBox3);
-            Controls.Add(checkBox2);
-            Controls.Add(checkBox1);
+            Controls.Add(ComicGenre);
+            Controls.Add(mangaGenre);
+            Controls.Add(BookGenre);
             Name = "Form2";
             Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -316,9 +320,9 @@
         #endregion
 
         private TextBox textBox1;
-        private CheckBox checkBox1;
-        private CheckBox checkBox2;
-        private CheckBox checkBox3;
+        private CheckBox BookGenre;
+        private CheckBox mangaGenre;
+        private CheckBox ComicGenre;
         private PictureBox pictureBox1;
         private ListBox listBox1;
         private Button button1;
