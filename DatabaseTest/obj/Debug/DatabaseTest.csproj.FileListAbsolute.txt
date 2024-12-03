@@ -244,3 +244,9 @@ C:\Users\morte\GitHub\AuctionSemesterProject\DatabaseTest\obj\Debug\DatabaseTest
 C:\Users\morte\GitHub\AuctionSemesterProject\DatabaseTest\obj\Debug\Database.D89CBF29.Up2Date
 C:\Users\morte\GitHub\AuctionSemesterProject\DatabaseTest\obj\Debug\DatabaseTest.exe
 C:\Users\morte\GitHub\AuctionSemesterProject\DatabaseTest\obj\Debug\DatabaseTest.pdb
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\DatabaseTest\bin\Debug\Microsoft.Bcl.TimeProvider.dll
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\DatabaseTest\bin\Debug\System.IO.Pipelines.dll
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\DatabaseTest\bin\Debug\Microsoft.Bcl.TimeProvider.xml
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\DatabaseTest\bin\Debug\System.IO.Pipelines.xml
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\DatabaseTest\obj\Debug\DatabaseTest.csproj.SuggestedBindingRedirects.cache
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\DatabaseTest\obj\Debug\DatabaseTest.exe.config
