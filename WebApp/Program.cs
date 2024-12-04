@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApp.Models;
-using WebApp.Service; 
+using WebApp.Service;
 
 namespace AuctionSemesterProject
 {
