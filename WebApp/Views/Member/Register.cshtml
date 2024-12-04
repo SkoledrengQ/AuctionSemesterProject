@@ -1,0 +1,67 @@
+﻿@model AuctionSemesterProject.AuctionModels.Member
+
+@{
+    ViewData["Title"] = "Register Member";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Ensure that the model is not null before accessing its properties -->
+@if (Model != null)
+{
+    <!-- Success message display -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <!-- Registration form -->
+    <form method="post" action="@Url.Action("Register", "Member")">
+        <div class="form-group">
+            <label for="FirstName">First Name</label>
+            <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required />
+        </div>
+
+        <div class="form-group">
+            <label for="LastName">Last Name</label>
+            <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Birthday">Birthday</label>
+            <input type="date" class="form-control" id="Birthday" name="Birthday" value="@Model.Birthday?.ToString("yyyy-MM-dd")" required />
+        </div>
+
+        <div class="form-group">
+            <label for="PhoneNo">Phone Number</label>
+            <input type="text" class="form-control" id="PhoneNo" name="PhoneNo" value="@Model.PhoneNo" />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required />
+        </div>
+
+        <!-- Address ID -->
+        <div class="form-group">
+            <label for="AddressID_FK">Address</label>
+            <input type="number" class="form-control" id="AddressID_FK" name="AddressID_FK" value="@Model.AddressID_FK" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Register</button>
+    </form>
+
+    <!-- Display validation errors if any -->
+    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+    {
+        <div class="alert alert-danger">
+            @error.ErrorMessage
+        </div>
+    }
+}
+else
+{
+    <p>Model is null!</p>
+}
