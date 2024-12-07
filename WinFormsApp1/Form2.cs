@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,128 +16,208 @@ namespace WinFormsApp
 {
     public partial class Form2 : Form
     {
-        private readonly List<string> BookGenre;
-        private readonly List<string> MangaGenre;
-        private readonly List<string> ComicGenre;
        
+        public ICollection CurrentGenres { get; private set; }
 
-
-        public Form2()
+        private class Genre ()
         {
-            InitializeComponent();
 
-            // Initialize genres
-            BookGenre = new List<string>
+
+            public class MangaGenre
             {
-                "Fantasy", "Literary Fiction", "Historical Fiction", "Science Fiction",
-                "Mystery", "Thriller", "Horror", "Adventure", "Biography", "Autobiography",
-                "Self-Help", "Travel", "History", "Philosophy", "Science",
-                "Historical Romance", "Science Fiction Fantasy", "Dystopian Fiction",
-                "Magical Realism", "Young Adult", "Middle Grade", "Graphic Novels",
-                "Poetry", "Crime/Thriller"
-            };
 
-            MangaGenre = new List<string>
+                public MangaGenre()
+                {
+                    ArrayList MangaGenre = new ArrayList();
+                    MangaGenre.Add("fantasy");
+                    MangaGenre.Add("Literary Fiction:");
+                    MangaGenre.Add("Historical Fiction:");
+                    MangaGenre.Add("Science Fiction");
+                    MangaGenre.Add("Mystery");
+                    MangaGenre.Add("Thriller");
+                    MangaGenre.Add("Horror");
+                    MangaGenre.Add("Adventure");
+                    MangaGenre.Add("Science");
+                    MangaGenre.Add("Crime/Thriller");
+                    MangaGenre.Add("History");
+                    MangaGenre.Add("Historical Fiction:");
+                    MangaGenre.Add("Young Adult");
+                }
+            }
+            public class Bookgenre
             {
-                "Fantasy", "Literary Fiction", "Historical Fiction", "Science Fiction",
-                "Mystery", "Thriller", "Horror", "Adventure", "Science",
-                "Crime/Thriller", "History", "Young Adult"
-            };
+                public Bookgenre()
+                {
+                    ArrayList BookGenre = new ArrayList();
 
-            ComicGenre = new List<string>
+                    BookGenre.Add("fantasy");
+                    BookGenre.Add("Literary Fiction:");
+                    BookGenre.Add("Historical Fiction:");
+                    BookGenre.Add("Science Fiction");
+                    BookGenre.Add("Mystery");
+                    BookGenre.Add("Thriller");
+                    BookGenre.Add("Horror");
+                    BookGenre.Add("Adventure");
+                    BookGenre.Add("Biography");
+                    BookGenre.Add("Autobiography");
+                    BookGenre.Add("Self-Help");
+                    BookGenre.Add("Travel");
+                    BookGenre.Add("History");
+                    BookGenre.Add("Philosophy");
+                    BookGenre.Add("Science");
+                    BookGenre.Add("Historical Romance");
+                    BookGenre.Add("Science Fiction Fantasy");
+                    BookGenre.Add("Dystopian Fiction");
+                    BookGenre.Add("Magical Realism");
+                    BookGenre.Add("Young Adult");
+                    BookGenre.Add("Middle Grade");
+                    BookGenre.Add("Graphic Novels");
+                    BookGenre.Add("Poetry");
+                    BookGenre.Add("Crime/Thriller");
+
+                }
+
+            }
+
+
+
+            public class ComicGenre
             {
-                "Fantasy", "Literary Fiction", "Historical Fiction", "Science Fiction",
-                "Mystery", "Thriller", "Horror", "Adventure", "Science",
-                "Crime/Thriller", "Superhero", "Villain Story"
-            };
-        }
+                public ComicGenre()
+                {
+                    ArrayList ComicGenre = new ArrayList();
+                    ComicGenre.Add("fantasy");
+                    ComicGenre.Add("Literary Fiction:");
+                    ComicGenre.Add("Historical Fiction:");
+                    ComicGenre.Add("Science Fiction");
+                    ComicGenre.Add("Mystery");
+                    ComicGenre.Add("Thriller");
+                    ComicGenre.Add("Horror");
+                    ComicGenre.Add("Adventure");
+                    ComicGenre.Add("Science");
+                    ComicGenre.Add("Crime/Thriller");
+                    ComicGenre.Add("superhero");
+                    ComicGenre.Add("villainStory");
 
-        private void button2_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
+                }
+            }
 
         }
 
-        private void label5_Click(object sender, EventArgs e)
-        {
 
-        }
 
-        private void label10_Click(object sender, EventArgs e)
-        {
 
-        }
 
-        private void checkBoxBook_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxBook.Checked)
-            {
+
+
+
+
+
+                public Form2()
+                {
+                    InitializeComponent();
+                }
+
+                private void button2_Click(object sender, EventArgs e)
+                {
+
+                }
+
+                private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+                {
+
+                }
+
+                private void label8_Click(object sender, EventArgs e)
+                {
+
+                }
+
+                private void label6_Click(object sender, EventArgs e)
+                {
+
+                }
+
+                private void label5_Click(object sender, EventArgs e)
+                {
+
+                }
+
+                private void label10_Click(object sender, EventArgs e)
+                {
+
+                }
+
+                private void checkBox1_CheckedChanged(object sender, EventArgs e)
+                {
+              
+                if (BookGenre.Checked)
+                    {
+                
                 // Uncheck other checkboxes if checkBox1 is checked
-                checkBoxManga.Checked = false;
-                checkBoxComic.Checked = false;
-                domainUpDown1_SelectedItemChanged(sender, e);
-            }
-        }
+                mangaGenre.Checked = false;
+                        ComicGenre.Checked = false;
+                    }
+                }
 
-        private void checkBoxManga_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxManga.Checked)
-            {
+                private void checkBox2_CheckedChanged(object sender, EventArgs e)
+                {
+        
+            if (mangaGenre.Checked)
+                    {
+               
                 // Uncheck other checkboxes if checkBox2 is checked
-                checkBoxComic.Checked = false;
-                checkBoxBook.Checked = false;
-                domainUpDown1_SelectedItemChanged(sender, e);
-            }
-        }
+                ComicGenre.Checked = false;
+                        BookGenre.Checked = false;
+                    }
+                }
 
-        private void checkBoxComic_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxComic.Checked)
-            {
+                private void checkBox3_CheckedChanged(object sender, EventArgs e)
+                {
+                    if (ComicGenre.Checked)
+                    {
+               
                 // Uncheck other checkboxes if checkBox3 is checked
-                checkBoxManga.Checked = false;
-                checkBoxBook.Checked = false;
-                domainUpDown1_SelectedItemChanged(sender, e);
-            }
-        }
+                mangaGenre.Checked = false;
+                        BookGenre.Checked = false;
+                    }
+                }
 
-        private void domainUpDown1_SelectedItemChanged(object sender, EventArgs e)
-        {
-            domainUpDown1.Items.Clear();
-
-            if (checkBoxBook.Checked)
-            {
-                // If checkbox is checked, show array1 in DomainUpDown
-                domainUpDown1.Items.AddRange(BookGenre.ToArray());
-            }
+                private void domainUpDown1_SelectedItemChanged(object sender, EventArgs e)
+                {
           
-            else if (checkBoxManga.Checked)
-            {
-                // If checkbox is checked, show array1 in DomainUpDown
-                domainUpDown1.Items.AddRange(MangaGenre.ToArray());
-            }
-            else if (checkBoxComic.Checked)
-            {
-                domainUpDown1.Items.AddRange(ComicGenre.ToArray());
-            }
+          
 
-            
+            if (BookGenre.Checked)
+                    {
+
+                        domainUpDown1.Items.Clear();
+                        domainUpDown1.Items.AddRange((ICollection)BookGenre);
+                      
+                    }
+
+                    if (mangaGenre.Checked)
+                    {
+                        // If checkbox is checked, show array1 in DomainUpDown
+                        domainUpDown1.Items.Clear();
+                        domainUpDown1.Items.AddRange((ICollection)mangaGenre);
+                        
+                    }
+                    if (ComicGenre.Checked)
+                    {
+                        domainUpDown1.Items.Clear();
+
+                        domainUpDown1.Items.AddRange((ICollection)ComicGenre);
+                        
+                    }
+                    else domainUpDown1.Items.Clear();
+
+
+                }
+            }
 
         }
-    }
-  }
+      
+    
 
