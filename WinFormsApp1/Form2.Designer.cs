@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            BookGenre = new CheckBox();
-            mangaGenre = new CheckBox();
-            ComicGenre = new CheckBox();
+            checkBoxBook = new CheckBox();
+            checkBoxManga = new CheckBox();
+            checkBoxComic = new CheckBox();
             pictureBox1 = new PictureBox();
             listBox1 = new ListBox();
             button1 = new Button();
@@ -56,38 +56,38 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // BookGenre
+            // checkBoxBook
             // 
-            BookGenre.AutoSize = true;
-            BookGenre.Location = new Point(19, 47);
-            BookGenre.Name = "BookGenre";
-            BookGenre.Size = new Size(56, 19);
-            BookGenre.TabIndex = 1;
-            BookGenre.Text = "genre";
-            BookGenre.UseVisualStyleBackColor = true;
-            BookGenre.CheckedChanged += checkBox1_CheckedChanged;
+            checkBoxBook.AutoSize = true;
+            checkBoxBook.Location = new Point(19, 47);
+            checkBoxBook.Name = "checkBoxBook";
+            checkBoxBook.Size = new Size(56, 19);
+            checkBoxBook.TabIndex = 1;
+            checkBoxBook.Text = "genre";
+            checkBoxBook.UseVisualStyleBackColor = true;
+            checkBoxBook.CheckedChanged += checkBoxBook_CheckedChanged;
             // 
-            // mangaGenre
+            // checkBoxManga
             // 
-            mangaGenre.AutoSize = true;
-            mangaGenre.Location = new Point(19, 87);
-            mangaGenre.Name = "mangaGenre";
-            mangaGenre.Size = new Size(57, 19);
-            mangaGenre.TabIndex = 2;
-            mangaGenre.Text = "Genre";
-            mangaGenre.UseVisualStyleBackColor = true;
-            mangaGenre.CheckedChanged += checkBox2_CheckedChanged;
+            checkBoxManga.AutoSize = true;
+            checkBoxManga.Location = new Point(19, 87);
+            checkBoxManga.Name = "checkBoxManga";
+            checkBoxManga.Size = new Size(57, 19);
+            checkBoxManga.TabIndex = 2;
+            checkBoxManga.Text = "Genre";
+            checkBoxManga.UseVisualStyleBackColor = true;
+            checkBoxManga.CheckedChanged += checkBoxManga_CheckedChanged;
             // 
-            // ComicGenre
+            // checkBoxComic
             // 
-            ComicGenre.AutoSize = true;
-            ComicGenre.Location = new Point(19, 128);
-            ComicGenre.Name = "ComicGenre";
-            ComicGenre.Size = new Size(56, 19);
-            ComicGenre.TabIndex = 3;
-            ComicGenre.Text = "genre";
-            ComicGenre.UseVisualStyleBackColor = true;
-            ComicGenre.CheckedChanged += checkBox3_CheckedChanged;
+            checkBoxComic.AutoSize = true;
+            checkBoxComic.Location = new Point(19, 128);
+            checkBoxComic.Name = "checkBoxComic";
+            checkBoxComic.Size = new Size(56, 19);
+            checkBoxComic.TabIndex = 3;
+            checkBoxComic.Text = "genre";
+            checkBoxComic.UseVisualStyleBackColor = true;
+            checkBoxComic.CheckedChanged += checkBoxComic_CheckedChanged;
             // 
             // pictureBox1
             // 
@@ -112,7 +112,7 @@
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 7;
-            button1.Text = "push auction";
+            button1.Text = "Push auction";
             button1.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -138,9 +138,9 @@
             label3.AutoSize = true;
             label3.Location = new Point(3, 29);
             label3.Name = "label3";
-            label3.Size = new Size(81, 15);
+            label3.Size = new Size(84, 15);
             label3.TabIndex = 10;
-            label3.Text = "Standart book";
+            label3.Text = "Standard Book";
             // 
             // textBox3
             // 
@@ -154,18 +154,18 @@
             label4.AutoSize = true;
             label4.Location = new Point(1, 236);
             label4.Name = "label4";
-            label4.Size = new Size(27, 15);
+            label4.Size = new Size(29, 15);
             label4.TabIndex = 13;
-            label4.Text = "title";
+            label4.Text = "Title";
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Location = new Point(619, 199);
             label5.Name = "label5";
-            label5.Size = new Size(71, 15);
+            label5.Size = new Size(72, 15);
             label5.TabIndex = 14;
-            label5.Text = "book details";
+            label5.Text = "Book Details";
             label5.Click += label5_Click;
             // 
             // dateTimePicker1
@@ -182,7 +182,6 @@
             domainUpDown1.Name = "domainUpDown1";
             domainUpDown1.Size = new Size(120, 23);
             domainUpDown1.TabIndex = 16;
-            domainUpDown1.Text = "domainUpDown1";
             domainUpDown1.SelectedItemChanged += domainUpDown1_SelectedItemChanged;
             // 
             // label6
@@ -190,9 +189,9 @@
             label6.AutoSize = true;
             label6.Location = new Point(578, 347);
             label6.Name = "label6";
-            label6.Size = new Size(55, 15);
+            label6.Size = new Size(56, 15);
             label6.TabIndex = 17;
-            label6.Text = "set Timer";
+            label6.Text = "Set Timer";
             label6.Click += label6_Click;
             // 
             // label7
@@ -200,9 +199,9 @@
             label7.AutoSize = true;
             label7.Location = new Point(-2, 179);
             label7.Name = "label7";
-            label7.Size = new Size(37, 15);
+            label7.Size = new Size(38, 15);
             label7.TabIndex = 18;
-            label7.Text = "genre";
+            label7.Text = "Genre";
             // 
             // textBox2
             // 
@@ -216,9 +215,9 @@
             label8.AutoSize = true;
             label8.Location = new Point(-2, 347);
             label8.Name = "label8";
-            label8.Size = new Size(70, 15);
+            label8.Size = new Size(57, 15);
             label8.TabIndex = 20;
-            label8.Text = "size of book";
+            label8.Text = "Book Size";
             label8.Click += label8_Click;
             // 
             // textBox4
@@ -233,9 +232,9 @@
             label9.AutoSize = true;
             label9.Location = new Point(-2, 290);
             label9.Name = "label9";
-            label9.Size = new Size(58, 15);
+            label9.Size = new Size(73, 15);
             label9.TabIndex = 22;
-            label9.Text = "relizeDate";
+            label9.Text = "Release Date";
             // 
             // label10
             // 
@@ -244,7 +243,7 @@
             label10.Name = "label10";
             label10.Size = new Size(88, 15);
             label10.TabIndex = 23;
-            label10.Text = "picture of book";
+            label10.Text = "Picture of Book";
             label10.Click += label10_Click;
             // 
             // richTextBox1
@@ -260,9 +259,9 @@
             label11.AutoSize = true;
             label11.Location = new Point(175, 9);
             label11.Name = "label11";
-            label11.Size = new Size(57, 15);
+            label11.Size = new Size(58, 15);
             label11.TabIndex = 25;
-            label11.Text = "summery";
+            label11.Text = "Summary";
             // 
             // textBox5
             // 
@@ -276,9 +275,9 @@
             label12.AutoSize = true;
             label12.Location = new Point(189, 328);
             label12.Name = "label12";
-            label12.Size = new Size(59, 15);
+            label12.Size = new Size(60, 15);
             label12.TabIndex = 27;
-            label12.Text = "start Price";
+            label12.Text = "Start Price";
             // 
             // Form2
             // 
@@ -307,9 +306,9 @@
             Controls.Add(button1);
             Controls.Add(listBox1);
             Controls.Add(pictureBox1);
-            Controls.Add(ComicGenre);
-            Controls.Add(mangaGenre);
-            Controls.Add(BookGenre);
+            Controls.Add(checkBoxComic);
+            Controls.Add(checkBoxManga);
+            Controls.Add(checkBoxBook);
             Name = "Form2";
             Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -320,9 +319,9 @@
         #endregion
 
         private TextBox textBox1;
-        private CheckBox BookGenre;
-        private CheckBox mangaGenre;
-        private CheckBox ComicGenre;
+        private CheckBox checkBoxBook;
+        private CheckBox checkBoxManga;
+        private CheckBox checkBoxComic;
         private PictureBox pictureBox1;
         private ListBox listBox1;
         private Button button1;
