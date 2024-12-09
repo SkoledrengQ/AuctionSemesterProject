@@ -2,6 +2,8 @@
 {
     partial class Form2
     {
+
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -63,9 +65,9 @@
             checkBoxBook.Name = "checkBoxBook";
             checkBoxBook.Size = new Size(56, 19);
             checkBoxBook.TabIndex = 1;
-            checkBoxBook.Text = "genre";
+            checkBoxBook.Text = "Genre";
             checkBoxBook.UseVisualStyleBackColor = true;
-            checkBoxBook.CheckedChanged += checkBoxBook_CheckedChanged;
+            checkBoxBook.CheckedChanged += new System.EventHandler(this.checkBoxBook_CheckedChanged);
             // 
             // checkBoxManga
             // 
@@ -76,7 +78,7 @@
             checkBoxManga.TabIndex = 2;
             checkBoxManga.Text = "Genre";
             checkBoxManga.UseVisualStyleBackColor = true;
-            checkBoxManga.CheckedChanged += checkBoxManga_CheckedChanged;
+            checkBoxManga.CheckedChanged += new System.EventHandler(this.checkBoxManga_CheckedChanged);
             // 
             // checkBoxComic
             // 
@@ -85,9 +87,9 @@
             checkBoxComic.Name = "checkBoxComic";
             checkBoxComic.Size = new Size(56, 19);
             checkBoxComic.TabIndex = 3;
-            checkBoxComic.Text = "genre";
+            checkBoxComic.Text = "Genre";
             checkBoxComic.UseVisualStyleBackColor = true;
-            checkBoxComic.CheckedChanged += checkBoxComic_CheckedChanged;
+            checkBoxComic.CheckedChanged += new System.EventHandler(this.checkBoxComic_CheckedChanged);
             // 
             // pictureBox1
             // 
@@ -311,6 +313,7 @@
             Controls.Add(checkBoxBook);
             Name = "Form2";
             Text = "Form2";
+            Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
