@@ -55,8 +55,8 @@ C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\Au
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\DataAccess.dll
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\Services.dll
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\API.pdb
-C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\AuctionModels.pdb
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\DataAccess.pdb
+C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\AuctionModels.pdb
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\Services.pdb
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\WebApp.csproj.AssemblyReference.cache
 C:\Users\Mads\Documents\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\WebApp.GeneratedMSBuildEditorConfig.editorconfig

@@ -1,5 +1,5 @@
-using AuctionSemesterProject.DataAccess;
 using AuctionSemesterProject.Services;
+using AuctionSemesterProject.DataAccess;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AuctionSemesterProject
@@ -13,7 +13,7 @@ namespace AuctionSemesterProject
             // Add services to the container (API controllers only)
             builder.Services.AddControllers();  // Add API controllers
 
-            // Register DAOs and Services for dependency injection
+            // Register shared DAOs and Services for dependency injection
             builder.Services.AddSingleton<AuctionDAO>(sp =>
                 new AuctionDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
             builder.Services.AddTransient<AuctionService>();

@@ -10,7 +10,9 @@
         "dependencies": {
           "API": "1.0.0",
           "AuctionModels": "1.0.0",
-          "Microsoft.Data.SqlClient": "5.2.2"
+          "DataAccess": "1.0.0",
+          "Microsoft.Data.SqlClient": "5.2.2",
+          "Services": "1.0.0"
         },
         "runtime": {
           "WebApp.dll": {}

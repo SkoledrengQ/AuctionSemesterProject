@@ -2272,7 +2272,9 @@
     "net8.0": [
       "API >= 1.0.0",
       "AuctionModels >= 1.0.0",
-      "Microsoft.Data.SqlClient >= 5.2.2"
+      "DataAccess >= 1.0.0",
+      "Microsoft.Data.SqlClient >= 5.2.2",
+      "Services >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2306,8 +2308,14 @@
             "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj": {
               "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj"
             },
+            "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
+              "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj"
+            },
             "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
               "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
+            },
+            "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": {
+              "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj"
             }
           }
         }
