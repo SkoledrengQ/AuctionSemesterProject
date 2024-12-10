@@ -16,8 +16,10 @@ namespace WebApp.Controllers
         // Index action - returns the homepage view
         public IActionResult Index()
         {
+            _logger.LogInformation("Index page accessed.");
             return View();
         }
+
 
         // Privacy action - returns the privacy page view
         public IActionResult Privacy()

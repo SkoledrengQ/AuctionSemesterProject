@@ -1,8 +1,8 @@
 ﻿using AuctionSemesterProject.AuctionModels;
+using AuctionSemesterProject.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.Controllers
 {
@@ -10,66 +10,26 @@ namespace AuctionSemesterProject.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
-        private readonly string _connectionString;
+        private readonly AddressService _addressService;
 
-        public AddressController(IConfiguration configuration)
+        public AddressController(AddressService addressService)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                  ?? throw new InvalidOperationException("Connection string not found.");
+            _addressService = addressService;
         }
 
         // GET: api/Address
         [HttpGet]
-        public IActionResult GetAllAddresses()
+        public async Task<IActionResult> GetAllAddresses()
         {
-            List<Address> addresses = new List<Address>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM Address", connection);
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    addresses.Add(new Address
-                    {
-                        AddressID = reader.GetInt32(0),
-                        StreetName = reader.GetString(1),
-                        City = reader.GetString(2),
-                        ZipCode = reader.GetString(3)
-                    });
-                }
-            }
-
+            List<Address> addresses = await _addressService.GetAllAddressesAsync();
             return Ok(addresses);
         }
 
         // GET: api/Address/{id}
         [HttpGet("{id}")]
-        public IActionResult GetAddressById(int id)
+        public async Task<IActionResult> GetAddressById(int id)
         {
-            Address ? address = null;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM Address WHERE addressID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    address = new Address
-                    {
-                        AddressID = reader.GetInt32(0),
-                        StreetName = reader.GetString(1),
-                        City = reader.GetString(2),
-                        ZipCode = reader.GetString(3)
-                    };
-                }
-            }
-
+            var address = await _addressService.GetAddressByIdAsync(id);
             if (address == null)
                 return NotFound();
 
@@ -78,54 +38,25 @@ namespace AuctionSemesterProject.Controllers
 
         // POST: api/Address
         [HttpPost]
-        public IActionResult CreateAddress([FromBody] Address address)
+        public async Task<IActionResult> CreateAddress([FromBody] Address address)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO Address (streetName, city, zipCode) VALUES (@streetName, @city, @zipCode)", connection);
-                command.Parameters.AddWithValue("@streetName", address.StreetName);
-                command.Parameters.AddWithValue("@city", address.City);
-                command.Parameters.AddWithValue("@zipCode", address.ZipCode);
-
-                command.ExecuteNonQuery();
-            }
-
+            await _addressService.CreateAddressAsync(address);
             return CreatedAtAction(nameof(GetAddressById), new { id = address.AddressID }, address);
         }
 
         // PUT: api/Address/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateAddress(int id, [FromBody] Address address)
+        public async Task<IActionResult> UpdateAddress(int id, [FromBody] Address address)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("UPDATE Address SET streetName = @streetName, city = @city, zipCode = @zipCode WHERE addressID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@streetName", address.StreetName);
-                command.Parameters.AddWithValue("@city", address.City);
-                command.Parameters.AddWithValue("@zipCode", address.ZipCode);
-
-                command.ExecuteNonQuery();
-            }
-
+            await _addressService.UpdateAddressAsync(id, address);
             return NoContent();
         }
 
         // DELETE: api/Address/{id}
         [HttpDelete("{id}")]
-        public IActionResult DeleteAddress(int id)
+        public async Task<IActionResult> DeleteAddress(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("DELETE FROM Address WHERE addressID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-
-                command.ExecuteNonQuery();
-            }
-
+            await _addressService.DeleteAddressAsync(id);
             return NoContent();
         }
     }

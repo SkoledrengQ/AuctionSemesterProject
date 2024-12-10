@@ -1,8 +1,8 @@
 ﻿using AuctionSemesterProject.AuctionModels;
+using AuctionSemesterProject.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.Controllers
 {
@@ -10,126 +10,48 @@ namespace AuctionSemesterProject.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly string _connectionString;
+        private readonly EmployeeService _employeeService;
 
-        public EmployeeController(IConfiguration configuration)
+        public EmployeeController(EmployeeService employeeService)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                  ?? throw new InvalidOperationException("Connection string not found.");
+            _employeeService = employeeService;
         }
 
-        // GET: api/Employee
         [HttpGet]
-        public IActionResult GetAllEmployees()
+        public async Task<IActionResult> GetAllEmployees()
         {
-            List<Employee> employees = new List<Employee>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM Employee", connection);
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    employees.Add(new Employee
-                    {
-                        EmployeeID = reader.GetInt32(0),
-                        FirstName = reader.GetString(1),
-                        LastName = reader.GetString(2),
-                        PhoneNo = reader.GetString(3),
-                        Email = reader.GetString(4)
-                    });
-                }
-            }
-
+            List<Employee> employees = await _employeeService.GetAllEmployeesAsync();
             return Ok(employees);
         }
 
-        // GET: api/Employee/{id}
         [HttpGet("{id}")]
-        public IActionResult GetEmployeeById(int id)
+        public async Task<IActionResult> GetEmployeeById(int id)
         {
-            Employee ? employee = null;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM Employee WHERE employeeID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    employee = new Employee
-                    {
-                        EmployeeID = reader.GetInt32(0),
-                        FirstName = reader.GetString(1),
-                        LastName = reader.GetString(2),
-                        PhoneNo = reader.GetString(3),
-                        Email = reader.GetString(4)
-                    };
-                }
-            }
-
+            Employee? employee = await _employeeService.GetEmployeeByIdAsync(id);
             if (employee == null)
                 return NotFound();
 
             return Ok(employee);
         }
 
-        // POST: api/Employee
         [HttpPost]
-        public IActionResult CreateEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> CreateEmployee([FromBody] Employee employee)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO Employee (firstName, lastName, phoneNo, email) VALUES (@firstName, @lastName, @phoneNo, @email)", connection);
-                command.Parameters.AddWithValue("@firstName", employee.FirstName);
-                command.Parameters.AddWithValue("@lastName", employee.LastName);
-                command.Parameters.AddWithValue("@phoneNo", employee.PhoneNo);
-                command.Parameters.AddWithValue("@email", employee.Email);
-
-                command.ExecuteNonQuery();
-            }
-
+            await _employeeService.CreateEmployeeAsync(employee);
             return CreatedAtAction(nameof(GetEmployeeById), new { id = employee.EmployeeID }, employee);
         }
 
-        // PUT: api/Employee/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateEmployee(int id, [FromBody] Employee employee)
+        public async Task<IActionResult> UpdateEmployee(int id, [FromBody] Employee employee)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("UPDATE Employee SET firstName = @firstName, lastName = @lastName, phoneNo = @phoneNo, email = @email WHERE employeeID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@firstName", employee.FirstName);
-                command.Parameters.AddWithValue("@lastName", employee.LastName);
-                command.Parameters.AddWithValue("@phoneNo", employee.PhoneNo);
-                command.Parameters.AddWithValue("@email", employee.Email);
-
-                command.ExecuteNonQuery();
-            }
-
+            await _employeeService.UpdateEmployeeAsync(id, employee);
             return NoContent();
         }
 
-        // DELETE: api/Employee/{id}
         [HttpDelete("{id}")]
-        public IActionResult DeleteEmployee(int id)
+        public async Task<IActionResult> DeleteEmployee(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("DELETE FROM Employee WHERE employeeID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-
-                command.ExecuteNonQuery();
-            }
-
+            await _employeeService.DeleteEmployeeAsync(id);
             return NoContent();
         }
     }
