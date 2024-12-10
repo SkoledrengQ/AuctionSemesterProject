@@ -1,4 +1,6 @@
-using Microsoft.OpenApi.Models;
+using AuctionSemesterProject.DataAccess;
+using AuctionSemesterProject.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AuctionSemesterProject
 {
@@ -8,38 +10,43 @@ namespace AuctionSemesterProject
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews(); // Enable MVC for views
+            // Add services to the container (API controllers only)
+            builder.Services.AddControllers();  // Add API controllers
 
-            // Swagger for API documentation
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            // Register DAOs and Services for dependency injection
+            builder.Services.AddSingleton<AuctionDAO>(sp =>
+                new AuctionDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddTransient<AuctionService>();
+
+            builder.Services.AddSingleton<AddressDAO>(sp =>
+                new AddressDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddTransient<AddressService>();
+
+            builder.Services.AddSingleton<AuctionItemDAO>(sp =>
+                new AuctionItemDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddTransient<AuctionItemService>();
+
+            builder.Services.AddSingleton<BidDAO>(sp =>
+                new BidDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddTransient<BidService>();
+
+            builder.Services.AddSingleton<EmployeeDAO>(sp =>
+                new EmployeeDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddTransient<EmployeeService>();
+
+            builder.Services.AddSingleton<MemberDAO>(sp =>
+                new MemberDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddTransient<MemberService>();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            // Redirect HTTP to HTTPS
+            // Configure the HTTP request pipeline
             app.UseHttpsRedirection();
-
-            // Authorization middleware
             app.UseAuthorization();
-
-            // Static files (CSS, JS, etc.)
-            app.UseStaticFiles();
-
-            // MVC routing configuration
             app.UseRouting();
 
-            // Configure default controller route
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}"); // Default route to HomeController/Index
+            // API routing configuration for controllers
+            app.MapControllers();  // Maps API controllers to endpoints
 
             // Run the application
             app.Run();

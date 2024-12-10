@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebApp.Models;
-using WebApp.Service; 
+using AuctionSemesterProject.Services;
+using AuctionSemesterProject.DataAccess;
+using Microsoft.OpenApi.Models;
 
 namespace AuctionSemesterProject
 {
@@ -13,21 +14,30 @@ namespace AuctionSemesterProject
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews();  // Enable MVC for views
 
-            // Set up HttpClient for calling Web API
-            builder.Services.AddHttpClient("WebApi", client =>
+            // Register DAOs and Services for dependency injection
+            builder.Services.AddScoped<BidDAO>(sp =>
             {
-                client.BaseAddress = new Uri("https://localhost:7005");  // your API base URL
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+                return new BidDAO(connectionString);
             });
 
-            // Register BidService for dependency injection
             builder.Services.AddScoped<BidService>(sp =>
             {
-                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-                var httpClient = httpClientFactory.CreateClient("WebApi");
-                return new BidService(httpClient);
+                var bidDAO = sp.GetRequiredService<BidDAO>();
+                return new BidService(bidDAO);  // Inject BidDAO into BidService
+            });
+
+            // Swagger setup for WebApp (MVC)
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Auction WebApp API",
+                    Version = "v1"
+                });
             });
 
             var app = builder.Build();
@@ -35,22 +45,26 @@ namespace AuctionSemesterProject
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
+                // Swagger will now be available at /swagger
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Auction WebApp API V1");
+                    options.RoutePrefix = "swagger";  // Set Swagger UI to be at /swagger
+                });
             }
 
+            // Ensure MVC views are still accessible at the root URL
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
+            // MVC routing configuration for website
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            // Run the application
             app.Run();
         }
     }

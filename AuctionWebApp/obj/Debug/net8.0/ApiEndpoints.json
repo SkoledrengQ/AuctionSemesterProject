@@ -79,7 +79,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionController",
     "Method": "GetAllAuctions",
     "RelativePath": "api/Auction",
     "HttpMethod": "GET",
@@ -89,7 +89,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionController",
     "Method": "CreateAuction",
     "RelativePath": "api/Auction",
     "HttpMethod": "POST",
@@ -105,7 +105,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionController",
     "Method": "GetAuctionById",
     "RelativePath": "api/Auction/{id}",
     "HttpMethod": "GET",
@@ -121,7 +121,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionController",
     "Method": "UpdateAuction",
     "RelativePath": "api/Auction/{id}",
     "HttpMethod": "PUT",
@@ -142,7 +142,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AuctionWebApp.Controllers.AuctionController",
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionController",
     "Method": "DeleteAuction",
     "RelativePath": "api/Auction/{id}",
     "HttpMethod": "DELETE",
@@ -159,7 +159,7 @@
   },
   {
     "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
-    "Method": "GetAllItems",
+    "Method": "GetAllAuctionItems",
     "RelativePath": "api/AuctionItem",
     "HttpMethod": "GET",
     "IsController": true,
@@ -169,14 +169,14 @@
   },
   {
     "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
-    "Method": "CreateItem",
+    "Method": "CreateAuctionItem",
     "RelativePath": "api/AuctionItem",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "item",
+        "Name": "auctionItem",
         "Type": "AuctionSemesterProject.AuctionModels.AuctionItem",
         "IsRequired": true
       }
@@ -185,7 +185,7 @@
   },
   {
     "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
-    "Method": "GetItemById",
+    "Method": "GetAuctionItemById",
     "RelativePath": "api/AuctionItem/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -201,7 +201,7 @@
   },
   {
     "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
-    "Method": "UpdateItem",
+    "Method": "UpdateAuctionItem",
     "RelativePath": "api/AuctionItem/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -213,7 +213,7 @@
         "IsRequired": true
       },
       {
-        "Name": "item",
+        "Name": "auctionItem",
         "Type": "AuctionSemesterProject.AuctionModels.AuctionItem",
         "IsRequired": true
       }
@@ -222,7 +222,7 @@
   },
   {
     "ContainingType": "AuctionSemesterProject.Controllers.AuctionItemController",
-    "Method": "DeleteItem",
+    "Method": "DeleteAuctionItem",
     "RelativePath": "api/AuctionItem/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,

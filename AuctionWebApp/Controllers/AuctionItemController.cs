@@ -1,8 +1,8 @@
 ﻿using AuctionSemesterProject.AuctionModels;
+using AuctionSemesterProject.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.Controllers
 {
@@ -10,72 +10,26 @@ namespace AuctionSemesterProject.Controllers
     [ApiController]
     public class AuctionItemController : ControllerBase
     {
-        private readonly string _connectionString;
+        private readonly AuctionItemService _auctionItemService;
 
-        public AuctionItemController(IConfiguration configuration)
+        public AuctionItemController(AuctionItemService auctionItemService)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection")
-                  ?? throw new InvalidOperationException("Connection string not found.");
+            _auctionItemService = auctionItemService;
         }
 
         // GET: api/AuctionItem
         [HttpGet]
-        public IActionResult GetAllItems()
+        public async Task<IActionResult> GetAllAuctionItems()
         {
-            List<AuctionItem> items = new List<AuctionItem>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM AuctionItem", connection);
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    items.Add(new AuctionItem
-                    {
-                        ItemID = reader.GetInt32(0),
-                        Title = reader.GetString(1),
-                        ReleaseDate = reader.GetDateTime(2),
-                        Author = reader.GetString(3),
-                        Genre = reader.GetString(4),
-                        Description = reader.GetString(5),
-                        ItemType = reader.GetString(6)
-                    });
-                }
-            }
-
+            List<AuctionItem> items = await _auctionItemService.GetAllAuctionItemsAsync();
             return Ok(items);
         }
 
         // GET: api/AuctionItem/{id}
         [HttpGet("{id}")]
-        public IActionResult GetItemById(int id)
+        public async Task<IActionResult> GetAuctionItemById(int id)
         {
-            AuctionItem ? item = null;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM AuctionItem WHERE itemID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    item = new AuctionItem
-                    {
-                        ItemID = reader.GetInt32(0),
-                        Title = reader.GetString(1),
-                        ReleaseDate = reader.GetDateTime(2),
-                        Author = reader.GetString(3),
-                        Genre = reader.GetString(4),
-                        Description = reader.GetString(5),
-                        ItemType = reader.GetString(6)
-                    };
-                }
-            }
-
+            AuctionItem? item = await _auctionItemService.GetAuctionItemByIdAsync(id);
             if (item == null)
                 return NotFound();
 
@@ -84,60 +38,25 @@ namespace AuctionSemesterProject.Controllers
 
         // POST: api/AuctionItem
         [HttpPost]
-        public IActionResult CreateItem([FromBody] AuctionItem item)
+        public async Task<IActionResult> CreateAuctionItem([FromBody] AuctionItem auctionItem)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO AuctionItem (title, releaseDate, author, genre, description, itemType) VALUES (@title, @releaseDate, @author, @genre, @description, @itemType)", connection);
-                command.Parameters.AddWithValue("@title", item.Title);
-                command.Parameters.AddWithValue("@releaseDate", item.ReleaseDate);
-                command.Parameters.AddWithValue("@author", item.Author);
-                command.Parameters.AddWithValue("@genre", item.Genre);
-                command.Parameters.AddWithValue("@description", item.Description);
-                command.Parameters.AddWithValue("@itemType", item.ItemType);
-
-                command.ExecuteNonQuery();
-            }
-
-            return CreatedAtAction(nameof(GetItemById), new { id = item.ItemID }, item);
+            await _auctionItemService.CreateAuctionItemAsync(auctionItem);
+            return CreatedAtAction(nameof(GetAuctionItemById), new { id = auctionItem.ItemID }, auctionItem);
         }
 
         // PUT: api/AuctionItem/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateItem(int id, [FromBody] AuctionItem item)
+        public async Task<IActionResult> UpdateAuctionItem(int id, [FromBody] AuctionItem auctionItem)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("UPDATE AuctionItem SET title = @title, releaseDate = @releaseDate, author = @author, genre = @genre, description = @description, itemType = @itemType WHERE itemID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@title", item.Title);
-                command.Parameters.AddWithValue("@releaseDate", item.ReleaseDate);
-                command.Parameters.AddWithValue("@author", item.Author);
-                command.Parameters.AddWithValue("@genre", item.Genre);
-                command.Parameters.AddWithValue("@description", item.Description);
-                command.Parameters.AddWithValue("@itemType", item.ItemType);
-
-                command.ExecuteNonQuery();
-            }
-
+            await _auctionItemService.UpdateAuctionItemAsync(id, auctionItem);
             return NoContent();
         }
 
         // DELETE: api/AuctionItem/{id}
         [HttpDelete("{id}")]
-        public IActionResult DeleteItem(int id)
+        public async Task<IActionResult> DeleteAuctionItem(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("DELETE FROM AuctionItem WHERE itemID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-
-                command.ExecuteNonQuery();
-            }
-
+            await _auctionItemService.DeleteAuctionItemAsync(id);
             return NoContent();
         }
     }
