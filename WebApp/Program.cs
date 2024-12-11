@@ -11,7 +11,7 @@ namespace AuctionSemesterProject
             var builder = WebApplication.CreateBuilder(args);
 
             // Register services for the WebApp project
-            builder.Services.AddControllersWithViews();  // Add MVC controllers
+            builder.Services.AddControllersWithViews();  // Use the default configuration for Razor views
 
             // Register shared DAOs and Services for dependency injection
             builder.Services.AddSingleton<AuctionDAO>(sp =>

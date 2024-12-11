@@ -20,7 +20,6 @@ namespace WebApp.Controllers
             return View();
         }
 
-
         // Privacy action - returns the privacy page view
         public IActionResult Privacy()
         {
