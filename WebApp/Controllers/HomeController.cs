@@ -33,5 +33,12 @@ namespace WebApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        // Returns the CreateAuction view
+        public IActionResult CreateAuction()
+        {
+            return View();
+        }
+
     }
 }

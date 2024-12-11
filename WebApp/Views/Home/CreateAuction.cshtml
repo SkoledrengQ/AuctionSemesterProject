@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Create Auction";
+}
+
+<div class="container my-5">
+    <h1 class="text-center">Create a New Auction</h1>
+    <form method="post" action="/Home/CreateAuction" class="mt-4">
+        <div class="mb-3">
+            <label for="auctionId" class="form-label">Auction ID</label>
+            <input type="number" class="form-control" id="auctionId" name="auctionId" placeholder="Enter Auction ID" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="startPrice" class="form-label">Start Price</label>
+            <input type="number" class="form-control" id="startPrice" name="startPrice" placeholder="Enter Start Price" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="minBid" class="form-label">Minimum Bid</label>
+            <input type="number" class="form-control" id="minBid" name="minBid" placeholder="Enter Minimum Bid" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="endingBid" class="form-label">Ending Bid</label>
+            <input type="number" class="form-control" id="endingBid" name="endingBid" placeholder="Enter Ending Bid" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="currentHighestBid" class="form-label">Current Highest Bid</label>
+            <input type="number" class="form-control" id="currentHighestBid" name="currentHighestBid" placeholder="Enter Current Highest Bid" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="buyNowPrice" class="form-label">Buy Now Price</label>
+            <input type="number" class="form-control" id="buyNowPrice" name="buyNowPrice" placeholder="Enter Buy Now Price" />
+        </div>
+
+        <div class="mb-3">
+            <label for="noOfBids" class="form-label">Number of Bids</label>
+            <input type="number" class="form-control" id="noOfBids" name="noOfBids" placeholder="Enter Number of Bids" />
+        </div>
+
+        <div class="mb-3">
+            <label for="employeeId" class="form-label">Employee ID</label>
+            <input type="number" class="form-control" id="employeeId" name="employeeId" placeholder="Enter Employee ID" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Create Auction</button>
+    </form>
+</div>

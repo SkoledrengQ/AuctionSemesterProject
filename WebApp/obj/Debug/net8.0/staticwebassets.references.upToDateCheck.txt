@@ -1,0 +1,7 @@
+C:\Users\domsb\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\domsb\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\domsb\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\domsb\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\domsb\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\domsb\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\domsb\Documents\GitHub\AuctionSemesterProject\AuctionWebApp\obj\Debug\net8.0\staticwebassets.build.json
