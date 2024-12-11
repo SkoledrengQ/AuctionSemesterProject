@@ -686,11 +686,42 @@
       "AuctionModels/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "5.2.2"
+        },
         "compile": {
           "bin/placeholder/AuctionModels.dll": {}
         },
         "runtime": {
           "bin/placeholder/AuctionModels.dll": {}
+        }
+      },
+      "DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "AuctionModels": "1.0.0",
+          "Microsoft.Data.SqlClient": "5.2.2"
+        },
+        "compile": {
+          "bin/placeholder/DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DataAccess.dll": {}
+        }
+      },
+      "Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "DataAccess": "1.0.0",
+          "Microsoft.Data.SqlClient": "5.2.2"
+        },
+        "compile": {
+          "bin/placeholder/Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Services.dll": {}
         }
       }
     }
@@ -2202,35 +2233,42 @@
       "type": "project",
       "path": "../Model/AuctionModels.csproj",
       "msbuildProject": "../Model/AuctionModels.csproj"
+    },
+    "DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../DAO/DataAccess.csproj",
+      "msbuildProject": "../DAO/DataAccess.csproj"
+    },
+    "Services/1.0.0": {
+      "type": "project",
+      "path": "../Services/Services.csproj",
+      "msbuildProject": "../Services/Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "AuctionModels >= 1.0.0",
+      "DataAccess >= 1.0.0",
       "Microsoft.Data.SqlClient >= 5.2.2",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.21.0",
+      "Services >= 1.0.0",
       "Swashbuckle.AspNetCore >= 7.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Doms\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Mads\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj",
+      "projectUniqueName": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj",
-      "packagesPath": "C:\\Users\\Doms\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\obj\\",
+      "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj",
+      "packagesPath": "C:\\Users\\Mads\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Doms\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Mads\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2245,8 +2283,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
-              "projectPath": "C:\\Users\\Doms\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
+            "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
+              "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj"
+            },
+            "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
+              "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
+            },
+            "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": {
+              "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj"
             }
           }
         }
@@ -2260,8 +2304,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -2299,7 +2342,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
