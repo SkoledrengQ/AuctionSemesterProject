@@ -133,9 +133,9 @@
             label3.AutoSize = true;
             label3.Location = new Point(3, 29);
             label3.Name = "label3";
-            label3.Size = new Size(81, 15);
+            label3.Size = new Size(84, 15);
             label3.TabIndex = 10;
-            label3.Text = "Standart book";
+            label3.Text = "Standard Book";
             // 
             // textBox3
             // 
@@ -149,18 +149,18 @@
             label4.AutoSize = true;
             label4.Location = new Point(1, 236);
             label4.Name = "label4";
-            label4.Size = new Size(27, 15);
+            label4.Size = new Size(29, 15);
             label4.TabIndex = 13;
-            label4.Text = "title";
+            label4.Text = "Title";
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Location = new Point(619, 199);
             label5.Name = "label5";
-            label5.Size = new Size(71, 15);
+            label5.Size = new Size(72, 15);
             label5.TabIndex = 14;
-            label5.Text = "book details";
+            label5.Text = "Book Details";
             label5.Click += label5_Click;
             // 
             // dateTimePicker1
@@ -184,9 +184,9 @@
             label6.AutoSize = true;
             label6.Location = new Point(578, 347);
             label6.Name = "label6";
-            label6.Size = new Size(55, 15);
+            label6.Size = new Size(56, 15);
             label6.TabIndex = 17;
-            label6.Text = "set Timer";
+            label6.Text = "Set Timer";
             label6.Click += label6_Click;
             // 
             // label7
@@ -194,9 +194,9 @@
             label7.AutoSize = true;
             label7.Location = new Point(-2, 179);
             label7.Name = "label7";
-            label7.Size = new Size(37, 15);
+            label7.Size = new Size(38, 15);
             label7.TabIndex = 18;
-            label7.Text = "genre";
+            label7.Text = "Genre";
             // 
             // textBox2
             // 
@@ -210,9 +210,9 @@
             label8.AutoSize = true;
             label8.Location = new Point(-2, 347);
             label8.Name = "label8";
-            label8.Size = new Size(70, 15);
+            label8.Size = new Size(71, 15);
             label8.TabIndex = 20;
-            label8.Text = "size of book";
+            label8.Text = "Size of Book";
             label8.Click += label8_Click;
             // 
             // textBox4
@@ -227,9 +227,9 @@
             label9.AutoSize = true;
             label9.Location = new Point(-2, 290);
             label9.Name = "label9";
-            label9.Size = new Size(58, 15);
+            label9.Size = new Size(73, 15);
             label9.TabIndex = 22;
-            label9.Text = "relizeDate";
+            label9.Text = "Release Date";
             // 
             // label10
             // 
@@ -238,7 +238,7 @@
             label10.Name = "label10";
             label10.Size = new Size(88, 15);
             label10.TabIndex = 23;
-            label10.Text = "picture of book";
+            label10.Text = "Picture of Book";
             label10.Click += label10_Click;
             // 
             // richTextBox1
@@ -254,9 +254,10 @@
             label11.AutoSize = true;
             label11.Location = new Point(175, 9);
             label11.Name = "label11";
-            label11.Size = new Size(57, 15);
+            label11.Size = new Size(58, 15);
             label11.TabIndex = 25;
-            label11.Text = "summery";
+            label11.Text = "Summary";
+            label11.Click += label11_Click;
             // 
             // Form2
             // 

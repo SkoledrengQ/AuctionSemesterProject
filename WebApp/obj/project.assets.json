@@ -685,10 +685,10 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "AuctionModels": "1.0.0",
-          "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": "1.0.0",
-          "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": "1.0.0",
+          "DataAccess": "1.0.0",
           "Microsoft.Data.SqlClient": "5.2.2",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.21.0",
+          "Services": "1.0.0",
           "Swashbuckle.AspNetCore": "7.0.0"
         },
         "compile": {
@@ -712,6 +712,34 @@
         },
         "runtime": {
           "bin/placeholder/AuctionModels.dll": {}
+        }
+      },
+      "DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "AuctionModels": "1.0.0",
+          "Microsoft.Data.SqlClient": "5.2.2"
+        },
+        "compile": {
+          "bin/placeholder/DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DataAccess.dll": {}
+        }
+      },
+      "Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "DataAccess": "1.0.0",
+          "Microsoft.Data.SqlClient": "5.2.2"
+        },
+        "compile": {
+          "bin/placeholder/Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Services.dll": {}
         }
       }
     }
@@ -2228,15 +2256,25 @@
       "type": "project",
       "path": "../Model/AuctionModels.csproj",
       "msbuildProject": "../Model/AuctionModels.csproj"
+    },
+    "DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../DAO/DataAccess.csproj",
+      "msbuildProject": "../DAO/DataAccess.csproj"
+    },
+    "Services/1.0.0": {
+      "type": "project",
+      "path": "../Services/Services.csproj",
+      "msbuildProject": "../Services/Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "API >= 1.0.0",
       "AuctionModels >= 1.0.0",
-      "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj",
-      "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj",
-      "Microsoft.Data.SqlClient >= 5.2.2"
+      "DataAccess >= 1.0.0",
+      "Microsoft.Data.SqlClient >= 5.2.2",
+      "Services >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2328,25 +2366,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1105",
-      "level": "Error",
-      "message": "Unable to find project information for 'C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj'. If you are using Visual Studio, this may be because the project is unloaded or not part of the current solution so run a restore from the command-line. Otherwise, the project file may be invalid or missing targets required for restore.",
-      "libraryId": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
-      "code": "NU1105",
-      "level": "Error",
-      "message": "Unable to find project information for 'C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj'. If you are using Visual Studio, this may be because the project is unloaded or not part of the current solution so run a restore from the command-line. Otherwise, the project file may be invalid or missing targets required for restore.",
-      "libraryId": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }
