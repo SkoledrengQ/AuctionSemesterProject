@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            checkBox1 = new CheckBox();
-            checkBox2 = new CheckBox();
-            checkBox3 = new CheckBox();
+            checkBoxBook = new CheckBox();
+            checkBoxManga = new CheckBox();
+            checkBoxComic = new CheckBox();
             pictureBox1 = new PictureBox();
             listBox1 = new ListBox();
             button1 = new Button();
@@ -56,33 +56,33 @@
             // 
             // checkBox1
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(19, 47);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(83, 19);
-            checkBox1.TabIndex = 1;
-            checkBox1.Text = "checkBox1";
-            checkBox1.UseVisualStyleBackColor = true;
+            checkBoxBook.AutoSize = true;
+            checkBoxBook.Location = new Point(19, 47);
+            checkBoxBook.Name = "checkBox1";
+            checkBoxBook.Size = new Size(83, 19);
+            checkBoxBook.TabIndex = 1;
+            checkBoxBook.Text = "checkBox1";
+            checkBoxBook.UseVisualStyleBackColor = true;
             // 
             // checkBox2
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(19, 87);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(83, 19);
-            checkBox2.TabIndex = 2;
-            checkBox2.Text = "checkBox2";
-            checkBox2.UseVisualStyleBackColor = true;
+            checkBoxManga.AutoSize = true;
+            checkBoxManga.Location = new Point(19, 87);
+            checkBoxManga.Name = "checkBox2";
+            checkBoxManga.Size = new Size(83, 19);
+            checkBoxManga.TabIndex = 2;
+            checkBoxManga.Text = "checkBox2";
+            checkBoxManga.UseVisualStyleBackColor = true;
             // 
             // checkBox3
             // 
-            checkBox3.AutoSize = true;
-            checkBox3.Location = new Point(19, 128);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(83, 19);
-            checkBox3.TabIndex = 3;
-            checkBox3.Text = "checkBox3";
-            checkBox3.UseVisualStyleBackColor = true;
+            checkBoxComic.AutoSize = true;
+            checkBoxComic.Location = new Point(19, 128);
+            checkBoxComic.Name = "checkBox3";
+            checkBoxComic.Size = new Size(83, 19);
+            checkBoxComic.TabIndex = 3;
+            checkBoxComic.Text = "checkBox3";
+            checkBoxComic.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
@@ -284,9 +284,9 @@
             Controls.Add(button1);
             Controls.Add(listBox1);
             Controls.Add(pictureBox1);
-            Controls.Add(checkBox3);
-            Controls.Add(checkBox2);
-            Controls.Add(checkBox1);
+            Controls.Add(checkBoxComic);
+            Controls.Add(checkBoxManga);
+            Controls.Add(checkBoxBook);
             Name = "Form2";
             Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -297,9 +297,9 @@
         #endregion
 
         private TextBox textBox1;
-        private CheckBox checkBox1;
-        private CheckBox checkBox2;
-        private CheckBox checkBox3;
+        private CheckBox checkBoxBook;
+        private CheckBox checkBoxManga;
+        private CheckBox checkBoxComic;
         private PictureBox pictureBox1;
         private ListBox listBox1;
         private Button button1;
