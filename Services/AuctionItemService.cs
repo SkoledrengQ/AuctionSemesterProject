@@ -24,14 +24,14 @@ namespace AuctionSemesterProject.Services
             return await _auctionItemDAO.GetAuctionItemByIdAsync(id);
         }
 
-        public async Task CreateAuctionItemAsync(AuctionItem auctionItem)
+        public async Task CreateAuctionItemAsync(AuctionItem item)
         {
-            await _auctionItemDAO.CreateAuctionItemAsync(auctionItem);
+            await _auctionItemDAO.CreateAuctionItemAsync(item);
         }
 
-        public async Task UpdateAuctionItemAsync(int id, AuctionItem auctionItem)
+        public async Task UpdateAuctionItemAsync(int id, AuctionItem item)
         {
-            await _auctionItemDAO.UpdateAuctionItemAsync(id, auctionItem);
+            await _auctionItemDAO.UpdateAuctionItemAsync(item);
         }
 
         public async Task DeleteAuctionItemAsync(int id)

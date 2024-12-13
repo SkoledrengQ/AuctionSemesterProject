@@ -31,7 +31,7 @@ namespace AuctionSemesterProject.Services
 
         public async Task UpdateAddressAsync(int id, Address address)
         {
-            await _addressDAO.UpdateAddressAsync(id, address);
+            await _addressDAO.UpdateAddressAsync(address);
         }
 
         public async Task DeleteAddressAsync(int id)

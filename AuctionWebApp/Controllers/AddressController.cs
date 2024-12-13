@@ -1,5 +1,5 @@
-﻿using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.Services;
+﻿using AuctionSemesterProject.Services;
+using AuctionSemesterProject.AuctionModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,47 +17,40 @@ namespace AuctionSemesterProject.Controllers
             _addressService = addressService;
         }
 
-        // GET: api/Address
         [HttpGet]
-        public async Task<IActionResult> GetAllAddresses()
+        public async Task<IActionResult> GetAll()
         {
-            List<Address> addresses = await _addressService.GetAllAddressesAsync();
+            var addresses = await _addressService.GetAllAddressesAsync();
             return Ok(addresses);
         }
 
-        // GET: api/Address/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAddressById(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var address = await _addressService.GetAddressByIdAsync(id);
-            if (address == null)
-                return NotFound();
-
+            if (address == null) return NotFound();
             return Ok(address);
         }
 
-        // POST: api/Address
         [HttpPost]
-        public async Task<IActionResult> CreateAddress([FromBody] Address address)
+        public async Task<IActionResult> Create(Address address)
         {
             await _addressService.CreateAddressAsync(address);
-            return CreatedAtAction(nameof(GetAddressById), new { id = address.AddressID }, address);
+            return Ok();
         }
 
-        // PUT: api/Address/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAddress(int id, [FromBody] Address address)
+        public async Task<IActionResult> Update(int id, Address address)
         {
             await _addressService.UpdateAddressAsync(id, address);
-            return NoContent();
+            return Ok();
         }
 
-        // DELETE: api/Address/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAddress(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _addressService.DeleteAddressAsync(id);
-            return NoContent();
+            return Ok();
         }
     }
 }

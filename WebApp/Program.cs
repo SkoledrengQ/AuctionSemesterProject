@@ -1,8 +1,6 @@
-using AuctionSemesterProject.Services;
-using AuctionSemesterProject.DataAccess;
-using Microsoft.OpenApi.Models; // Ensure this namespace is included
+using Microsoft.Extensions.DependencyInjection;
 
-namespace AuctionSemesterProject
+namespace WebApp
 {
     public class Program
     {
@@ -10,63 +8,36 @@ namespace AuctionSemesterProject
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Register services for the WebApp project
-            builder.Services.AddControllersWithViews();  // Use the default configuration for Razor views
+            // Add services for controllers with views
+            builder.Services.AddControllersWithViews();
 
-            // Register shared DAOs and Services for dependency injection
-            builder.Services.AddSingleton<AuctionDAO>(sp =>
-                new AuctionDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<AuctionService>();
-
-            builder.Services.AddSingleton<AddressDAO>(sp =>
-                new AddressDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<AddressService>();
-
-            builder.Services.AddSingleton<AuctionItemDAO>(sp =>
-                new AuctionItemDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<AuctionItemService>();
-
-            builder.Services.AddSingleton<BidDAO>(sp =>
-                new BidDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<BidService>();
-
-            builder.Services.AddSingleton<EmployeeDAO>(sp =>
-                new EmployeeDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<EmployeeService>();
-
-            builder.Services.AddSingleton<MemberDAO>(sp =>
-                new MemberDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<MemberService>();
-
-            // Register Swagger services
-            builder.Services.AddEndpointsApiExplorer(); // Required for Swagger in minimal APIs
-            builder.Services.AddSwaggerGen(options =>
+            // Register HttpClient for making API calls
+            builder.Services.AddHttpClient("ApiClient", client =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Auction WebApp API",
-                    Version = "v1"
-                });
+                client.BaseAddress = new Uri("https://your-api-url"); // Replace with your API base URL
             });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline for the WebApp project
+            // Configure the HTTP request pipeline
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Auction WebApp API V1");
-                    options.RoutePrefix = "swagger";
-                });
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseRouting();
 
-            // MVC routing configuration for the WebApp
+            app.UseAuthorization();
+
+            // Configure default routing for MVC
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

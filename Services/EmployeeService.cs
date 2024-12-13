@@ -31,7 +31,7 @@ namespace AuctionSemesterProject.Services
 
         public async Task UpdateEmployeeAsync(int id, Employee employee)
         {
-            await _employeeDAO.UpdateEmployeeAsync(id, employee);
+            await _employeeDAO.UpdateEmployeeAsync(employee);
         }
 
         public async Task DeleteEmployeeAsync(int id)

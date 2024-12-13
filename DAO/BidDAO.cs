@@ -1,8 +1,7 @@
 ﻿using AuctionSemesterProject.AuctionModels;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
-using System.Data;
-using System.Threading.Tasks;  // Add this for async/await support
+using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.DataAccess
 {
@@ -17,92 +16,147 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<List<Bid>> GetAllBidsAsync()
         {
-            List<Bid> bids = new List<Bid>();
+            var bids = new List<Bid>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                await connection.OpenAsync();  // Async open connection
-                SqlCommand command = new SqlCommand("SELECT * FROM Bid", connection);
-                SqlDataReader reader = await command.ExecuteReaderAsync();  // Async execute
+                await connection.OpenAsync();
+                var query = @"
+                    SELECT 
+                        B.Amount, B.MemberID_FK, M.FirstName, M.LastName, M.PhoneNo, M.Email,
+                        B.AuctionID_FK, A.StartPrice, A.CurrentHighestBid
+                    FROM Bid B
+                    LEFT JOIN Member M ON B.MemberID_FK = M.MemberID
+                    LEFT JOIN Auction A ON B.AuctionID_FK = A.AuctionID;
+                ";
 
-                while (await reader.ReadAsync())  // Async read
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    bids.Add(new Bid
+                    while (await reader.ReadAsync())
                     {
-                        Amount = reader.GetDecimal(0),
-                        MemberID_FK = reader.GetInt32(1),
-                        AuctionID_FK = reader.GetInt32(2)
-                    });
+                        bids.Add(new Bid
+                        {
+                            Amount = reader.GetDecimal(0),
+                            Member = new Member
+                            {
+                                MemberID = reader.GetInt32(1),
+                                FirstName = reader.GetString(2),
+                                LastName = reader.GetString(3),
+                                PhoneNo = reader.GetString(4),
+                                Email = reader.GetString(5)
+                            },
+                            Auction = new Auction
+                            {
+                                AuctionID = reader.GetInt32(6),
+                                StartPrice = reader.GetDecimal(7),
+                                CurrentHighestBid = reader.IsDBNull(8) ? null : reader.GetDecimal(8)
+                            }
+                        });
+                    }
                 }
             }
 
             return bids;
         }
 
-        public async Task<Bid?> GetBidByIdAsync(int id)
+        public async Task<Bid?> GetBidByIdAsync(int auctionId, int memberId)
         {
-            Bid? bid = null;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                await connection.OpenAsync();  // Async open connection
-                SqlCommand command = new SqlCommand("SELECT * FROM Bid WHERE auctionID_FK = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = await command.ExecuteReaderAsync();  // Async execute
+                await connection.OpenAsync();
+                var query = @"
+                    SELECT 
+                        B.Amount, B.MemberID_FK, M.FirstName, M.LastName, M.PhoneNo, M.Email,
+                        B.AuctionID_FK, A.StartPrice, A.CurrentHighestBid
+                    FROM Bid B
+                    LEFT JOIN Member M ON B.MemberID_FK = M.MemberID
+                    LEFT JOIN Auction A ON B.AuctionID_FK = A.AuctionID
+                    WHERE B.AuctionID_FK = @AuctionID_FK AND B.MemberID_FK = @MemberID_FK;
+                ";
 
-                if (await reader.ReadAsync())  // Async read
+                using (var command = new SqlCommand(query, connection))
                 {
-                    bid = new Bid
+                    command.Parameters.AddWithValue("@AuctionID_FK", auctionId);
+                    command.Parameters.AddWithValue("@MemberID_FK", memberId);
+
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        Amount = reader.GetDecimal(0),
-                        MemberID_FK = reader.GetInt32(1),
-                        AuctionID_FK = reader.GetInt32(2)
-                    };
+                        if (await reader.ReadAsync())
+                        {
+                            return new Bid
+                            {
+                                Amount = reader.GetDecimal(0),
+                                Member = new Member
+                                {
+                                    MemberID = reader.GetInt32(1),
+                                    FirstName = reader.GetString(2),
+                                    LastName = reader.GetString(3),
+                                    PhoneNo = reader.GetString(4),
+                                    Email = reader.GetString(5)
+                                },
+                                Auction = new Auction
+                                {
+                                    AuctionID = reader.GetInt32(6),
+                                    StartPrice = reader.GetDecimal(7),
+                                    CurrentHighestBid = reader.IsDBNull(8) ? null : reader.GetDecimal(8)
+                                }
+                            };
+                        }
+                    }
                 }
             }
 
-            return bid;
+            return null;
         }
 
-        public async Task CreateBidAsync(decimal newBid, int auctionID, int memberID)
+        public async Task CreateBidAsync(Bid bid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                await connection.OpenAsync();  // Async open connection
-                SqlCommand command = new SqlCommand("PlaceBid", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                await connection.OpenAsync();
+                var query = "INSERT INTO Bid (Amount, MemberID_FK, AuctionID_FK) VALUES (@Amount, @MemberID_FK, @AuctionID_FK);";
 
-                command.Parameters.AddWithValue("@newBid", newBid);
-                command.Parameters.AddWithValue("@auctionID", auctionID);
-                command.Parameters.AddWithValue("@memberID", memberID);
-
-                await command.ExecuteNonQueryAsync();  // Async execute
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Amount", bid.Amount);
+                    command.Parameters.AddWithValue("@MemberID_FK", bid.Member.MemberID);
+                    command.Parameters.AddWithValue("@AuctionID_FK", bid.Auction.AuctionID);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
-        public async Task UpdateBidAsync(int id, Bid bid)
+        public async Task UpdateBidAsync(Bid bid)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                await connection.OpenAsync();  // Async open connection
-                SqlCommand command = new SqlCommand("UPDATE Bid SET amount = @amount, memberID_FK = @memberID_FK WHERE auctionID_FK = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@amount", bid.Amount);
-                command.Parameters.AddWithValue("@memberID_FK", bid.MemberID_FK);
+                await connection.OpenAsync();
+                var query = "UPDATE Bid SET Amount = @Amount WHERE MemberID_FK = @MemberID_FK AND AuctionID_FK = @AuctionID_FK;";
 
-                await command.ExecuteNonQueryAsync();  // Async execute
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Amount", bid.Amount);
+                    command.Parameters.AddWithValue("@MemberID_FK", bid.Member.MemberID);
+                    command.Parameters.AddWithValue("@AuctionID_FK", bid.Auction.AuctionID);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
-        public async Task DeleteBidAsync(int id)
+        public async Task DeleteBidAsync(int auctionId, int memberId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                await connection.OpenAsync();  // Async open connection
-                SqlCommand command = new SqlCommand("DELETE FROM Bid WHERE auctionID_FK = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
+                await connection.OpenAsync();
+                var query = "DELETE FROM Bid WHERE AuctionID_FK = @AuctionID_FK AND MemberID_FK = @MemberID_FK;";
 
-                await command.ExecuteNonQueryAsync();  // Async execute
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@AuctionID_FK", auctionId);
+                    command.Parameters.AddWithValue("@MemberID_FK", memberId);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
     }
