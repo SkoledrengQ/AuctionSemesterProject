@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Security.Cryptography.X509Certificates;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WinFormsApp
 {
@@ -75,6 +77,11 @@ namespace WinFormsApp
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+            // Get the value from the DateTimePicker
+            DateTime selectedDateTime = dateTimePicker1.Value;
+
+            // Get only the time part of the selected DateTime
+            TimeSpan time = selectedDateTime.TimeOfDay; 
 
         }
 
@@ -154,6 +161,15 @@ namespace WinFormsApp
             Debug.WriteLine("checkBoxBook_CheckedChanged triggered");
             Debug.WriteLine($"checkBoxBook.Checked: {checkBoxBook.Checked}");
             domainUpDown1_SelectedItemChanged(sender, e);
+
+            if (checkBoxBook.Checked)
+            {
+
+                checkBoxManga.Checked = false;
+                checkBoxComic.Checked = false;
+            }
+
+
         }
 
         private void checkBoxManga_CheckedChanged(object sender, EventArgs e)
@@ -161,6 +177,14 @@ namespace WinFormsApp
             Debug.WriteLine("checkBoxManga_CheckedChanged triggered");
             Debug.WriteLine($"checkBoxManga.Checked: {checkBoxManga.Checked}");
             domainUpDown1_SelectedItemChanged(sender, e);
+
+            if (checkBoxManga.Checked)
+            {
+
+                checkBoxBook.Checked = false;
+                checkBoxComic.Checked = false;
+            }
+
         }
 
         private void checkBoxComic_CheckedChanged(object sender, EventArgs e)
@@ -168,6 +192,54 @@ namespace WinFormsApp
             Debug.WriteLine("checkBoxComic_CheckedChanged triggered");
             Debug.WriteLine($"checkBoxComic.Checked: {checkBoxComic.Checked}");
             domainUpDown1_SelectedItemChanged(sender, e);
+
+            if (checkBoxComic.Checked)
+            {
+
+                checkBoxManga.Checked = false;
+                checkBoxBook.Checked = false;
+            }
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            string textrichTextBox1 = textBox1.Text;
+            listBox1.Items.Add(textrichTextBox1);
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+            string textTitle = textBox1.Text;
+            listBox1.Items.Add(textTitle);
+            textBox1.Clear();
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e, string text, string textTitle,string textSizeOfBook, string DomainUpDown, string textrichTextBox1)
+        {
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+
+                listBox1.Items.Add(DomainUpDown);
+                listBox1.Items.Add(text);
+                listBox1.Items.Add(textTitle);
+                listBox1.Items.Add(textSizeOfBook);
+                listBox1.Items.Add(textrichTextBox1);
+            }
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+            string textReleaseDate = textBox1.Text;
+            listBox1.Items.Add(textReleaseDate);
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            string textSizeOfBook = textBox1.Text;
+            listBox1.Items.Add(textSizeOfBook);
         }
     }
 }

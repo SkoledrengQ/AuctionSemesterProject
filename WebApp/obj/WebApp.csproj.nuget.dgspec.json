@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WebApp\\WebApp.csproj": {}
+    "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj": {
+    "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj",
+        "projectUniqueName": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj",
-        "packagesPath": "C:\\Users\\morte\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\obj\\",
+        "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj",
+        "packagesPath": "C:\\Users\\dehns\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\morte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dehns\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,20 +26,21 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj"
+              "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj"
               },
-              "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
-                "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
+              "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
+                "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
               },
-              "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": {
-                "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj"
+              "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": {
+                "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj"
               }
             }
           }
@@ -91,24 +92,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
+    "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\morte\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\obj\\",
+        "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj",
+        "packagesPath": "C:\\Users\\dehns\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\morte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dehns\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -117,14 +118,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
-                "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
+              "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
+                "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
               }
             }
           }
@@ -165,24 +167,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
+    "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj",
+        "projectUniqueName": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj",
         "projectName": "AuctionModels",
-        "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj",
-        "packagesPath": "C:\\Users\\morte\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\obj\\",
+        "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj",
+        "packagesPath": "C:\\Users\\dehns\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\morte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dehns\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -191,6 +193,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -235,24 +238,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": {
+    "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj",
+        "projectUniqueName": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj",
         "projectName": "Services",
-        "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj",
-        "packagesPath": "C:\\Users\\morte\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\obj\\",
+        "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj",
+        "packagesPath": "C:\\Users\\dehns\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\morte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dehns\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -261,14 +264,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj"
+              "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj"
               }
             }
           }
@@ -309,24 +313,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WebApp\\WebApp.csproj": {
+    "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\WebApp\\WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WebApp\\WebApp.csproj",
+        "projectUniqueName": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\WebApp\\WebApp.csproj",
         "projectName": "WebApp",
-        "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WebApp\\WebApp.csproj",
-        "packagesPath": "C:\\Users\\morte\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\WebApp\\obj\\",
+        "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\WebApp\\WebApp.csproj",
+        "packagesPath": "C:\\Users\\dehns\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\morte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dehns\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -335,23 +339,24 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj": {
-                "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj"
+              "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj": {
+                "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\AuctionWebApp\\API.csproj"
               },
-              "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj"
+              "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\DAO\\DataAccess.csproj"
               },
-              "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
-                "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
+              "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
+                "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
               },
-              "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": {
-                "projectPath": "C:\\Users\\morte\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj"
+              "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": {
+                "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj"
               }
             }
           }
@@ -395,7 +400,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
