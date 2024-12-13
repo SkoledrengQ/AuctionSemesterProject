@@ -1,4 +1,5 @@
-﻿namespace WinFormsApp
+﻿
+namespace WinFormsApp
 {
     partial class Form2
     {
@@ -54,31 +55,31 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // checkBox1
+            // checkBoxBook
             // 
             checkBoxBook.AutoSize = true;
             checkBoxBook.Location = new Point(19, 47);
-            checkBoxBook.Name = "checkBox1";
+            checkBoxBook.Name = "checkBoxBook";
             checkBoxBook.Size = new Size(83, 19);
             checkBoxBook.TabIndex = 1;
             checkBoxBook.Text = "checkBox1";
             checkBoxBook.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // checkBoxManga
             // 
             checkBoxManga.AutoSize = true;
             checkBoxManga.Location = new Point(19, 87);
-            checkBoxManga.Name = "checkBox2";
+            checkBoxManga.Name = "checkBoxManga";
             checkBoxManga.Size = new Size(83, 19);
             checkBoxManga.TabIndex = 2;
             checkBoxManga.Text = "checkBox2";
             checkBoxManga.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // checkBoxComic
             // 
             checkBoxComic.AutoSize = true;
             checkBoxComic.Location = new Point(19, 128);
-            checkBoxComic.Name = "checkBox3";
+            checkBoxComic.Name = "checkBoxComic";
             checkBoxComic.Size = new Size(83, 19);
             checkBoxComic.TabIndex = 3;
             checkBoxComic.Text = "checkBox3";
@@ -100,6 +101,7 @@
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(120, 94);
             listBox1.TabIndex = 6;
+            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
             // button1
             // 
@@ -143,6 +145,7 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(120, 23);
             textBox3.TabIndex = 11;
+            textBox3.TextChanged += textBox3_TextChanged;
             // 
             // label4
             // 
@@ -204,6 +207,7 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(100, 23);
             textBox2.TabIndex = 19;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // label8
             // 
@@ -221,6 +225,7 @@
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(100, 23);
             textBox4.TabIndex = 21;
+            textBox4.TextChanged += textBox4_TextChanged;
             // 
             // label9
             // 
@@ -248,15 +253,16 @@
             richTextBox1.Size = new Size(322, 248);
             richTextBox1.TabIndex = 24;
             richTextBox1.Text = "";
+            richTextBox1.TextChanged += richTextBox1_TextChanged;
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Location = new Point(175, 9);
             label11.Name = "label11";
-            label11.Size = new Size(58, 15);
+            label11.Size = new Size(99, 15);
             label11.TabIndex = 25;
-            label11.Text = "Summary";
+            label11.Text = "Summary of Item";
             label11.Click += label11_Click;
             // 
             // Form2
@@ -292,6 +298,11 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
