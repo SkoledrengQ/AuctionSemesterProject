@@ -111,6 +111,7 @@ namespace WinFormsApp
             button1.TabIndex = 7;
             button1.Text = "push auction";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // label1
             // 

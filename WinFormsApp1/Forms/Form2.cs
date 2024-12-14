@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography.X509Certificates;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Net.Mime.MediaTypeNames;
+using Timer = System.Windows.Forms.Timer;
 
 namespace WinFormsApp
 {
@@ -19,6 +20,8 @@ namespace WinFormsApp
         private readonly List<string> BookGenre;
 
         private readonly List<string> ComicGenre;
+
+        public EventHandler Tick { get; private set; }
 
         public Form2()
         {
@@ -81,7 +84,7 @@ namespace WinFormsApp
             DateTime selectedDateTime = dateTimePicker1.Value;
 
             // Get only the time part of the selected DateTime
-            TimeSpan time = selectedDateTime.TimeOfDay; 
+            TimeSpan time = selectedDateTime.TimeOfDay;
 
         }
 
@@ -216,17 +219,42 @@ namespace WinFormsApp
 
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e, string text, string textTitle,string textSizeOfBook, string DomainUpDown, string textrichTextBox1)
+       
+
+       
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e, string text, string textTitle, string textSizeOfBook, string DomainUpDown, string textrichTextBox1)
         {
             if (!string.IsNullOrWhiteSpace(text))
             {
-
+               
                 listBox1.Items.Add(DomainUpDown);
                 listBox1.Items.Add(text);
                 listBox1.Items.Add(textTitle);
                 listBox1.Items.Add(textSizeOfBook);
                 listBox1.Items.Add(textrichTextBox1);
+
+
+
+                Timer timer = new Timer()
+                {
+                    Interval = 2000,
+                   
+                };
+                timer.Start();
             }
+             
+          
+          
+
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+          
+           listBox1.GetItemText("Item " + (listBox1.SelectedItems));
+            listBox1.DataSource = null;
+            listBox1.DataSource = listBox1.Items;
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
@@ -240,6 +268,11 @@ namespace WinFormsApp
         {
             string textSizeOfBook = textBox1.Text;
             listBox1.Items.Add(textSizeOfBook);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }
