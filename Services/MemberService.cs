@@ -1,5 +1,4 @@
-﻿// Services/MemberService.cs
-using AuctionSemesterProject.AuctionModels;
+﻿using AuctionSemesterProject.AuctionModels;
 using AuctionSemesterProject.DataAccess;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,7 +31,7 @@ namespace AuctionSemesterProject.Services
 
         public async Task UpdateMemberAsync(int id, Member member)
         {
-            await _memberDAO.UpdateMemberAsync(id, member);
+            await _memberDAO.UpdateMemberAsync(member);
         }
 
         public async Task DeleteMemberAsync(int id)

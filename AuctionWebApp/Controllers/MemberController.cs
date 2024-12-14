@@ -1,5 +1,5 @@
-﻿using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.Services;
+﻿using AuctionSemesterProject.Services;
+using AuctionSemesterProject.AuctionModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,47 +16,40 @@ namespace AuctionSemesterProject.Controllers
             _memberService = memberService;
         }
 
-        // GET: api/Member
         [HttpGet]
-        public async Task<IActionResult> GetAllMembers()
+        public async Task<IActionResult> GetAll()
         {
             var members = await _memberService.GetAllMembersAsync();
             return Ok(members);
         }
 
-        // GET: api/Member/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMemberById(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var member = await _memberService.GetMemberByIdAsync(id);
-            if (member == null)
-                return NotFound();
-
+            if (member == null) return NotFound();
             return Ok(member);
         }
 
-        // POST: api/Member
         [HttpPost]
-        public async Task<IActionResult> CreateMember([FromBody] Member member)
+        public async Task<IActionResult> Create(Member member)
         {
             await _memberService.CreateMemberAsync(member);
-            return CreatedAtAction(nameof(GetMemberById), new { id = member.MemberID }, member);
+            return Ok();
         }
 
-        // PUT: api/Member/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMember(int id, [FromBody] Member member)
+        public async Task<IActionResult> Update(int id, Member member)
         {
             await _memberService.UpdateMemberAsync(id, member);
-            return NoContent();
+            return Ok();
         }
 
-        // DELETE: api/Member/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMember(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _memberService.DeleteMemberAsync(id);
-            return NoContent();
+            return Ok();
         }
     }
 }

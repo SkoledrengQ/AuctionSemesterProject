@@ -1,5 +1,4 @@
-﻿// Services/AuctionService.cs
-using AuctionSemesterProject.AuctionModels;
+﻿using AuctionSemesterProject.AuctionModels;
 using AuctionSemesterProject.DataAccess;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,19 +24,19 @@ namespace AuctionSemesterProject.Services
             return await _auctionDAO.GetAuctionByIdAsync(id);
         }
 
-        public async Task CreateAuctionAsync(Auction auction)
+        public async Task<bool> UpdateAuctionAsync(int id, Auction updatedAuction)
         {
-            await _auctionDAO.CreateAuctionAsync(auction);
-        }
+            var existingAuction = await _auctionDAO.GetAuctionByIdAsync(id);
+            if (existingAuction == null)
+            {
+                return false; // Auction does not exist
+            }
 
-        public async Task UpdateAuctionAsync(int id, Auction auction)
-        {
-            await _auctionDAO.UpdateAuctionAsync(id, auction);
-        }
+            // Update the LastUpdated field directly here
+            updatedAuction.LastUpdated = DateTime.UtcNow;
 
-        public async Task DeleteAuctionAsync(int id)
-        {
-            await _auctionDAO.DeleteAuctionAsync(id);
+            // Validate and update the auction, now without the originalLastUpdated parameter
+            return await _auctionDAO.UpdateAuctionWithConcurrencyCheckAsync(updatedAuction);
         }
     }
 }

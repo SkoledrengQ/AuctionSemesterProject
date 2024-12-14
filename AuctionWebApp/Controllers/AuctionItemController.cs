@@ -1,7 +1,6 @@
-﻿using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.Services;
+﻿using AuctionSemesterProject.Services;
+using AuctionSemesterProject.AuctionModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.Controllers
@@ -17,47 +16,40 @@ namespace AuctionSemesterProject.Controllers
             _auctionItemService = auctionItemService;
         }
 
-        // GET: api/AuctionItem
         [HttpGet]
-        public async Task<IActionResult> GetAllAuctionItems()
+        public async Task<IActionResult> GetAll()
         {
-            List<AuctionItem> items = await _auctionItemService.GetAllAuctionItemsAsync();
+            var items = await _auctionItemService.GetAllAuctionItemsAsync();
             return Ok(items);
         }
 
-        // GET: api/AuctionItem/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAuctionItemById(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            AuctionItem? item = await _auctionItemService.GetAuctionItemByIdAsync(id);
-            if (item == null)
-                return NotFound();
-
+            var item = await _auctionItemService.GetAuctionItemByIdAsync(id);
+            if (item == null) return NotFound();
             return Ok(item);
         }
 
-        // POST: api/AuctionItem
         [HttpPost]
-        public async Task<IActionResult> CreateAuctionItem([FromBody] AuctionItem auctionItem)
+        public async Task<IActionResult> Create(AuctionItem item)
         {
-            await _auctionItemService.CreateAuctionItemAsync(auctionItem);
-            return CreatedAtAction(nameof(GetAuctionItemById), new { id = auctionItem.ItemID }, auctionItem);
+            await _auctionItemService.CreateAuctionItemAsync(item);
+            return Ok();
         }
 
-        // PUT: api/AuctionItem/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAuctionItem(int id, [FromBody] AuctionItem auctionItem)
+        public async Task<IActionResult> Update(int id, AuctionItem item)
         {
-            await _auctionItemService.UpdateAuctionItemAsync(id, auctionItem);
-            return NoContent();
+            await _auctionItemService.UpdateAuctionItemAsync(id, item);
+            return Ok();
         }
 
-        // DELETE: api/AuctionItem/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAuctionItem(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _auctionItemService.DeleteAuctionItemAsync(id);
-            return NoContent();
+            return Ok();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using AuctionSemesterProject.AuctionModels;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.DataAccess
@@ -17,29 +17,52 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<List<Auction>> GetAllAuctionsAsync()
         {
-            List<Auction> auctions = new List<Auction>();
+            var auctions = new List<Auction>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT * FROM Auction", connection);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
+                var query = @"
+                    SELECT 
+                        A.AuctionID, A.StartPrice, A.MinBid, A.EndingBid, A.CurrentHighestBid,
+                        A.BuyNowPrice, A.NoOfBids, A.TimeExtension, A.LastUpdated,
+                        E.EmployeeID, E.FirstName, E.LastName,
+                        I.ItemID, I.Title, I.Author
+                    FROM Auction A
+                    LEFT JOIN Employee E ON A.EmployeeID_FK = E.EmployeeID
+                    LEFT JOIN AuctionItem I ON A.ItemID_FK = I.ItemID;
+                ";
 
-                while (await reader.ReadAsync())
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    auctions.Add(new Auction
+                    while (await reader.ReadAsync())
                     {
-                        AuctionID = reader.GetInt32(0),
-                        StartPrice = reader.GetDecimal(1),
-                        MinBid = reader.GetDecimal(2),
-                        EndingBid = reader.GetDecimal(3),
-                        CurrentHighestBid = reader.GetDecimal(4),
-                        BuyNowPrice = reader.GetDecimal(5),
-                        NoOfBids = reader.GetInt32(6),
-                        TimeExtension = reader.GetString(7),
-                        EmployeeID_FK = reader.GetInt32(8),
-                        ItemID_FK = reader.GetInt32(9)
-                    });
+                        auctions.Add(new Auction
+                        {
+                            AuctionID = reader.GetInt32(0),
+                            StartPrice = reader.GetDecimal(1),
+                            MinBid = reader.GetDecimal(2),
+                            EndingBid = reader.IsDBNull(3) ? null : reader.GetDecimal(3),
+                            CurrentHighestBid = reader.IsDBNull(4) ? null : reader.GetDecimal(4),
+                            BuyNowPrice = reader.IsDBNull(5) ? null : reader.GetDecimal(5),
+                            NoOfBids = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
+                            TimeExtension = reader.IsDBNull(7) ? null : reader.GetString(7),
+                            LastUpdated = reader.GetDateTime(8),
+                            Employee = new Employee
+                            {
+                                EmployeeID = reader.GetInt32(9),
+                                FirstName = reader.GetString(10),
+                                LastName = reader.GetString(11),
+                            },
+                            AuctionItem = new AuctionItem
+                            {
+                                ItemID = reader.GetInt32(12),
+                                Title = reader.GetString(13),
+                                Author = reader.GetString(14),
+                            }
+                        });
+                    }
                 }
             }
 
@@ -48,97 +71,124 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<Auction?> GetAuctionByIdAsync(int id)
         {
-            Auction? auction = null;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT * FROM Auction WHERE auctionID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
+                var query = @"
+                    SELECT 
+                        A.AuctionID, A.StartPrice, A.MinBid, A.EndingBid, A.CurrentHighestBid,
+                        A.BuyNowPrice, A.NoOfBids, A.TimeExtension, A.LastUpdated,
+                        E.EmployeeID, E.FirstName, E.LastName,
+                        I.ItemID, I.Title, I.Author
+                    FROM Auction A
+                    LEFT JOIN Employee E ON A.EmployeeID_FK = E.EmployeeID
+                    LEFT JOIN AuctionItem I ON A.ItemID_FK = I.ItemID
+                    WHERE A.AuctionID = @AuctionID;
+                ";
 
-                if (await reader.ReadAsync())
+                using (var command = new SqlCommand(query, connection))
                 {
-                    auction = new Auction
+                    command.Parameters.AddWithValue("@AuctionID", id);
+
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        AuctionID = reader.GetInt32(0),
-                        StartPrice = reader.GetDecimal(1),
-                        MinBid = reader.GetDecimal(2),
-                        EndingBid = reader.GetDecimal(3),
-                        CurrentHighestBid = reader.GetDecimal(4),
-                        BuyNowPrice = reader.GetDecimal(5),
-                        NoOfBids = reader.GetInt32(6),
-                        TimeExtension = reader.GetString(7),
-                        EmployeeID_FK = reader.GetInt32(8),
-                        ItemID_FK = reader.GetInt32(9)
-                    };
+                        if (await reader.ReadAsync())
+                        {
+                            return new Auction
+                            {
+                                AuctionID = reader.GetInt32(0),
+                                StartPrice = reader.GetDecimal(1),
+                                MinBid = reader.GetDecimal(2),
+                                EndingBid = reader.IsDBNull(3) ? null : reader.GetDecimal(3),
+                                CurrentHighestBid = reader.IsDBNull(4) ? null : reader.GetDecimal(4),
+                                BuyNowPrice = reader.IsDBNull(5) ? null : reader.GetDecimal(5),
+                                NoOfBids = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
+                                TimeExtension = reader.IsDBNull(7) ? null : reader.GetString(7),
+                                LastUpdated = reader.GetDateTime(8),
+                                Employee = new Employee
+                                {
+                                    EmployeeID = reader.GetInt32(9),
+                                    FirstName = reader.GetString(10),
+                                    LastName = reader.GetString(11),
+                                },
+                                AuctionItem = new AuctionItem
+                                {
+                                    ItemID = reader.GetInt32(12),
+                                    Title = reader.GetString(13),
+                                    Author = reader.GetString(14),
+                                }
+                            };
+                        }
+                    }
                 }
             }
 
-            return auction;
+            return null;
         }
 
         public async Task CreateAuctionAsync(Auction auction)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(
-                    "INSERT INTO Auction (startPrice, minBid, endingBid, currentHighestBid, buyNowPrice, noOfBids, timeExtension, employeeID_FK, itemID_FK) " +
-                    "VALUES (@startPrice, @minBid, @endingBid, @currentHighestBid, @buyNowPrice, @noOfBids, @timeExtension, @employeeID_FK, @itemID_FK)",
-                    connection
-                );
+                var query = @"
+                    INSERT INTO Auction (StartPrice, MinBid, EndingBid, CurrentHighestBid, BuyNowPrice, NoOfBids, TimeExtension, EmployeeID_FK, ItemID_FK, LastUpdated)
+                    VALUES (@StartPrice, @MinBid, @EndingBid, @CurrentHighestBid, @BuyNowPrice, @NoOfBids, @TimeExtension, @EmployeeID_FK, @ItemID_FK, @LastUpdated);
+                ";
 
-                command.Parameters.AddWithValue("@startPrice", auction.StartPrice);
-                command.Parameters.AddWithValue("@minBid", auction.MinBid);
-                command.Parameters.AddWithValue("@endingBid", auction.EndingBid);
-                command.Parameters.AddWithValue("@currentHighestBid", auction.CurrentHighestBid);
-                command.Parameters.AddWithValue("@buyNowPrice", auction.BuyNowPrice);
-                command.Parameters.AddWithValue("@noOfBids", auction.NoOfBids);
-                command.Parameters.AddWithValue("@timeExtension", auction.TimeExtension);
-                command.Parameters.AddWithValue("@employeeID_FK", auction.EmployeeID_FK);
-                command.Parameters.AddWithValue("@itemID_FK", auction.ItemID_FK);
-
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@StartPrice", auction.StartPrice);
+                    command.Parameters.AddWithValue("@MinBid", auction.MinBid);
+                    command.Parameters.AddWithValue("@EndingBid", auction.EndingBid ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@CurrentHighestBid", auction.CurrentHighestBid ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@BuyNowPrice", auction.BuyNowPrice ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@NoOfBids", auction.NoOfBids);
+                    command.Parameters.AddWithValue("@TimeExtension", auction.TimeExtension ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@EmployeeID_FK", auction.Employee.EmployeeID);
+                    command.Parameters.AddWithValue("@ItemID_FK", auction.AuctionItem.ItemID);
+                    command.Parameters.AddWithValue("@LastUpdated", auction.LastUpdated);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
-        public async Task UpdateAuctionAsync(int id, Auction auction)
+        public async Task<bool> UpdateAuctionWithConcurrencyCheckAsync(Auction auction)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(
-                    "UPDATE Auction SET startPrice = @startPrice, minBid = @minBid, endingBid = @endingBid, currentHighestBid = @currentHighestBid, " +
-                    "buyNowPrice = @buyNowPrice, noOfBids = @noOfBids, timeExtension = @timeExtension, employeeID_FK = @employeeID_FK, itemID_FK = @itemID_FK " +
-                    "WHERE auctionID = @id",
-                    connection
-                );
+                var query = @"
+                    UPDATE Auction
+                    SET CurrentHighestBid = @CurrentHighestBid, LastUpdated = @LastUpdated
+                    WHERE AuctionID = @AuctionID AND LastUpdated = @OriginalLastUpdated;
+                ";
 
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@startPrice", auction.StartPrice);
-                command.Parameters.AddWithValue("@minBid", auction.MinBid);
-                command.Parameters.AddWithValue("@endingBid", auction.EndingBid);
-                command.Parameters.AddWithValue("@currentHighestBid", auction.CurrentHighestBid);
-                command.Parameters.AddWithValue("@buyNowPrice", auction.BuyNowPrice);
-                command.Parameters.AddWithValue("@noOfBids", auction.NoOfBids);
-                command.Parameters.AddWithValue("@timeExtension", auction.TimeExtension);
-                command.Parameters.AddWithValue("@employeeID_FK", auction.EmployeeID_FK);
-                command.Parameters.AddWithValue("@itemID_FK", auction.ItemID_FK);
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@CurrentHighestBid", auction.CurrentHighestBid ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@LastUpdated", DateTime.UtcNow);
+                    command.Parameters.AddWithValue("@AuctionID", auction.AuctionID);
+                    command.Parameters.AddWithValue("@OriginalLastUpdated", auction.LastUpdated);
 
-                await command.ExecuteNonQueryAsync();
+                    var rowsAffected = await command.ExecuteNonQueryAsync();
+                    return rowsAffected > 0; // Ensure the row was updated
+                }
             }
         }
 
         public async Task DeleteAuctionAsync(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("DELETE FROM Auction WHERE auctionID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
+                var query = "DELETE FROM Auction WHERE AuctionID = @AuctionID;";
 
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@AuctionID", id);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
     }

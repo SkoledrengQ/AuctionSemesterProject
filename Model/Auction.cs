@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace AuctionSemesterProject.AuctionModels;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace AuctionSemesterProject.AuctionModels;
+using System.ComponentModel.DataAnnotations;
+
 public class Auction
 {
     [Key]
@@ -39,4 +40,6 @@ public class Auction
 
     [ForeignKey(nameof(ItemID_FK))]
     public virtual AuctionItem? AuctionItem { get; set; }
+
+    public DateTime LastUpdated { get; set; } 
 }

@@ -16,26 +16,29 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<List<AuctionItem>> GetAllAuctionItemsAsync()
         {
-            List<AuctionItem> items = new List<AuctionItem>();
+            var items = new List<AuctionItem>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT * FROM AuctionItem", connection);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
+                var query = "SELECT * FROM AuctionItem;";
 
-                while (await reader.ReadAsync())
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    items.Add(new AuctionItem
+                    while (await reader.ReadAsync())
                     {
-                        ItemID = reader.GetInt32(0),
-                        Title = reader.GetString(1),
-                        ReleaseDate = reader.GetDateTime(2),
-                        Author = reader.GetString(3),
-                        Genre = reader.GetString(4),
-                        Description = reader.GetString(5),
-                        ItemType = reader.GetString(6)
-                    });
+                        items.Add(new AuctionItem
+                        {
+                            ItemID = reader.GetInt32(0),
+                            Title = reader.GetString(1),
+                            ReleaseDate = reader.IsDBNull(2) ? null : reader.GetDateTime(2),
+                            Author = reader.GetString(3),
+                            Genre = reader.GetString(4),
+                            Description = reader.GetString(5),
+                            ItemType = reader.GetString(6)
+                        });
+                    }
                 }
             }
 
@@ -44,87 +47,90 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<AuctionItem?> GetAuctionItemByIdAsync(int id)
         {
-            AuctionItem? item = null;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT * FROM AuctionItem WHERE itemID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
+                var query = "SELECT * FROM AuctionItem WHERE ItemID = @ItemID;";
 
-                if (await reader.ReadAsync())
+                using (var command = new SqlCommand(query, connection))
                 {
-                    item = new AuctionItem
+                    command.Parameters.AddWithValue("@ItemID", id);
+
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        ItemID = reader.GetInt32(0),
-                        Title = reader.GetString(1),
-                        ReleaseDate = reader.GetDateTime(2),
-                        Author = reader.GetString(3),
-                        Genre = reader.GetString(4),
-                        Description = reader.GetString(5),
-                        ItemType = reader.GetString(6)
-                    };
+                        if (await reader.ReadAsync())
+                        {
+                            return new AuctionItem
+                            {
+                                ItemID = reader.GetInt32(0),
+                                Title = reader.GetString(1),
+                                ReleaseDate = reader.IsDBNull(2) ? null : reader.GetDateTime(2),
+                                Author = reader.GetString(3),
+                                Genre = reader.GetString(4),
+                                Description = reader.GetString(5),
+                                ItemType = reader.GetString(6)
+                            };
+                        }
+                    }
                 }
             }
 
-            return item;
+            return null;
         }
 
         public async Task CreateAuctionItemAsync(AuctionItem item)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(
-                    "INSERT INTO AuctionItem (title, releaseDate, author, genre, description, itemType) " +
-                    "VALUES (@title, @releaseDate, @author, @genre, @description, @itemType)",
-                    connection
-                );
+                var query = "INSERT INTO AuctionItem (Title, ReleaseDate, Author, Genre, Description, ItemType) VALUES (@Title, @ReleaseDate, @Author, @Genre, @Description, @ItemType);";
 
-                command.Parameters.AddWithValue("@title", item.Title);
-                command.Parameters.AddWithValue("@releaseDate", item.ReleaseDate);
-                command.Parameters.AddWithValue("@author", item.Author);
-                command.Parameters.AddWithValue("@genre", item.Genre);
-                command.Parameters.AddWithValue("@description", item.Description);
-                command.Parameters.AddWithValue("@itemType", item.ItemType);
-
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Title", item.Title);
+                    command.Parameters.AddWithValue("@ReleaseDate", item.ReleaseDate ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Author", item.Author);
+                    command.Parameters.AddWithValue("@Genre", item.Genre);
+                    command.Parameters.AddWithValue("@Description", item.Description);
+                    command.Parameters.AddWithValue("@ItemType", item.ItemType);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
-        public async Task UpdateAuctionItemAsync(int id, AuctionItem item)
+        public async Task UpdateAuctionItemAsync(AuctionItem item)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(
-                    "UPDATE AuctionItem SET title = @title, releaseDate = @releaseDate, author = @author, genre = @genre, " +
-                    "description = @description, itemType = @itemType WHERE itemID = @id",
-                    connection
-                );
+                var query = "UPDATE AuctionItem SET Title = @Title, ReleaseDate = @ReleaseDate, Author = @Author, Genre = @Genre, Description = @Description, ItemType = @ItemType WHERE ItemID = @ItemID;";
 
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@title", item.Title);
-                command.Parameters.AddWithValue("@releaseDate", item.ReleaseDate);
-                command.Parameters.AddWithValue("@author", item.Author);
-                command.Parameters.AddWithValue("@genre", item.Genre);
-                command.Parameters.AddWithValue("@description", item.Description);
-                command.Parameters.AddWithValue("@itemType", item.ItemType);
-
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Title", item.Title);
+                    command.Parameters.AddWithValue("@ReleaseDate", item.ReleaseDate ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Author", item.Author);
+                    command.Parameters.AddWithValue("@Genre", item.Genre);
+                    command.Parameters.AddWithValue("@Description", item.Description);
+                    command.Parameters.AddWithValue("@ItemType", item.ItemType);
+                    command.Parameters.AddWithValue("@ItemID", item.ItemID);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
         public async Task DeleteAuctionItemAsync(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("DELETE FROM AuctionItem WHERE itemID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
+                var query = "DELETE FROM AuctionItem WHERE ItemID = @ItemID;";
 
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ItemID", id);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
     }

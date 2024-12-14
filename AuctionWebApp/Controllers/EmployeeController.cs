@@ -1,7 +1,6 @@
-﻿using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.Services;
+﻿using AuctionSemesterProject.Services;
+using AuctionSemesterProject.AuctionModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.Controllers
@@ -18,41 +17,39 @@ namespace AuctionSemesterProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllEmployees()
+        public async Task<IActionResult> GetAll()
         {
-            List<Employee> employees = await _employeeService.GetAllEmployeesAsync();
+            var employees = await _employeeService.GetAllEmployeesAsync();
             return Ok(employees);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployeeById(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            Employee? employee = await _employeeService.GetEmployeeByIdAsync(id);
-            if (employee == null)
-                return NotFound();
-
+            var employee = await _employeeService.GetEmployeeByIdAsync(id);
+            if (employee == null) return NotFound();
             return Ok(employee);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> Create(Employee employee)
         {
             await _employeeService.CreateEmployeeAsync(employee);
-            return CreatedAtAction(nameof(GetEmployeeById), new { id = employee.EmployeeID }, employee);
+            return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployee(int id, [FromBody] Employee employee)
+        public async Task<IActionResult> Update(int id, Employee employee)
         {
             await _employeeService.UpdateEmployeeAsync(id, employee);
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _employeeService.DeleteEmployeeAsync(id);
-            return NoContent();
+            return Ok();
         }
     }
 }

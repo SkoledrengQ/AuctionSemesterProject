@@ -1,7 +1,5 @@
-﻿using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.Services;
+﻿using AuctionSemesterProject.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.Controllers
@@ -17,42 +15,37 @@ namespace AuctionSemesterProject.Controllers
             _bidService = bidService;
         }
 
+        [HttpPost("PlaceBid")]
+        public async Task<IActionResult> PlaceBid([FromForm] int auctionId, [FromForm] int memberId, [FromForm] decimal amount)
+        {
+            var result = await _bidService.PlaceBidAsync(auctionId, memberId, amount);
+
+            if (!result.Success)
+            {
+                if (result.Conflict)
+                {
+                    return Conflict("The auction was updated by another user. Please refresh and try again.");
+                }
+
+                return BadRequest(result.ErrorMessage);
+            }
+
+            return Ok("Your bid has been placed successfully!");
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllBids()
         {
-            List<Bid> bids = await _bidService.GetAllBidsAsync();
+            var bids = await _bidService.GetAllBidsAsync();
             return Ok(bids);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetBidById(int id)
+        [HttpGet("{auctionId}/{memberId}")]
+        public async Task<IActionResult> GetBid(int auctionId, int memberId)
         {
-            Bid? bid = await _bidService.GetBidByIdAsync(id);
-            if (bid == null)
-                return NotFound();
-
+            var bid = await _bidService.GetBidByIdAsync(auctionId, memberId);
+            if (bid == null) return NotFound();
             return Ok(bid);
-        }
-
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateBid(decimal newBid, int auctionID, int memberID)
-        {
-            await _bidService.CreateBidAsync(newBid, auctionID, memberID);
-            return Ok(new { Message = "Bid placed successfully!" });
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBid(int id, [FromBody] Bid bid)
-        {
-            await _bidService.UpdateBidAsync(id, bid);
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBid(int id)
-        {
-            await _bidService.DeleteBidAsync(id);
-            return NoContent();
         }
     }
 }
