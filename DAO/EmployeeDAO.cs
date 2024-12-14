@@ -16,24 +16,27 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<List<Employee>> GetAllEmployeesAsync()
         {
-            List<Employee> employees = new List<Employee>();
+            var employees = new List<Employee>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT * FROM Employee", connection);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
+                var query = "SELECT * FROM Employee;";
 
-                while (await reader.ReadAsync())
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    employees.Add(new Employee
+                    while (await reader.ReadAsync())
                     {
-                        EmployeeID = reader.GetInt32(0),
-                        FirstName = reader.GetString(1),
-                        LastName = reader.GetString(2),
-                        PhoneNo = reader.GetString(3),
-                        Email = reader.GetString(4)
-                    });
+                        employees.Add(new Employee
+                        {
+                            EmployeeID = reader.GetInt32(0),
+                            FirstName = reader.GetString(1),
+                            LastName = reader.GetString(2),
+                            PhoneNo = reader.GetString(3),
+                            Email = reader.GetString(4)
+                        });
+                    }
                 }
             }
 
@@ -42,77 +45,84 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<Employee?> GetEmployeeByIdAsync(int id)
         {
-            Employee? employee = null;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT * FROM Employee WHERE employeeID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
+                var query = "SELECT * FROM Employee WHERE EmployeeID = @EmployeeID;";
 
-                if (await reader.ReadAsync())
+                using (var command = new SqlCommand(query, connection))
                 {
-                    employee = new Employee
+                    command.Parameters.AddWithValue("@EmployeeID", id);
+
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        EmployeeID = reader.GetInt32(0),
-                        FirstName = reader.GetString(1),
-                        LastName = reader.GetString(2),
-                        PhoneNo = reader.GetString(3),
-                        Email = reader.GetString(4)
-                    };
+                        if (await reader.ReadAsync())
+                        {
+                            return new Employee
+                            {
+                                EmployeeID = reader.GetInt32(0),
+                                FirstName = reader.GetString(1),
+                                LastName = reader.GetString(2),
+                                PhoneNo = reader.GetString(3),
+                                Email = reader.GetString(4)
+                            };
+                        }
+                    }
                 }
             }
 
-            return employee;
+            return null;
         }
 
         public async Task CreateEmployeeAsync(Employee employee)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(
-                    "INSERT INTO Employee (firstName, lastName, phoneNo, email) VALUES (@firstName, @lastName, @phoneNo, @email)",
-                    connection
-                );
-                command.Parameters.AddWithValue("@firstName", employee.FirstName);
-                command.Parameters.AddWithValue("@lastName", employee.LastName);
-                command.Parameters.AddWithValue("@phoneNo", employee.PhoneNo);
-                command.Parameters.AddWithValue("@email", employee.Email);
+                var query = "INSERT INTO Employee (FirstName, LastName, PhoneNo, Email) VALUES (@FirstName, @LastName, @PhoneNo, @Email);";
 
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@FirstName", employee.FirstName);
+                    command.Parameters.AddWithValue("@LastName", employee.LastName);
+                    command.Parameters.AddWithValue("@PhoneNo", employee.PhoneNo);
+                    command.Parameters.AddWithValue("@Email", employee.Email);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
-        public async Task UpdateEmployeeAsync(int id, Employee employee)
+        public async Task UpdateEmployeeAsync(Employee employee)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(
-                    "UPDATE Employee SET firstName = @firstName, lastName = @lastName, phoneNo = @phoneNo, email = @email WHERE employeeID = @id",
-                    connection
-                );
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@firstName", employee.FirstName);
-                command.Parameters.AddWithValue("@lastName", employee.LastName);
-                command.Parameters.AddWithValue("@phoneNo", employee.PhoneNo);
-                command.Parameters.AddWithValue("@email", employee.Email);
+                var query = "UPDATE Employee SET FirstName = @FirstName, LastName = @LastName, PhoneNo = @PhoneNo, Email = @Email WHERE EmployeeID = @EmployeeID;";
 
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@FirstName", employee.FirstName);
+                    command.Parameters.AddWithValue("@LastName", employee.LastName);
+                    command.Parameters.AddWithValue("@PhoneNo", employee.PhoneNo);
+                    command.Parameters.AddWithValue("@Email", employee.Email);
+                    command.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
         public async Task DeleteEmployeeAsync(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("DELETE FROM Employee WHERE employeeID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
+                var query = "DELETE FROM Employee WHERE EmployeeID = @EmployeeID;";
 
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@EmployeeID", id);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
     }

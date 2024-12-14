@@ -1,6 +1,7 @@
 using AuctionSemesterProject.Services;
 using AuctionSemesterProject.DataAccess;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
 namespace AuctionSemesterProject
 {
@@ -11,7 +12,7 @@ namespace AuctionSemesterProject
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container (API controllers only)
-            builder.Services.AddControllers();  // Add API controllers
+            builder.Services.AddControllers();
 
             // Register shared DAOs and Services for dependency injection
             builder.Services.AddSingleton<AuctionDAO>(sp =>
@@ -38,9 +39,31 @@ namespace AuctionSemesterProject
                 new MemberDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
             builder.Services.AddTransient<MemberService>();
 
+            // Register Swagger services
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Auction API",
+                    Version = "v1",
+                    Description = "API for managing auctions and related resources."
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Auction API V1");
+                    options.RoutePrefix = "swagger";
+                });
+            }
+
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.UseRouting();

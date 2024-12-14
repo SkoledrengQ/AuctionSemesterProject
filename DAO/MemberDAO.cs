@@ -16,26 +16,41 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<List<Member>> GetAllMembersAsync()
         {
-            List<Member> members = new List<Member>();
+            var members = new List<Member>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT * FROM Member", connection);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
+                var query = @"
+                    SELECT 
+                        M.MemberID, M.FirstName, M.LastName, M.Birthday, M.PhoneNo, M.Email,
+                        A.AddressID, A.StreetName, A.City, A.ZipCode
+                    FROM Member M
+                    LEFT JOIN Address A ON M.AddressID_FK = A.AddressID;
+                ";
 
-                while (await reader.ReadAsync())
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    members.Add(new Member
+                    while (await reader.ReadAsync())
                     {
-                        MemberID = reader.GetInt32(0),
-                        FirstName = reader.GetString(1),
-                        LastName = reader.GetString(2),
-                        Birthday = reader.GetDateTime(3),
-                        PhoneNo = reader.GetString(4),
-                        Email = reader.GetString(5),
-                        AddressID_FK = reader.GetInt32(6)
-                    });
+                        members.Add(new Member
+                        {
+                            MemberID = reader.GetInt32(0),
+                            FirstName = reader.GetString(1),
+                            LastName = reader.GetString(2),
+                            Birthday = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
+                            PhoneNo = reader.GetString(4),
+                            Email = reader.GetString(5),
+                            Address = new Address
+                            {
+                                AddressID = reader.GetInt32(6),
+                                StreetName = reader.GetString(7),
+                                City = reader.GetString(8),
+                                ZipCode = reader.GetString(9)
+                            }
+                        });
+                    }
                 }
             }
 
@@ -44,87 +59,111 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<Member?> GetMemberByIdAsync(int id)
         {
-            Member? member = null;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT * FROM Member WHERE memberID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
+                var query = @"
+                    SELECT 
+                        M.MemberID, M.FirstName, M.LastName, M.Birthday, M.PhoneNo, M.Email,
+                        A.AddressID, A.StreetName, A.City, A.ZipCode
+                    FROM Member M
+                    LEFT JOIN Address A ON M.AddressID_FK = A.AddressID
+                    WHERE M.MemberID = @MemberID;
+                ";
 
-                if (await reader.ReadAsync())
+                using (var command = new SqlCommand(query, connection))
                 {
-                    member = new Member
+                    command.Parameters.AddWithValue("@MemberID", id);
+
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        MemberID = reader.GetInt32(0),
-                        FirstName = reader.GetString(1),
-                        LastName = reader.GetString(2),
-                        Birthday = reader.GetDateTime(3),
-                        PhoneNo = reader.GetString(4),
-                        Email = reader.GetString(5),
-                        AddressID_FK = reader.GetInt32(6)
-                    };
+                        if (await reader.ReadAsync())
+                        {
+                            return new Member
+                            {
+                                MemberID = reader.GetInt32(0),
+                                FirstName = reader.GetString(1),
+                                LastName = reader.GetString(2),
+                                Birthday = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
+                                PhoneNo = reader.GetString(4),
+                                Email = reader.GetString(5),
+                                Address = new Address
+                                {
+                                    AddressID = reader.GetInt32(6),
+                                    StreetName = reader.GetString(7),
+                                    City = reader.GetString(8),
+                                    ZipCode = reader.GetString(9)
+                                }
+                            };
+                        }
+                    }
                 }
             }
 
-            return member;
+            return null;
         }
 
         public async Task CreateMemberAsync(Member member)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(
-                    "INSERT INTO Member (firstName, lastName, birthday, phoneNo, email, addressID_FK) " +
-                    "VALUES (@firstName, @lastName, @birthday, @phoneNo, @email, @addressID_FK)",
-                    connection
-                );
+                var query = @"
+                    INSERT INTO Member (FirstName, LastName, Birthday, PhoneNo, Email, AddressID_FK)
+                    VALUES (@FirstName, @LastName, @Birthday, @PhoneNo, @Email, @AddressID_FK);
+                ";
 
-                command.Parameters.AddWithValue("@firstName", member.FirstName);
-                command.Parameters.AddWithValue("@lastName", member.LastName);
-                command.Parameters.AddWithValue("@birthday", member.Birthday);
-                command.Parameters.AddWithValue("@phoneNo", member.PhoneNo);
-                command.Parameters.AddWithValue("@email", member.Email);
-                command.Parameters.AddWithValue("@addressID_FK", member.AddressID_FK);
-
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@FirstName", member.FirstName);
+                    command.Parameters.AddWithValue("@LastName", member.LastName);
+                    command.Parameters.AddWithValue("@Birthday", member.Birthday ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@PhoneNo", member.PhoneNo);
+                    command.Parameters.AddWithValue("@Email", member.Email);
+                    command.Parameters.AddWithValue("@AddressID_FK", member.Address?.AddressID ?? (object)DBNull.Value);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
-        public async Task UpdateMemberAsync(int id, Member member)
+        public async Task UpdateMemberAsync(Member member)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(
-                    "UPDATE Member SET firstName = @firstName, lastName = @lastName, birthday = @birthday, phoneNo = @phoneNo, " +
-                    "email = @email, addressID_FK = @addressID_FK WHERE memberID = @id",
-                    connection
-                );
+                var query = @"
+                    UPDATE Member
+                    SET FirstName = @FirstName, LastName = @LastName, Birthday = @Birthday, 
+                        PhoneNo = @PhoneNo, Email = @Email, AddressID_FK = @AddressID_FK
+                    WHERE MemberID = @MemberID;
+                ";
 
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@firstName", member.FirstName);
-                command.Parameters.AddWithValue("@lastName", member.LastName);
-                command.Parameters.AddWithValue("@birthday", member.Birthday);
-                command.Parameters.AddWithValue("@phoneNo", member.PhoneNo);
-                command.Parameters.AddWithValue("@email", member.Email);
-                command.Parameters.AddWithValue("@addressID_FK", member.AddressID_FK);
-
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@FirstName", member.FirstName);
+                    command.Parameters.AddWithValue("@LastName", member.LastName);
+                    command.Parameters.AddWithValue("@Birthday", member.Birthday ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@PhoneNo", member.PhoneNo);
+                    command.Parameters.AddWithValue("@Email", member.Email);
+                    command.Parameters.AddWithValue("@AddressID_FK", member.Address?.AddressID ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@MemberID", member.MemberID);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
         public async Task DeleteMemberAsync(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("DELETE FROM Member WHERE memberID = @id", connection);
-                command.Parameters.AddWithValue("@id", id);
+                var query = "DELETE FROM Member WHERE MemberID = @MemberID;";
 
-                await command.ExecuteNonQueryAsync();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@MemberID", id);
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
     }
