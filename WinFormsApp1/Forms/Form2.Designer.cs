@@ -94,6 +94,7 @@ namespace WinFormsApp
             pictureBox1.Size = new Size(145, 135);
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // listBox1
             // 
@@ -104,7 +105,6 @@ namespace WinFormsApp
             listBox1.Size = new Size(120, 94);
             listBox1.TabIndex = 6;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
-            
             // 
             // button1
             // 

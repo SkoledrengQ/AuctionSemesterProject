@@ -231,7 +231,7 @@ namespace WinFormsApp
             string Title = textBox3.Text;
             textBox3.Text = "Enter text here";
             string currentText = textBox3.Text;
-            
+
 
             string filteredText = new string(currentText.Where(c => Char.IsLetter(c) || c == ' ').ToArray());
 
@@ -252,7 +252,7 @@ namespace WinFormsApp
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e, string text, string textTitle, string textSizeOfBook, string DomainUpDown, string textrichTextBox1)
         {
 
-          
+
 
 
 
@@ -269,10 +269,10 @@ namespace WinFormsApp
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox4 = new TextBox();
-           string ReleaseDate = textBox4.Text;
-           
+            string ReleaseDate = textBox4.Text;
+
             string currentText = textBox4.Text;
-           
+
 
             string filteredText = new string(currentText.Where(c => Char.IsLetter(c) || c == ' ').ToArray());
             listBox1.Visible = true;
@@ -288,9 +288,9 @@ namespace WinFormsApp
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-           TextBox textBox2 = new TextBox(); 
+            TextBox textBox2 = new TextBox();
             string textSizeOfBook = textBox2.Text;
-           
+
             string currentText = textBox2.Text;
             string filteredText = new string(currentText.Where(c => Char.IsLetter(c) || c == ' ').ToArray());
             listBox1.Visible = true;
@@ -301,7 +301,7 @@ namespace WinFormsApp
 
                 textBox2.SelectionStart = textBox2.Text.Length;
             }
-            
+
 
         }
 
@@ -312,12 +312,12 @@ namespace WinFormsApp
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            
+
 
 
             if (!string.IsNullOrWhiteSpace(Text))
             {
-               
+
                 listBox1.Items.Add("genre: " + domainUpDown1.Text);
                 listBox1.Items.Add("Title: " + textBox3.Text);
                 listBox1.Items.Add("size: " + textBox2.Text + " pages");
@@ -329,10 +329,34 @@ namespace WinFormsApp
             {
                 MessageBox.Show("Please enter some text before adding to the list.");
             }
-           
+
         }
 
-       
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string imagePath = (@"C:Users\Pictures\auction\image.jpg");
+                
+                if (System.IO.File.Exists(imagePath))
+                {
+                    // Load the image from the file path
+                    pictureBox1.Image = System.Drawing.Image.FromFile(imagePath);
+
+                    // Optional: Set the size mode to zoom to fit the image in the PictureBox
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else
+                {
+                    MessageBox.Show("Image file does not exist.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Display any errors that occur during image loading
+                MessageBox.Show("Error loading image: " + ex.Message);
+            }
+        }
     }
 }
 
