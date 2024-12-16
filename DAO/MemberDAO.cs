@@ -5,7 +5,16 @@ using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.DataAccess
 {
-    public class MemberDAO
+    public interface IMemberAccess
+    {
+        Task<List<Member>> GetAllMembersAsync();
+        Task<Member?> GetMemberByIdAsync(int id);
+        Task CreateMemberAsync(Member member);
+        Task UpdateMemberAsync(Member member);
+        Task DeleteMemberAsync(int id);
+    }
+
+    public class MemberDAO : IMemberAccess
     {
         private readonly string _connectionString;
 
@@ -26,8 +35,7 @@ namespace AuctionSemesterProject.DataAccess
                         M.MemberID, M.FirstName, M.LastName, M.Birthday, M.PhoneNo, M.Email,
                         A.AddressID, A.StreetName, A.City, A.ZipCode
                     FROM Member M
-                    LEFT JOIN Address A ON M.AddressID_FK = A.AddressID;
-                ";
+                    LEFT JOIN Address A ON M.AddressID_FK = A.AddressID;";
 
                 using (var command = new SqlCommand(query, connection))
                 using (var reader = await command.ExecuteReaderAsync())
@@ -68,8 +76,7 @@ namespace AuctionSemesterProject.DataAccess
                         A.AddressID, A.StreetName, A.City, A.ZipCode
                     FROM Member M
                     LEFT JOIN Address A ON M.AddressID_FK = A.AddressID
-                    WHERE M.MemberID = @MemberID;
-                ";
+                    WHERE M.MemberID = @MemberID;";
 
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -110,8 +117,7 @@ namespace AuctionSemesterProject.DataAccess
                 await connection.OpenAsync();
                 var query = @"
                     INSERT INTO Member (FirstName, LastName, Birthday, PhoneNo, Email, AddressID_FK)
-                    VALUES (@FirstName, @LastName, @Birthday, @PhoneNo, @Email, @AddressID_FK);
-                ";
+                    VALUES (@FirstName, @LastName, @Birthday, @PhoneNo, @Email, @AddressID_FK);";
 
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -135,8 +141,7 @@ namespace AuctionSemesterProject.DataAccess
                     UPDATE Member
                     SET FirstName = @FirstName, LastName = @LastName, Birthday = @Birthday, 
                         PhoneNo = @PhoneNo, Email = @Email, AddressID_FK = @AddressID_FK
-                    WHERE MemberID = @MemberID;
-                ";
+                    WHERE MemberID = @MemberID;";
 
                 using (var command = new SqlCommand(query, connection))
                 {

@@ -5,7 +5,16 @@ using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.DataAccess
 {
-    public class BidDAO
+    public interface IBidAccess
+    {
+        Task<List<Bid>> GetAllBidsAsync();
+        Task<Bid?> GetBidByIdAsync(int auctionId, int memberId);
+        Task CreateBidAsync(Bid bid);
+        Task UpdateBidAsync(Bid bid);
+        Task DeleteBidAsync(int auctionId, int memberId);
+    }
+
+    public class BidDAO : IBidAccess
     {
         private readonly string _connectionString;
 
@@ -27,8 +36,7 @@ namespace AuctionSemesterProject.DataAccess
                         B.AuctionID_FK, A.StartPrice, A.CurrentHighestBid
                     FROM Bid B
                     LEFT JOIN Member M ON B.MemberID_FK = M.MemberID
-                    LEFT JOIN Auction A ON B.AuctionID_FK = A.AuctionID;
-                ";
+                    LEFT JOIN Auction A ON B.AuctionID_FK = A.AuctionID;";
 
                 using (var command = new SqlCommand(query, connection))
                 using (var reader = await command.ExecuteReaderAsync())
@@ -72,8 +80,7 @@ namespace AuctionSemesterProject.DataAccess
                     FROM Bid B
                     LEFT JOIN Member M ON B.MemberID_FK = M.MemberID
                     LEFT JOIN Auction A ON B.AuctionID_FK = A.AuctionID
-                    WHERE B.AuctionID_FK = @AuctionID_FK AND B.MemberID_FK = @MemberID_FK;
-                ";
+                    WHERE B.AuctionID_FK = @AuctionID_FK AND B.MemberID_FK = @MemberID_FK;";
 
                 using (var command = new SqlCommand(query, connection))
                 {

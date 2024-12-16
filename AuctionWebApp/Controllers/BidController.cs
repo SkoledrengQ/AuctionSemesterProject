@@ -1,51 +1,56 @@
-﻿using AuctionSemesterProject.Services;
+﻿namespace AuctionSemesterProject.Controllers;
+
+using API.Dtos;
+using AuctionSemesterProject.BusinessLogicLayer;
+using AuctionSemesterProject.DTO;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-namespace AuctionSemesterProject.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class BidController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BidController : ControllerBase
+    private readonly BidLogic _bidLogic;
+
+    public BidController(BidLogic bidLogic)
     {
-        private readonly BidService _bidService;
+        _bidLogic = bidLogic;
+    }
 
-        public BidController(BidService bidService)
-        {
-            _bidService = bidService;
-        }
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var bids = await _bidLogic.GetAllBidsAsync();
+        return Ok(bids);
+    }
 
-        [HttpPost("PlaceBid")]
-        public async Task<IActionResult> PlaceBid([FromForm] int auctionId, [FromForm] int memberId, [FromForm] decimal amount)
-        {
-            var result = await _bidService.PlaceBidAsync(auctionId, memberId, amount);
+    [HttpGet("{auctionId}/{memberId}")]
+    public async Task<IActionResult> Get(int auctionId, int memberId)
+    {
+        var bid = await _bidLogic.GetBidByIdAsync(auctionId, memberId);
+        if (bid == null) return NotFound();
+        return Ok(bid);
+    }
 
-            if (!result.Success)
-            {
-                if (result.Conflict)
-                {
-                    return Conflict("The auction was updated by another user. Please refresh and try again.");
-                }
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] BidDto bidDto)
+    {
+        await _bidLogic.CreateBidAsync(bidDto);
+        return CreatedAtAction(nameof(Get), new { auctionId = bidDto.AuctionID, memberId = bidDto.MemberID }, bidDto);
+    }
 
-                return BadRequest(result.ErrorMessage);
-            }
+    [HttpPut("{auctionId}/{memberId}")]
+    public async Task<IActionResult> Update(int auctionId, int memberId, [FromBody] BidDto bidDto)
+    {
+        var success = await _bidLogic.UpdateBidAsync(auctionId, memberId, bidDto);
+        if (!success) return NotFound();
+        return NoContent();
+    }
 
-            return Ok("Your bid has been placed successfully!");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllBids()
-        {
-            var bids = await _bidService.GetAllBidsAsync();
-            return Ok(bids);
-        }
-
-        [HttpGet("{auctionId}/{memberId}")]
-        public async Task<IActionResult> GetBid(int auctionId, int memberId)
-        {
-            var bid = await _bidService.GetBidByIdAsync(auctionId, memberId);
-            if (bid == null) return NotFound();
-            return Ok(bid);
-        }
+    [HttpDelete("{auctionId}/{memberId}")]
+    public async Task<IActionResult> Delete(int auctionId, int memberId)
+    {
+        var success = await _bidLogic.DeleteBidAsync(auctionId, memberId);
+        if (!success) return NotFound();
+        return NoContent();
     }
 }

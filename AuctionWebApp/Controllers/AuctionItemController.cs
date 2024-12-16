@@ -1,55 +1,55 @@
-﻿using AuctionSemesterProject.Services;
-using AuctionSemesterProject.AuctionModels;
+﻿namespace AuctionSemesterProject.Controllers;
+
+using AuctionSemesterProject.BusinessLogicLayer;
+using AuctionSemesterProject.DTO;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-namespace AuctionSemesterProject.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class AuctionItemController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuctionItemController : ControllerBase
+    private readonly AuctionItemLogic _auctionItemLogic;
+
+    public AuctionItemController(AuctionItemLogic auctionItemLogic)
     {
-        private readonly AuctionItemService _auctionItemService;
+        _auctionItemLogic = auctionItemLogic;
+    }
 
-        public AuctionItemController(AuctionItemService auctionItemService)
-        {
-            _auctionItemService = auctionItemService;
-        }
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var items = await _auctionItemLogic.GetAllAuctionItemsAsync();
+        return Ok(items);
+    }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var items = await _auctionItemService.GetAllAuctionItemsAsync();
-            return Ok(items);
-        }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        var item = await _auctionItemLogic.GetAuctionItemByIdAsync(id);
+        if (item == null) return NotFound();
+        return Ok(item);
+    }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var item = await _auctionItemService.GetAuctionItemByIdAsync(id);
-            if (item == null) return NotFound();
-            return Ok(item);
-        }
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] AuctionItemDto auctionItemDto)
+    {
+        await _auctionItemLogic.CreateAuctionItemAsync(auctionItemDto);
+        return CreatedAtAction(nameof(Get), new { id = auctionItemDto.ItemID }, auctionItemDto);
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(AuctionItem item)
-        {
-            await _auctionItemService.CreateAuctionItemAsync(item);
-            return Ok();
-        }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] AuctionItemDto auctionItemDto)
+    {
+        var success = await _auctionItemLogic.UpdateAuctionItemAsync(id, auctionItemDto);
+        if (!success) return NotFound();
+        return NoContent();
+    }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, AuctionItem item)
-        {
-            await _auctionItemService.UpdateAuctionItemAsync(id, item);
-            return Ok();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _auctionItemService.DeleteAuctionItemAsync(id);
-            return Ok();
-        }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var success = await _auctionItemLogic.DeleteAuctionItemAsync(id);
+        if (!success) return NotFound();
+        return NoContent();
     }
 }

@@ -90,6 +90,22 @@
   },
   {
     "ContainingType": "AuctionSemesterProject.Controllers.AuctionController",
+    "Method": "Create",
+    "RelativePath": "api/Auction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "auctionDto",
+        "Type": "API.Dtos.AuctionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionController",
     "Method": "Get",
     "RelativePath": "api/Auction/{id}",
     "HttpMethod": "GET",
@@ -118,8 +134,24 @@
         "IsRequired": true
       },
       {
-        "Name": "auction",
-        "Type": "AuctionSemesterProject.AuctionModels.Auction",
+        "Name": "auctionDto",
+        "Type": "API.Dtos.AuctionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuctionSemesterProject.Controllers.AuctionController",
+    "Method": "Delete",
+    "RelativePath": "api/Auction/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

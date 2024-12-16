@@ -5,7 +5,16 @@ using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.DataAccess
 {
-    public class AuctionItemDAO
+    public interface IAuctionItemAccess
+    {
+        Task<List<AuctionItem>> GetAllAuctionItemsAsync();
+        Task<AuctionItem?> GetAuctionItemByIdAsync(int id);
+        Task CreateAuctionItemAsync(AuctionItem item);
+        Task UpdateAuctionItemAsync(AuctionItem item);
+        Task DeleteAuctionItemAsync(int id);
+    }
+
+    public class AuctionItemDAO : IAuctionItemAccess
     {
         private readonly string _connectionString;
 
@@ -83,7 +92,9 @@ namespace AuctionSemesterProject.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var query = "INSERT INTO AuctionItem (Title, ReleaseDate, Author, Genre, Description, ItemType) VALUES (@Title, @ReleaseDate, @Author, @Genre, @Description, @ItemType);";
+                var query = @"
+                    INSERT INTO AuctionItem (Title, ReleaseDate, Author, Genre, Description, ItemType)
+                    VALUES (@Title, @ReleaseDate, @Author, @Genre, @Description, @ItemType);";
 
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -103,7 +114,10 @@ namespace AuctionSemesterProject.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var query = "UPDATE AuctionItem SET Title = @Title, ReleaseDate = @ReleaseDate, Author = @Author, Genre = @Genre, Description = @Description, ItemType = @ItemType WHERE ItemID = @ItemID;";
+                var query = @"
+                    UPDATE AuctionItem
+                    SET Title = @Title, ReleaseDate = @ReleaseDate, Author = @Author, Genre = @Genre, Description = @Description, ItemType = @ItemType
+                    WHERE ItemID = @ItemID;";
 
                 using (var command = new SqlCommand(query, connection))
                 {

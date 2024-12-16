@@ -5,7 +5,16 @@ using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.DataAccess
 {
-    public class EmployeeDAO
+    public interface IEmployeeAccess
+    {
+        Task<List<Employee>> GetAllEmployeesAsync();
+        Task<Employee?> GetEmployeeByIdAsync(int id);
+        Task CreateEmployeeAsync(Employee employee);
+        Task UpdateEmployeeAsync(Employee employee);
+        Task<bool> DeleteEmployeeAsync(int id);
+    }
+
+    public class EmployeeDAO : IEmployeeAccess
     {
         private readonly string _connectionString;
 
@@ -48,12 +57,11 @@ namespace AuctionSemesterProject.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var query = "SELECT * FROM Employee WHERE EmployeeID = @EmployeeID;";
+                var query = "SELECT * FROM Employee WHERE EmployeeID = @id;";
 
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@EmployeeID", id);
-
+                    command.Parameters.AddWithValue("@id", id);
                     using (var reader = await command.ExecuteReaderAsync())
                     {
                         if (await reader.ReadAsync())
@@ -70,7 +78,6 @@ namespace AuctionSemesterProject.DataAccess
                     }
                 }
             }
-
             return null;
         }
 
@@ -87,6 +94,7 @@ namespace AuctionSemesterProject.DataAccess
                     command.Parameters.AddWithValue("@LastName", employee.LastName);
                     command.Parameters.AddWithValue("@PhoneNo", employee.PhoneNo);
                     command.Parameters.AddWithValue("@Email", employee.Email);
+
                     await command.ExecuteNonQueryAsync();
                 }
             }
@@ -101,27 +109,29 @@ namespace AuctionSemesterProject.DataAccess
 
                 using (var command = new SqlCommand(query, connection))
                 {
+                    command.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
                     command.Parameters.AddWithValue("@FirstName", employee.FirstName);
                     command.Parameters.AddWithValue("@LastName", employee.LastName);
                     command.Parameters.AddWithValue("@PhoneNo", employee.PhoneNo);
                     command.Parameters.AddWithValue("@Email", employee.Email);
-                    command.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
+
                     await command.ExecuteNonQueryAsync();
                 }
             }
         }
 
-        public async Task DeleteEmployeeAsync(int id)
+        public async Task<bool> DeleteEmployeeAsync(int id)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var query = "DELETE FROM Employee WHERE EmployeeID = @EmployeeID;";
+                var query = "DELETE FROM Employee WHERE EmployeeID = @id;";
 
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@EmployeeID", id);
-                    await command.ExecuteNonQueryAsync();
+                    command.Parameters.AddWithValue("@id", id);
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    return rowsAffected > 0;
                 }
             }
         }

@@ -5,7 +5,16 @@ using System.Threading.Tasks;
 
 namespace AuctionSemesterProject.DataAccess
 {
-    public class AddressDAO
+    public interface IAddressAccess
+    {
+        Task<List<Address>> GetAllAddressesAsync();
+        Task<Address?> GetAddressByIdAsync(int id);
+        Task CreateAddressAsync(Address address);
+        Task UpdateAddressAsync(Address address);
+        Task<bool> DeleteAddressAsync(int id); // Updated to return Task<bool>
+    }
+
+    public class AddressDAO : IAddressAccess
     {
         private readonly string _connectionString;
 
@@ -38,7 +47,6 @@ namespace AuctionSemesterProject.DataAccess
                     }
                 }
             }
-
             return addresses;
         }
 
@@ -68,7 +76,6 @@ namespace AuctionSemesterProject.DataAccess
                     }
                 }
             }
-
             return null;
         }
 
@@ -84,6 +91,7 @@ namespace AuctionSemesterProject.DataAccess
                     command.Parameters.AddWithValue("@StreetName", address.StreetName);
                     command.Parameters.AddWithValue("@City", address.City);
                     command.Parameters.AddWithValue("@ZipCode", address.ZipCode);
+
                     await command.ExecuteNonQueryAsync();
                 }
             }
@@ -102,12 +110,13 @@ namespace AuctionSemesterProject.DataAccess
                     command.Parameters.AddWithValue("@City", address.City);
                     command.Parameters.AddWithValue("@ZipCode", address.ZipCode);
                     command.Parameters.AddWithValue("@AddressID", address.AddressID);
+
                     await command.ExecuteNonQueryAsync();
                 }
             }
         }
 
-        public async Task DeleteAddressAsync(int id)
+        public async Task<bool> DeleteAddressAsync(int id)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -117,7 +126,9 @@ namespace AuctionSemesterProject.DataAccess
                 using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@AddressID", id);
-                    await command.ExecuteNonQueryAsync();
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    return rowsAffected > 0; // Return true if rows were deleted
                 }
             }
         }
