@@ -2,18 +2,10 @@
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AuctionSemesterProject.Interfaces;
 
 namespace AuctionSemesterProject.DataAccess
 {
-    public interface IBidAccess
-    {
-        Task<List<Bid>> GetAllBidsAsync();
-        Task<Bid?> GetBidByIdAsync(int auctionId, int memberId);
-        Task CreateBidAsync(Bid bid);
-        Task UpdateBidAsync(Bid bid);
-        Task DeleteBidAsync(int auctionId, int memberId);
-    }
-
     public class BidDAO : IBidAccess
     {
         private readonly string _connectionString;
@@ -129,6 +121,7 @@ namespace AuctionSemesterProject.DataAccess
                     command.Parameters.AddWithValue("@Amount", bid.Amount);
                     command.Parameters.AddWithValue("@MemberID_FK", bid.Member.MemberID);
                     command.Parameters.AddWithValue("@AuctionID_FK", bid.Auction.AuctionID);
+
                     await command.ExecuteNonQueryAsync();
                 }
             }
@@ -146,12 +139,13 @@ namespace AuctionSemesterProject.DataAccess
                     command.Parameters.AddWithValue("@Amount", bid.Amount);
                     command.Parameters.AddWithValue("@MemberID_FK", bid.Member.MemberID);
                     command.Parameters.AddWithValue("@AuctionID_FK", bid.Auction.AuctionID);
+
                     await command.ExecuteNonQueryAsync();
                 }
             }
         }
 
-        public async Task DeleteBidAsync(int auctionId, int memberId)
+        public async Task<bool> DeleteBidAsync(int auctionId, int memberId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -162,7 +156,9 @@ namespace AuctionSemesterProject.DataAccess
                 {
                     command.Parameters.AddWithValue("@AuctionID_FK", auctionId);
                     command.Parameters.AddWithValue("@MemberID_FK", memberId);
-                    await command.ExecuteNonQueryAsync();
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    return rowsAffected > 0;
                 }
             }
         }

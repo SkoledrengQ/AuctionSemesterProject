@@ -1,5 +1,6 @@
 ﻿namespace AuctionSemesterProject.Controllers;
 
+using AuctionSemesterProject.AuctionModels;
 using AuctionSemesterProject.BusinessLogicLayer;
 using AuctionSemesterProject.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -40,10 +41,10 @@ public class AddressController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] AddressDto addressDto)
     {
-        var success = await _addressLogic.UpdateAddressAsync(id, addressDto);
-        if (!success) return NotFound();
+        await _addressLogic.UpdateAddressAsync(id, addressDto);
         return NoContent();
     }
+
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

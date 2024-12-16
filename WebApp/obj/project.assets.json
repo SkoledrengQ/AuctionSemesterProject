@@ -688,7 +688,6 @@
           "DataAccess": "1.0.0",
           "Microsoft.Data.SqlClient": "5.2.2",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.21.0",
-          "Services": "1.0.0",
           "Swashbuckle.AspNetCore": "7.0.0"
         },
         "compile": {

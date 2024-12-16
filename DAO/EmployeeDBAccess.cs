@@ -2,18 +2,10 @@
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AuctionSemesterProject.Interfaces;
 
 namespace AuctionSemesterProject.DataAccess
 {
-    public interface IEmployeeAccess
-    {
-        Task<List<Employee>> GetAllEmployeesAsync();
-        Task<Employee?> GetEmployeeByIdAsync(int id);
-        Task CreateEmployeeAsync(Employee employee);
-        Task UpdateEmployeeAsync(Employee employee);
-        Task<bool> DeleteEmployeeAsync(int id);
-    }
-
     public class EmployeeDAO : IEmployeeAccess
     {
         private readonly string _connectionString;
@@ -57,11 +49,12 @@ namespace AuctionSemesterProject.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var query = "SELECT * FROM Employee WHERE EmployeeID = @id;";
+                var query = "SELECT * FROM Employee WHERE EmployeeID = @EmployeeID;";
 
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@EmployeeID", id);
+
                     using (var reader = await command.ExecuteReaderAsync())
                     {
                         if (await reader.ReadAsync())
@@ -78,6 +71,7 @@ namespace AuctionSemesterProject.DataAccess
                     }
                 }
             }
+
             return null;
         }
 
@@ -86,7 +80,9 @@ namespace AuctionSemesterProject.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var query = "INSERT INTO Employee (FirstName, LastName, PhoneNo, Email) VALUES (@FirstName, @LastName, @PhoneNo, @Email);";
+                var query = @"
+                    INSERT INTO Employee (FirstName, LastName, PhoneNo, Email) 
+                    VALUES (@FirstName, @LastName, @PhoneNo, @Email);";
 
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -105,15 +101,18 @@ namespace AuctionSemesterProject.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var query = "UPDATE Employee SET FirstName = @FirstName, LastName = @LastName, PhoneNo = @PhoneNo, Email = @Email WHERE EmployeeID = @EmployeeID;";
+                var query = @"
+                    UPDATE Employee 
+                    SET FirstName = @FirstName, LastName = @LastName, PhoneNo = @PhoneNo, Email = @Email
+                    WHERE EmployeeID = @EmployeeID;";
 
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
                     command.Parameters.AddWithValue("@FirstName", employee.FirstName);
                     command.Parameters.AddWithValue("@LastName", employee.LastName);
                     command.Parameters.AddWithValue("@PhoneNo", employee.PhoneNo);
                     command.Parameters.AddWithValue("@Email", employee.Email);
+                    command.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
 
                     await command.ExecuteNonQueryAsync();
                 }
@@ -125,11 +124,12 @@ namespace AuctionSemesterProject.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                var query = "DELETE FROM Employee WHERE EmployeeID = @id;";
+                var query = "DELETE FROM Employee WHERE EmployeeID = @EmployeeID;";
 
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@EmployeeID", id);
+
                     int rowsAffected = await command.ExecuteNonQueryAsync();
                     return rowsAffected > 0;
                 }

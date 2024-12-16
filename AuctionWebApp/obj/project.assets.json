@@ -709,20 +709,6 @@
         "runtime": {
           "bin/placeholder/DataAccess.dll": {}
         }
-      },
-      "Services/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "dependencies": {
-          "DataAccess": "1.0.0",
-          "Microsoft.Data.SqlClient": "5.2.2"
-        },
-        "compile": {
-          "bin/placeholder/Services.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Services.dll": {}
-        }
       }
     }
   },
@@ -2238,11 +2224,6 @@
       "type": "project",
       "path": "../DAO/DataAccess.csproj",
       "msbuildProject": "../DAO/DataAccess.csproj"
-    },
-    "Services/1.0.0": {
-      "type": "project",
-      "path": "../Services/Services.csproj",
-      "msbuildProject": "../Services/Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -2251,7 +2232,6 @@
       "DataAccess >= 1.0.0",
       "Microsoft.Data.SqlClient >= 5.2.2",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.21.0",
-      "Services >= 1.0.0",
       "Swashbuckle.AspNetCore >= 7.0.0"
     ]
   },
@@ -2288,9 +2268,6 @@
             },
             "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
               "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj"
-            },
-            "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj": {
-              "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Services\\Services.csproj"
             }
           }
         }

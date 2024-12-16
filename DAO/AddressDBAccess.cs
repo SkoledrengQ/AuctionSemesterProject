@@ -2,18 +2,10 @@
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AuctionSemesterProject.Interfaces;
 
 namespace AuctionSemesterProject.DataAccess
 {
-    public interface IAddressAccess
-    {
-        Task<List<Address>> GetAllAddressesAsync();
-        Task<Address?> GetAddressByIdAsync(int id);
-        Task CreateAddressAsync(Address address);
-        Task UpdateAddressAsync(Address address);
-        Task<bool> DeleteAddressAsync(int id); // Updated to return Task<bool>
-    }
-
     public class AddressDAO : IAddressAccess
     {
         private readonly string _connectionString;
@@ -47,6 +39,7 @@ namespace AuctionSemesterProject.DataAccess
                     }
                 }
             }
+
             return addresses;
         }
 
@@ -76,6 +69,7 @@ namespace AuctionSemesterProject.DataAccess
                     }
                 }
             }
+
             return null;
         }
 
@@ -112,6 +106,7 @@ namespace AuctionSemesterProject.DataAccess
                     command.Parameters.AddWithValue("@AddressID", address.AddressID);
 
                     await command.ExecuteNonQueryAsync();
+                    
                 }
             }
         }
@@ -128,7 +123,7 @@ namespace AuctionSemesterProject.DataAccess
                     command.Parameters.AddWithValue("@AddressID", id);
 
                     int rowsAffected = await command.ExecuteNonQueryAsync();
-                    return rowsAffected > 0; // Return true if rows were deleted
+                    return rowsAffected > 0;
                 }
             }
         }

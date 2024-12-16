@@ -4,6 +4,7 @@ using AuctionSemesterProject.DTO;
 using AuctionSemesterProject.AuctionModels;
 using AuctionSemesterProject.DataAccess;
 using API.Dtos;
+using AuctionSemesterProject.Interfaces;
 
 public class AuctionLogic
 {

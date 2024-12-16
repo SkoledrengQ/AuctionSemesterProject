@@ -15,28 +15,28 @@ namespace AuctionSemesterProject
             builder.Services.AddControllers();
 
             // Register shared DAOs and Services for dependency injection
-            builder.Services.AddSingleton<AuctionDAO>(sp =>
-                new AuctionDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddSingleton<AuctionDBAccess>(sp =>
+                new AuctionDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
             builder.Services.AddTransient<AuctionService>();
 
-            builder.Services.AddSingleton<AddressDAO>(sp =>
-                new AddressDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddSingleton<AddressDBAccess>(sp =>
+                new AddressDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
             builder.Services.AddTransient<AddressService>();
 
-            builder.Services.AddSingleton<AuctionItemDAO>(sp =>
-                new AuctionItemDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddSingleton<AuctionItemDBAccess>(sp =>
+                new AuctionItemDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
             builder.Services.AddTransient<AuctionItemService>();
 
-            builder.Services.AddSingleton<BidDAO>(sp =>
-                new BidDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddSingleton<BidDBAccess>(sp =>
+                new BidDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
             builder.Services.AddTransient<BidService>();
 
-            builder.Services.AddSingleton<EmployeeDAO>(sp =>
-                new EmployeeDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddSingleton<EmployeeDBAccess>(sp =>
+                new EmployeeDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
             builder.Services.AddTransient<EmployeeService>();
 
-            builder.Services.AddSingleton<MemberDAO>(sp =>
-                new MemberDAO(builder.Configuration.GetConnectionString("DefaultConnection")!));
+            builder.Services.AddSingleton<MemberDBAccess>(sp =>
+                new MemberDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
             builder.Services.AddTransient<MemberService>();
 
             // Register Swagger services

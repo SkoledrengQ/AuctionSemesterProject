@@ -2,18 +2,10 @@
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AuctionSemesterProject.Interfaces;
 
 namespace AuctionSemesterProject.DataAccess
 {
-    public interface IAuctionItemAccess
-    {
-        Task<List<AuctionItem>> GetAllAuctionItemsAsync();
-        Task<AuctionItem?> GetAuctionItemByIdAsync(int id);
-        Task CreateAuctionItemAsync(AuctionItem item);
-        Task UpdateAuctionItemAsync(AuctionItem item);
-        Task DeleteAuctionItemAsync(int id);
-    }
-
     public class AuctionItemDAO : IAuctionItemAccess
     {
         private readonly string _connectionString;
@@ -104,6 +96,7 @@ namespace AuctionSemesterProject.DataAccess
                     command.Parameters.AddWithValue("@Genre", item.Genre);
                     command.Parameters.AddWithValue("@Description", item.Description);
                     command.Parameters.AddWithValue("@ItemType", item.ItemType);
+
                     await command.ExecuteNonQueryAsync();
                 }
             }
@@ -128,12 +121,13 @@ namespace AuctionSemesterProject.DataAccess
                     command.Parameters.AddWithValue("@Description", item.Description);
                     command.Parameters.AddWithValue("@ItemType", item.ItemType);
                     command.Parameters.AddWithValue("@ItemID", item.ItemID);
+
                     await command.ExecuteNonQueryAsync();
                 }
             }
         }
 
-        public async Task DeleteAuctionItemAsync(int id)
+        public async Task<bool> DeleteAuctionItemAsync(int id)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -143,7 +137,9 @@ namespace AuctionSemesterProject.DataAccess
                 using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@ItemID", id);
-                    await command.ExecuteNonQueryAsync();
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    return rowsAffected > 0;
                 }
             }
         }

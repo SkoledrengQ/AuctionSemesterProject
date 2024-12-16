@@ -1,5 +1,5 @@
 ﻿namespace AuctionSemesterProject.BusinessLogicLayer;
-
+using AuctionSemesterProject.Interfaces;
 using AuctionSemesterProject.DTO;
 using AuctionSemesterProject.AuctionModels;
 using AuctionSemesterProject.DataAccess;
@@ -49,16 +49,15 @@ public class AddressLogic
         await _addressAccess.CreateAddressAsync(address);
     }
 
-    public async Task<bool> UpdateAddressAsync(int id, AddressDto addressDto)
+    public async Task UpdateAddressAsync(int id, AddressDto addressDto)
     {
         var address = await _addressAccess.GetAddressByIdAsync(id);
-        if (address == null) return false;
 
         address.StreetName = addressDto.StreetName;
         address.City = addressDto.City;
         address.ZipCode = addressDto.ZipCode;
 
-        return await _addressAccess.UpdateAddressAsync(address);
+        await _addressAccess.UpdateAddressAsync(address);
     }
 
     public async Task<bool> DeleteAddressAsync(int id)
