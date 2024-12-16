@@ -18,6 +18,12 @@ namespace WinFormsApp.Database
             _connectionString = ConfigurationManager.ConnectionStrings["DMA-CSD-V23_10461224"].ConnectionString;
         }
 
+        // Expose the connection string as public property
+        public string ConnectionString
+        {
+            get { return _connectionString; }
+        }
+
         // Method to retriever user details for validation
         public DataRow GetUserByFirstName(string firstName)
         {
