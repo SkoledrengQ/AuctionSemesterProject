@@ -1,16 +1,11 @@
-﻿using AuctionSemesterProject.DataAccess.Interfaces;
-using AuctionSemesterProject.AuctionModels;
+﻿using DataAccess.Interfaces;
+using AuctionModels;
 using API.Dtos;
 
 namespace API.BusinessLogicLayer;
-public class AddressLogic
+public class AddressLogic(IAddressAccess addressAccess)
 {
-    private readonly IAddressAccess _addressAccess;
-
-    public AddressLogic(IAddressAccess addressAccess)
-    {
-        _addressAccess = addressAccess;
-    }
+    private readonly IAddressAccess _addressAccess = addressAccess;
 
     public async Task<List<AddressDto>> GetAllAddressesAsync()
     {

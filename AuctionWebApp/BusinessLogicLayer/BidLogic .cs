@@ -1,17 +1,12 @@
 ﻿namespace API.BusinessLogicLayer;
 
-using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.DataAccess.Interfaces;
+using AuctionModels;
+using DataAccess.Interfaces;
 using API.Dtos;
 
-public class BidLogic
+public class BidLogic(IBidAccess bidAccess)
 {
-    private readonly IBidAccess _bidAccess;
-
-    public BidLogic(IBidAccess bidAccess)
-    {
-        _bidAccess = bidAccess;
-    }
+    private readonly IBidAccess _bidAccess = bidAccess;
 
     public async Task<List<BidDto>> GetAllBidsAsync()
     {

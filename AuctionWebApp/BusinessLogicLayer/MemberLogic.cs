@@ -1,16 +1,11 @@
 ﻿namespace API.BusinessLogicLayer;
-using AuctionSemesterProject.DataAccess.Interfaces;
-using AuctionSemesterProject.AuctionModels;
+using DataAccess.Interfaces;
+using AuctionModels;
 using API.Dtos;
 
-public class MemberLogic
+public class MemberLogic(IMemberAccess memberAccess)
 {
-    private readonly IMemberAccess _memberAccess;
-
-    public MemberLogic(IMemberAccess memberAccess)
-    {
-        _memberAccess = memberAccess;
-    }
+    private readonly IMemberAccess _memberAccess = memberAccess;
 
     public async Task<List<MemberDto>> GetAllMembersAsync()
     {

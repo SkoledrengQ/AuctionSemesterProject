@@ -6,14 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuctionItemController : ControllerBase
+public class AuctionItemController(AuctionItemLogic auctionItemLogic) : ControllerBase
 {
-    private readonly AuctionItemLogic _auctionItemLogic;
-
-    public AuctionItemController(AuctionItemLogic auctionItemLogic)
-    {
-        _auctionItemLogic = auctionItemLogic;
-    }
+    private readonly AuctionItemLogic _auctionItemLogic = auctionItemLogic;
 
     [HttpGet]
     public async Task<IActionResult> GetAll()

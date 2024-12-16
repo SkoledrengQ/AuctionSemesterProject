@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AuctionSemesterProject.AuctionModels;
+using AuctionModels;
 
 namespace WebApp.ServiceLayer
 {

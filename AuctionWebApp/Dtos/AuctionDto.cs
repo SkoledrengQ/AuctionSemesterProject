@@ -1,38 +1,24 @@
 ﻿namespace API.Dtos;
 
-public class AuctionDto
+public class AuctionDto(int auctionId, decimal startPrice, decimal minBid, decimal? endingBid, decimal? currentHighestBid, decimal? buyNowPrice, int? noOfBids, string? timeExtension, int employeeId, int itemId)
 {
-    public AuctionDto(int auctionId, decimal startPrice, decimal minBid, decimal? endingBid, decimal? currentHighestBid, decimal? buyNowPrice, int? noOfBids, string? timeExtension, int employeeId, int itemId)
-    {
-        AuctionID = auctionId;
-        StartPrice = startPrice;
-        MinBid = minBid;
-        EndingBid = endingBid;
-        CurrentHighestBid = currentHighestBid;
-        BuyNowPrice = buyNowPrice;
-        NoOfBids = noOfBids;
-        TimeExtension = timeExtension;
-        EmployeeID = employeeId;
-        ItemID = itemId;
-    }
+    public int AuctionID { get; init; } = auctionId;
 
-    public int AuctionID { get; init; }
+    public decimal StartPrice { get; init; } = startPrice;
 
-    public decimal StartPrice { get; init; }
+    public decimal MinBid { get; init; } = minBid;
 
-    public decimal MinBid { get; init; }
+    public decimal? EndingBid { get; init; } = endingBid;
 
-    public decimal? EndingBid { get; init; }
+    public decimal? CurrentHighestBid { get; init; } = currentHighestBid;
 
-    public decimal? CurrentHighestBid { get; init; }
+    public decimal? BuyNowPrice { get; init; } = buyNowPrice;
 
-    public decimal? BuyNowPrice { get; init; }
+    public int? NoOfBids { get; init; } = noOfBids;
 
-    public int? NoOfBids { get; init; }
+    public string? TimeExtension { get; init; } = timeExtension;
 
-    public string? TimeExtension { get; init; }
+    public int EmployeeID { get; init; } = employeeId;
 
-    public int EmployeeID { get; init; }
-
-    public int ItemID { get; init; }
+    public int ItemID { get; init; } = itemId;
 }

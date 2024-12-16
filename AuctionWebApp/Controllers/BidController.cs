@@ -6,14 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BidController : ControllerBase
+public class BidController(BidLogic bidLogic) : ControllerBase
 {
-    private readonly BidLogic _bidLogic;
-
-    public BidController(BidLogic bidLogic)
-    {
-        _bidLogic = bidLogic;
-    }
+    private readonly BidLogic _bidLogic = bidLogic;
 
     [HttpGet]
     public async Task<IActionResult> GetAll()

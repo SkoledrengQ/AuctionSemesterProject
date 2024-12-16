@@ -1,19 +1,14 @@
-﻿using AuctionSemesterProject.AuctionModels;
+﻿using AuctionModels;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AuctionSemesterProject.DataAccess.Interfaces;
+using DataAccess.Interfaces;
 
-namespace AuctionSemesterProject.DataAccess
+namespace DataAccess
 {
-    public class EmployeeDAO : IEmployeeAccess
+    public class EmployeeDAO(string connectionString) : IEmployeeAccess
     {
-        private readonly string _connectionString;
-
-        public EmployeeDAO(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
+        private readonly string _connectionString = connectionString;
 
         public async Task<List<Employee>> GetAllEmployeesAsync()
         {
@@ -24,20 +19,18 @@ namespace AuctionSemesterProject.DataAccess
                 await connection.OpenAsync();
                 var query = "SELECT * FROM Employee;";
 
-                using (var command = new SqlCommand(query, connection))
-                using (var reader = await command.ExecuteReaderAsync())
+                using var command = new SqlCommand(query, connection);
+                using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
                 {
-                    while (await reader.ReadAsync())
+                    employees.Add(new Employee
                     {
-                        employees.Add(new Employee
-                        {
-                            EmployeeID = reader.GetInt32(0),
-                            FirstName = reader.GetString(1),
-                            LastName = reader.GetString(2),
-                            PhoneNo = reader.GetString(3),
-                            Email = reader.GetString(4)
-                        });
-                    }
+                        EmployeeID = reader.GetInt32(0),
+                        FirstName = reader.GetString(1),
+                        LastName = reader.GetString(2),
+                        PhoneNo = reader.GetString(3),
+                        Email = reader.GetString(4)
+                    });
                 }
             }
 
@@ -46,30 +39,24 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<Employee?> GetEmployeeByIdAsync(int id)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            var query = "SELECT * FROM Employee WHERE EmployeeID = @EmployeeID;";
+
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@EmployeeID", id);
+
+            using var reader = await command.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
             {
-                await connection.OpenAsync();
-                var query = "SELECT * FROM Employee WHERE EmployeeID = @EmployeeID;";
-
-                using (var command = new SqlCommand(query, connection))
+                return new Employee
                 {
-                    command.Parameters.AddWithValue("@EmployeeID", id);
-
-                    using (var reader = await command.ExecuteReaderAsync())
-                    {
-                        if (await reader.ReadAsync())
-                        {
-                            return new Employee
-                            {
-                                EmployeeID = reader.GetInt32(0),
-                                FirstName = reader.GetString(1),
-                                LastName = reader.GetString(2),
-                                PhoneNo = reader.GetString(3),
-                                Email = reader.GetString(4)
-                            };
-                        }
-                    }
-                }
+                    EmployeeID = reader.GetInt32(0),
+                    FirstName = reader.GetString(1),
+                    LastName = reader.GetString(2),
+                    PhoneNo = reader.GetString(3),
+                    Email = reader.GetString(4)
+                };
             }
 
             return null;
@@ -77,63 +64,51 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task CreateEmployeeAsync(Employee employee)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = @"
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            var query = @"
                     INSERT INTO Employee (FirstName, LastName, PhoneNo, Email) 
                     VALUES (@FirstName, @LastName, @PhoneNo, @Email);";
 
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@FirstName", employee.FirstName);
-                    command.Parameters.AddWithValue("@LastName", employee.LastName);
-                    command.Parameters.AddWithValue("@PhoneNo", employee.PhoneNo);
-                    command.Parameters.AddWithValue("@Email", employee.Email);
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@FirstName", employee.FirstName);
+            command.Parameters.AddWithValue("@LastName", employee.LastName);
+            command.Parameters.AddWithValue("@PhoneNo", employee.PhoneNo);
+            command.Parameters.AddWithValue("@Email", employee.Email);
 
-                    await command.ExecuteNonQueryAsync();
-                }
-            }
+            await command.ExecuteNonQueryAsync();
         }
 
         public async Task UpdateEmployeeAsync(Employee employee)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = @"
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            var query = @"
                     UPDATE Employee 
                     SET FirstName = @FirstName, LastName = @LastName, PhoneNo = @PhoneNo, Email = @Email
                     WHERE EmployeeID = @EmployeeID;";
 
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@FirstName", employee.FirstName);
-                    command.Parameters.AddWithValue("@LastName", employee.LastName);
-                    command.Parameters.AddWithValue("@PhoneNo", employee.PhoneNo);
-                    command.Parameters.AddWithValue("@Email", employee.Email);
-                    command.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@FirstName", employee.FirstName);
+            command.Parameters.AddWithValue("@LastName", employee.LastName);
+            command.Parameters.AddWithValue("@PhoneNo", employee.PhoneNo);
+            command.Parameters.AddWithValue("@Email", employee.Email);
+            command.Parameters.AddWithValue("@EmployeeID", employee.EmployeeID);
 
-                    await command.ExecuteNonQueryAsync();
-                }
-            }
+            await command.ExecuteNonQueryAsync();
         }
 
         public async Task<bool> DeleteEmployeeAsync(int id)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = "DELETE FROM Employee WHERE EmployeeID = @EmployeeID;";
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            var query = "DELETE FROM Employee WHERE EmployeeID = @EmployeeID;";
 
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@EmployeeID", id);
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@EmployeeID", id);
 
-                    int rowsAffected = await command.ExecuteNonQueryAsync();
-                    return rowsAffected > 0;
-                }
-            }
+            int rowsAffected = await command.ExecuteNonQueryAsync();
+            return rowsAffected > 0;
         }
     }
 }

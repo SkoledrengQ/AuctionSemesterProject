@@ -1,29 +1,18 @@
 ﻿namespace API.Dtos;
 
-public class MemberDto
+public class MemberDto(int memberId, string? firstName, string? lastName, DateTime? birthday, string? phoneNo, string? email, int addressId)
 {
-    public MemberDto(int memberId, string? firstName, string? lastName, DateTime? birthday, string? phoneNo, string? email, int addressId)
-    {
-        MemberID = memberId;
-        FirstName = firstName;
-        LastName = lastName;
-        Birthday = birthday;
-        PhoneNo = phoneNo;
-        Email = email;
-        AddressID = addressId;
-    }
+    public int MemberID { get; init; } = memberId;
 
-    public int MemberID { get; init; }
+    public string? FirstName { get; init; } = firstName;
 
-    public string? FirstName { get; init; }
+    public string? LastName { get; init; } = lastName;
 
-    public string? LastName { get; init; }
+    public DateTime? Birthday { get; init; } = birthday;
 
-    public DateTime? Birthday { get; init; }
+    public string? PhoneNo { get; init; } = phoneNo;
 
-    public string? PhoneNo { get; init; }
+    public string? Email { get; init; } = email;
 
-    public string? Email { get; init; }
-
-    public int AddressID { get; init; }
+    public int AddressID { get; init; } = addressId;
 }

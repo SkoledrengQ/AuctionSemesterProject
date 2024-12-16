@@ -1,20 +1,12 @@
 ﻿namespace API.Dtos;
 
-public class AddressDto
+public class AddressDto(int addressId, string? streetName, string? city, string? zipCode)
 {
-    public AddressDto(int addressId, string? streetName, string? city, string? zipCode)
-    {
-        AddressID = addressId;
-        StreetName = streetName;
-        City = city;
-        ZipCode = zipCode;
-    }
+    public int AddressID { get; init; } = addressId;
 
-    public int AddressID { get; init; }
+    public string? StreetName { get; init; } = streetName;
 
-    public string? StreetName { get; init; }
+    public string? City { get; init; } = city;
 
-    public string? City { get; init; }
-
-    public string? ZipCode { get; init; }
+    public string? ZipCode { get; init; } = zipCode;
 }

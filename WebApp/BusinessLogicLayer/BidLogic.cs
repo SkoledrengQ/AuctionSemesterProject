@@ -5,14 +5,9 @@ using API.Dtos;
 
 namespace WebApp.BusinessLogicLayer
 {
-    public class BidLogic
+    public class BidLogic(IBidService bidService)
     {
-        private readonly IBidService _bidService;
-
-        public BidLogic()
-        {
-            _bidService = new BidService();
-        }
+        private readonly IBidService _bidService = bidService;
 
         public async Task<BidResult> PlaceBidAsync(int auctionId, int memberId, decimal amount)
         {

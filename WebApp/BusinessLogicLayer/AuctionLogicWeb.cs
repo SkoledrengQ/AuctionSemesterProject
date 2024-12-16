@@ -1,19 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AuctionSemesterProject.AuctionModels;
+using AuctionModels;
 using WebApp.Models;
 using WebApp.ServiceLayer;
 
 namespace WebApp.BusinessLogicLayer
 {
-    public class AuctionLogic
+    public class AuctionLogic(IAuctionService auctionService)
     {
-        private readonly IAuctionService _auctionService;
-
-        public AuctionLogic()
-        {
-            _auctionService = new AuctionService();
-        }
+        private readonly IAuctionService _auctionService = auctionService;
 
         public async Task<IEnumerable<AuctionItem>> GetActiveAuctionsAsync()
         {
@@ -25,7 +20,7 @@ namespace WebApp.BusinessLogicLayer
             catch
             {
                 // Return an empty list in case of an error
-                return new List<AuctionItem>();
+                return [];
             }
         }
 

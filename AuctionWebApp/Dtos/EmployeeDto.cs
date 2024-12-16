@@ -1,23 +1,14 @@
 ﻿namespace API.Dtos;
 
-public class EmployeeDto
+public class EmployeeDto(int employeeId, string? firstName, string? lastName, string? phoneNo, string? email)
 {
-    public EmployeeDto(int employeeId, string? firstName, string? lastName, string? phoneNo, string? email)
-    {
-        EmployeeID = employeeId;
-        FirstName = firstName;
-        LastName = lastName;
-        PhoneNo = phoneNo;
-        Email = email;
-    }
+    public int EmployeeID { get; init; } = employeeId;
 
-    public int EmployeeID { get; init; }
+    public string? FirstName { get; init; } = firstName;
 
-    public string? FirstName { get; init; }
+    public string? LastName { get; init; } = lastName;
 
-    public string? LastName { get; init; }
+    public string? PhoneNo { get; init; } = phoneNo;
 
-    public string? PhoneNo { get; init; }
-
-    public string? Email { get; init; }
+    public string? Email { get; init; } = email;
 }

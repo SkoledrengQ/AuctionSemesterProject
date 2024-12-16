@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AuctionSemesterProject.AuctionModels;
+using AuctionModels;
 
-namespace AuctionSemesterProject.DataAccess.Interfaces
+namespace DataAccess.Interfaces
 {
     public interface IBidAccess
     {

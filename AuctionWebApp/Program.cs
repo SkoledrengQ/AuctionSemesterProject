@@ -1,9 +1,9 @@
 
-using AuctionSemesterProject.DataAccess;
+using DataAccess;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace AuctionSemesterProject
+namespace API
 {
     public class Program
     {

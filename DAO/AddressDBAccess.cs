@@ -1,19 +1,14 @@
-﻿using AuctionSemesterProject.AuctionModels;
+﻿using AuctionModels;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AuctionSemesterProject.DataAccess.Interfaces;
+using DataAccess.Interfaces;
 
-namespace AuctionSemesterProject.DataAccess
+namespace DataAccess
 {
-    public class AddressDAO : IAddressAccess
+    public class AddressDAO(string connectionString) : IAddressAccess
     {
-        private readonly string _connectionString;
-
-        public AddressDAO(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
+        private readonly string _connectionString = connectionString;
 
         public async Task<List<Address>> GetAllAddressesAsync()
         {
@@ -24,19 +19,17 @@ namespace AuctionSemesterProject.DataAccess
                 await connection.OpenAsync();
                 var query = "SELECT * FROM Address;";
 
-                using (var command = new SqlCommand(query, connection))
-                using (var reader = await command.ExecuteReaderAsync())
+                using var command = new SqlCommand(query, connection);
+                using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
                 {
-                    while (await reader.ReadAsync())
+                    addresses.Add(new Address
                     {
-                        addresses.Add(new Address
-                        {
-                            AddressID = reader.GetInt32(0),
-                            StreetName = reader.GetString(1),
-                            City = reader.GetString(2),
-                            ZipCode = reader.GetString(3)
-                        });
-                    }
+                        AddressID = reader.GetInt32(0),
+                        StreetName = reader.GetString(1),
+                        City = reader.GetString(2),
+                        ZipCode = reader.GetString(3)
+                    });
                 }
             }
 
@@ -45,29 +38,23 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task<Address?> GetAddressByIdAsync(int id)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            var query = "SELECT * FROM Address WHERE AddressID = @AddressID;";
+
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@AddressID", id);
+
+            using var reader = await command.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
             {
-                await connection.OpenAsync();
-                var query = "SELECT * FROM Address WHERE AddressID = @AddressID;";
-
-                using (var command = new SqlCommand(query, connection))
+                return new Address
                 {
-                    command.Parameters.AddWithValue("@AddressID", id);
-
-                    using (var reader = await command.ExecuteReaderAsync())
-                    {
-                        if (await reader.ReadAsync())
-                        {
-                            return new Address
-                            {
-                                AddressID = reader.GetInt32(0),
-                                StreetName = reader.GetString(1),
-                                City = reader.GetString(2),
-                                ZipCode = reader.GetString(3)
-                            };
-                        }
-                    }
-                }
+                    AddressID = reader.GetInt32(0),
+                    StreetName = reader.GetString(1),
+                    City = reader.GetString(2),
+                    ZipCode = reader.GetString(3)
+                };
             }
 
             return null;
@@ -75,57 +62,44 @@ namespace AuctionSemesterProject.DataAccess
 
         public async Task CreateAddressAsync(Address address)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = "INSERT INTO Address (StreetName, City, ZipCode) VALUES (@StreetName, @City, @ZipCode);";
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            var query = "INSERT INTO Address (StreetName, City, ZipCode) VALUES (@StreetName, @City, @ZipCode);";
 
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@StreetName", address.StreetName);
-                    command.Parameters.AddWithValue("@City", address.City);
-                    command.Parameters.AddWithValue("@ZipCode", address.ZipCode);
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@StreetName", address.StreetName);
+            command.Parameters.AddWithValue("@City", address.City);
+            command.Parameters.AddWithValue("@ZipCode", address.ZipCode);
 
-                    await command.ExecuteNonQueryAsync();
-                }
-            }
+            await command.ExecuteNonQueryAsync();
         }
 
         public async Task UpdateAddressAsync(Address address)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = "UPDATE Address SET StreetName = @StreetName, City = @City, ZipCode = @ZipCode WHERE AddressID = @AddressID;";
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            var query = "UPDATE Address SET StreetName = @StreetName, City = @City, ZipCode = @ZipCode WHERE AddressID = @AddressID;";
 
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@StreetName", address.StreetName);
-                    command.Parameters.AddWithValue("@City", address.City);
-                    command.Parameters.AddWithValue("@ZipCode", address.ZipCode);
-                    command.Parameters.AddWithValue("@AddressID", address.AddressID);
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@StreetName", address.StreetName);
+            command.Parameters.AddWithValue("@City", address.City);
+            command.Parameters.AddWithValue("@ZipCode", address.ZipCode);
+            command.Parameters.AddWithValue("@AddressID", address.AddressID);
 
-                    await command.ExecuteNonQueryAsync();
-                    
-                }
-            }
+            await command.ExecuteNonQueryAsync();
         }
 
         public async Task<bool> DeleteAddressAsync(int id)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var query = "DELETE FROM Address WHERE AddressID = @AddressID;";
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            var query = "DELETE FROM Address WHERE AddressID = @AddressID;";
 
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@AddressID", id);
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@AddressID", id);
 
-                    int rowsAffected = await command.ExecuteNonQueryAsync();
-                    return rowsAffected > 0;
-                }
-            }
+            int rowsAffected = await command.ExecuteNonQueryAsync();
+            return rowsAffected > 0;
         }
     }
 }

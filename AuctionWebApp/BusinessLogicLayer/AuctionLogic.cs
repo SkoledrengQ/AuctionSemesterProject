@@ -1,17 +1,12 @@
 ﻿namespace API.BusinessLogicLayer;
 
 using API.Dtos;
-using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.DataAccess.Interfaces;
+using AuctionModels;
+using DataAccess.Interfaces;
 
-public class AuctionLogic
+public class AuctionLogic(IAuctionAccess auctionAccess)
 {
-    private readonly IAuctionAccess _auctionAccess;
-
-    public AuctionLogic(IAuctionAccess auctionAccess)
-    {
-        _auctionAccess = auctionAccess;
-    }
+    private readonly IAuctionAccess _auctionAccess = auctionAccess;
 
     public async Task<List<AuctionDto>> GetAllAuctionsAsync()
     {

@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using AuctionSemesterProject.AuctionModels;
+using AuctionModels;
 
 namespace WebApp.ServiceLayer
 {
@@ -27,7 +27,7 @@ namespace WebApp.ServiceLayer
                 });
             }
 
-            return new List<AuctionItem>();
+            return [];
         }
 
         public async Task<Auction> GetAuctionByIdAsync(int id)

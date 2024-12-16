@@ -1,16 +1,11 @@
 ﻿namespace API.BusinessLogicLayer;
 using API.Dtos;
-using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.DataAccess.Interfaces;
+using AuctionModels;
+using DataAccess.Interfaces;
 
-public class EmployeeLogic
+public class EmployeeLogic(IEmployeeAccess employeeAccess)
 {
-    private readonly IEmployeeAccess _employeeAccess;
-
-    public EmployeeLogic(IEmployeeAccess employeeAccess)
-    {
-        _employeeAccess = employeeAccess;
-    }
+    private readonly IEmployeeAccess _employeeAccess = employeeAccess;
 
     public async Task<List<EmployeeDto>> GetAllEmployeesAsync()
     {

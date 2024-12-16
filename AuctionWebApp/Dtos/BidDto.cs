@@ -1,17 +1,10 @@
 ﻿namespace API.Dtos;
 
-public class BidDto
+public class BidDto(decimal amount, int memberId, int auctionId)
 {
-    public BidDto(decimal amount, int memberId, int auctionId)
-    {
-        Amount = amount;
-        MemberID = memberId;
-        AuctionID = auctionId;
-    }
+    public decimal Amount { get; init; } = amount;
 
-    public decimal Amount { get; init; }
+    public int MemberID { get; init; } = memberId;
 
-    public int MemberID { get; init; }
-
-    public int AuctionID { get; init; }
+    public int AuctionID { get; init; } = auctionId;
 }

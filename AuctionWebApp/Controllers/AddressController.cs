@@ -6,14 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AddressController : ControllerBase
+public class AddressController(AddressLogic addressLogic) : ControllerBase
 {
-    private readonly AddressLogic _addressLogic;
-
-    public AddressController(AddressLogic addressLogic)
-    {
-        _addressLogic = addressLogic;
-    }
+    private readonly AddressLogic _addressLogic = addressLogic;
 
     [HttpGet]
     public async Task<IActionResult> GetAll()

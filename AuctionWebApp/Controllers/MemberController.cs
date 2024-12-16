@@ -6,14 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MemberController : ControllerBase
+public class MemberController(MemberLogic memberLogic) : ControllerBase
 {
-    private readonly MemberLogic _memberLogic;
-
-    public MemberController(MemberLogic memberLogic)
-    {
-        _memberLogic = memberLogic;
-    }
+    private readonly MemberLogic _memberLogic = memberLogic;
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
