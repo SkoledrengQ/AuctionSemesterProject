@@ -1,4 +1,5 @@
 ﻿
+
 namespace WinFormsApp
 {
     partial class Form2
@@ -52,6 +53,7 @@ namespace WinFormsApp
             label10 = new Label();
             richTextBox1 = new RichTextBox();
             label11 = new Label();
+            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -92,6 +94,7 @@ namespace WinFormsApp
             pictureBox1.Size = new Size(145, 135);
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // listBox1
             // 
@@ -111,6 +114,7 @@ namespace WinFormsApp
             button1.TabIndex = 7;
             button1.Text = "push auction";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // label1
             // 
@@ -145,7 +149,7 @@ namespace WinFormsApp
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(120, 23);
             textBox3.TabIndex = 11;
-            textBox3.TextChanged += textBox3_TextChanged;
+            textBox3.TextChanged += textBox4_TextChanged;
             // 
             // label4
             // 
@@ -265,11 +269,22 @@ namespace WinFormsApp
             label11.Text = "Summary of Item";
             label11.Click += label11_Click;
             // 
+            // button2
+            // 
+            button2.Location = new Point(19, 404);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 26;
+            button2.Text = "add all details";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click_1;
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button2);
             Controls.Add(label11);
             Controls.Add(richTextBox1);
             Controls.Add(label10);
@@ -302,8 +317,11 @@ namespace WinFormsApp
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+           
         }
+
+
+
 
         #endregion
 
@@ -331,5 +349,6 @@ namespace WinFormsApp
         private Label label10;
         private RichTextBox richTextBox1;
         private Label label11;
+        private Button button2;
     }
 }
