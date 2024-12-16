@@ -1,1 +1,135 @@
-﻿
+﻿@model AuctionSemesterProject.Models.AuctionDetailsViewModel
+
+@{
+    ViewData["Title"] = "Auction Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #333333;
+            border-bottom: 2px solid #666666;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h4 {
+            margin-bottom: 10px;
+            color: #444444;
+        }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        .form-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            background-color: #006d5b;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background-color: #999999;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h2>@Model.Auction.AuctionItem.Title</h2>
+        <div class="section">
+            <h4>Item Details</h4>
+            <ul>
+                <li><strong>Author:</strong> @Model.Auction.AuctionItem.Author</li>
+                <li><strong>Genre:</strong> @Model.Auction.AuctionItem.Genre</li>
+                <li><strong>Description:</strong> @Model.Auction.AuctionItem.Description</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h4>Auction Information</h4>
+            <ul>
+                <li><strong>Starting Price:</strong> @Model.Auction.StartPrice.ToString("C")</li>
+                <li><strong>Current Bid:</strong> @(Model.Auction.EndingBid ?? Model.Auction.StartPrice).ToString("C")</li>
+                <li><strong>Minimum Bid Increment:</strong> @Model.Auction.MinBid.ToString("C")</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h4>Place Your Bid</h4>
+            <form asp-action="PlaceBid" method="post">
+                <input type="hidden" asp-for="Auction.AuctionID" />
+                <div class="form-group">
+                    <label asp-for="MemberID">Your Member ID</label>
+                    <input asp-for="MemberID" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="BidAmount">Your Bid Amount</label>
+                    <input asp-for="BidAmount" type="number" />
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn">Place Bid</button>
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to Auctions</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

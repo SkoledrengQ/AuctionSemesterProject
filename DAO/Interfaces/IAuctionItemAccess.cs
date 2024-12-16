@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using AuctionSemesterProject.AuctionModels;
 
-namespace AuctionSemesterProject.Interfaces
+namespace AuctionSemesterProject.DataAccess.Interfaces
 {
     public interface IAuctionItemAccess
     {

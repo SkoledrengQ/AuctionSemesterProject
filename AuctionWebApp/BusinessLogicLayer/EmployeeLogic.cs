@@ -1,8 +1,7 @@
-﻿namespace AuctionSemesterProject.BusinessLogicLayer;
-using AuctionSemesterProject.DTO;
+﻿namespace API.BusinessLogicLayer;
+using API.Dtos;
 using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.DataAccess;
-using AuctionSemesterProject.Interfaces;
+using AuctionSemesterProject.DataAccess.Interfaces;
 
 public class EmployeeLogic
 {

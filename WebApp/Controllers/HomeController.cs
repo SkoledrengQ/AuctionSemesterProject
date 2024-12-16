@@ -1,90 +1,51 @@
-using AuctionSemesterProject.AuctionModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Text.Json;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using WebApp.BusinessLogicLayer;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HttpClient _httpClient;
+        private readonly AuctionLogic _auctionLogic;
 
-        public HomeController(HttpClient httpClient)
+        public HomeController()
         {
-            _httpClient = httpClient;
+            _auctionLogic = new AuctionLogic();
         }
 
-        // Displays the homepage with all auction items
+        // GET: /Home/Index
         public async Task<IActionResult> Index()
         {
-            var apiUrl = "https://localhost:7005/api/AuctionItem";
-            var response = await _httpClient.GetAsync(apiUrl);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var auctionItems = JsonSerializer.Deserialize<List<AuctionItem>>(jsonData, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-
-                return View(auctionItems);
-            }
-
-            ViewBag.ErrorMessage = "Unable to load auction items.";
-            return View(new List<AuctionItem>());
+            // Fetch active auctions from AuctionLogic
+            var auctions = await _auctionLogic.GetActiveAuctionsAsync();
+            return View(auctions);
         }
 
-        // Displays details for a specific auction and its associated item
+        // GET: /Home/AuctionDetails/{id}
         public async Task<IActionResult> AuctionDetails(int id)
         {
-            var auctionApiUrl = $"https://localhost:7005/api/Auction/{id}";
-            var auctionItemApiUrl = $"https://localhost:7005/api/AuctionItem/{id}";
-
-            var auctionResponse = await _httpClient.GetAsync(auctionApiUrl);
-            var auctionItemResponse = await _httpClient.GetAsync(auctionItemApiUrl);
-
-            if (auctionResponse.IsSuccessStatusCode && auctionItemResponse.IsSuccessStatusCode)
+            // Fetch auction details from AuctionLogic
+            var auctionDetails = await _auctionLogic.GetAuctionDetailsAsync(id);
+            if (auctionDetails == null)
             {
-                var auctionJson = await auctionResponse.Content.ReadAsStringAsync();
-                var auctionItemJson = await auctionItemResponse.Content.ReadAsStringAsync();
-
-                var auction = JsonSerializer.Deserialize<Auction>(auctionJson, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-
-                var auctionItem = JsonSerializer.Deserialize<AuctionItem>(auctionItemJson, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-
-                var viewModel = new AuctionDetailsViewModel
-                {
-                    Auction = auction,
-                    AuctionItem = auctionItem
-                };
-
-                return View("~/Views/Auctions/AuctionDetails.cshtml", viewModel);
+                return NotFound();
             }
 
-            ViewBag.ErrorMessage = "Unable to load auction details.";
-            return RedirectToAction("Index");
+            // Pass the auction details to the view
+            return View(auctionDetails);
         }
 
-        // Privacy page
         public IActionResult Privacy()
         {
             return View();
         }
 
-        // Error handling
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View();
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

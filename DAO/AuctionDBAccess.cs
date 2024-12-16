@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AuctionSemesterProject.Interfaces;
+using AuctionSemesterProject.DataAccess.Interfaces;
 
 namespace AuctionSemesterProject.DataAccess
 {

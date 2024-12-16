@@ -1,8 +1,7 @@
-﻿namespace AuctionSemesterProject.Controllers;
+﻿namespace API.Controllers;
 
 using API.Dtos;
-using AuctionSemesterProject.BusinessLogicLayer;
-using AuctionSemesterProject.DTO;
+using API.BusinessLogicLayer;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]

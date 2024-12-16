@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<AuctionSemesterProject.AuctionModels.AuctionItem>
+
+@{
     ViewData["Title"] = "Shelf Treasures!";
 }
 
@@ -59,15 +61,10 @@
                     background-color: #d4f0e4;
                 }
     </style>
-    <script>
-        function navigateToAuction(id) {
-            window.location.href = `/Home/AuctionDetails/${id}`;
-        }
-    </script>
 </head>
 <body>
     <main>
-        <h2>Available Auction Items</h2>
+        <h2>@ViewData["Title"]</h2>
         <table>
             <thead>
                 <tr>
@@ -90,5 +87,10 @@
             </tbody>
         </table>
     </main>
+    <script>
+        function navigateToAuction(id) {
+            window.location.href = `/Auctions/AuctionDetails/${id}`;
+        }
+    </script>
 </body>
 </html>

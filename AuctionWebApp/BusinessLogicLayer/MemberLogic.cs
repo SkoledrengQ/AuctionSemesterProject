@@ -1,7 +1,6 @@
-﻿namespace AuctionSemesterProject.BusinessLogicLayer;
-using AuctionSemesterProject.Interfaces;
+﻿namespace API.BusinessLogicLayer;
+using AuctionSemesterProject.DataAccess.Interfaces;
 using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.DataAccess;
 using API.Dtos;
 
 public class MemberLogic

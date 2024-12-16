@@ -1,4 +1,4 @@
-using AuctionSemesterProject.Services;
+
 using AuctionSemesterProject.DataAccess;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -13,31 +13,6 @@ namespace AuctionSemesterProject
 
             // Add services to the container (API controllers only)
             builder.Services.AddControllers();
-
-            // Register shared DAOs and Services for dependency injection
-            builder.Services.AddSingleton<AuctionDBAccess>(sp =>
-                new AuctionDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<AuctionService>();
-
-            builder.Services.AddSingleton<AddressDBAccess>(sp =>
-                new AddressDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<AddressService>();
-
-            builder.Services.AddSingleton<AuctionItemDBAccess>(sp =>
-                new AuctionItemDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<AuctionItemService>();
-
-            builder.Services.AddSingleton<BidDBAccess>(sp =>
-                new BidDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<BidService>();
-
-            builder.Services.AddSingleton<EmployeeDBAccess>(sp =>
-                new EmployeeDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<EmployeeService>();
-
-            builder.Services.AddSingleton<MemberDBAccess>(sp =>
-                new MemberDBAccess(builder.Configuration.GetConnectionString("DefaultConnection")!));
-            builder.Services.AddTransient<MemberService>();
 
             // Register Swagger services
             builder.Services.AddEndpointsApiExplorer();

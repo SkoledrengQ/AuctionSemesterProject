@@ -1,10 +1,9 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using API.Dtos; // API DTOs for Auction and Bid
-using WebApp.BusinessLogicLayer;
+using API.Dtos;
+using WebApp.Models;
 
 namespace WebApp.ServiceLayer
 {
@@ -12,56 +11,30 @@ namespace WebApp.ServiceLayer
     {
         private readonly HttpClient _httpClient;
 
-        public BidService(HttpClient httpClient)
+        public BidService()
         {
-            _httpClient = httpClient;
+            _httpClient = new HttpClient(); // In a real app, consider injecting this via DI
         }
 
-        // Fetch auction details by ID
-        public async Task<AuctionDto> GetAuctionByIdAsync(int auctionId)
-        {
-            try
-            {
-                var response = await _httpClient.GetAsync($"api/Auctions/{auctionId}");
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<AuctionDto>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log error (e.g., to a file or monitoring system)
-                Console.WriteLine($"Error fetching auction: {ex.Message}");
-            }
-
-            return null; // Return null if the auction is not found or an error occurs
-        }
-
-        // Submit a bid
         public async Task<BidResult> PlaceBidAsync(BidDto bidDto)
         {
-            try
-            {
-                var json = JsonSerializer.Serialize(bidDto);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+            // Serialize the DTO to JSON
+            var content = new StringContent(
+                JsonSerializer.Serialize(bidDto),
+                Encoding.UTF8,
+                "application/json");
 
-                var response = await _httpClient.PostAsync("api/Bids", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    return new BidResult { IsSuccessful = true };
-                }
+            // Send POST request to the API
+            var response = await _httpClient.PostAsync("https://localhost:7005/api/bids", content);
 
-                // Extract error message from API response, if available
-                var errorMessage = await response.Content.ReadAsStringAsync();
-                return new BidResult { IsSuccessful = false, ErrorMessage = errorMessage };
-            }
-            catch (Exception ex)
+            if (response.IsSuccessStatusCode)
             {
-                // Log error (e.g., to a file or monitoring system)
-                Console.WriteLine($"Error placing bid: {ex.Message}");
-                return new BidResult { IsSuccessful = false, ErrorMessage = "An unexpected error occurred." };
+                return BidResult.Success();
             }
+
+            // Handle errors
+            var error = await response.Content.ReadAsStringAsync();
+            return BidResult.Failure($"Failed to place bid: {error}");
         }
     }
 }

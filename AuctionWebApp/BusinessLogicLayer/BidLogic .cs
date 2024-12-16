@@ -1,8 +1,7 @@
-﻿namespace AuctionSemesterProject.BusinessLogicLayer;
+﻿namespace API.BusinessLogicLayer;
 
-using AuctionSemesterProject.DTO;
 using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.DataAccess;
+using AuctionSemesterProject.DataAccess.Interfaces;
 using API.Dtos;
 
 public class BidLogic

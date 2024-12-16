@@ -1,4 +1,4 @@
-namespace WebApp.Models
+namespace AuctionSemesterProject.AuctionModels
 {
     public class ErrorViewModel
     {

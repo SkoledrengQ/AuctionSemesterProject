@@ -1,61 +1,28 @@
-﻿using System;
-using System.Threading.Tasks;
-using WebApp.ServiceLayer; // For BidService interactions
-using WebApp.Models; // For AuctionDetailsViewModel
-using API.Dtos; // DTOs exposed by the API
+﻿using System.Threading.Tasks;
+using WebApp.Models;
+using WebApp.ServiceLayer;
+using API.Dtos;
 
-namespace WebApp.BusinessLogic
+namespace WebApp.BusinessLogicLayer
 {
-    public class BidLogic : IBidLogic
+    public class BidLogic
     {
         private readonly IBidService _bidService;
 
-        public BidLogic(IBidService bidService)
+        public BidLogic()
         {
-            _bidService = bidService;
+            _bidService = new BidService();
         }
 
-        // Process the bid request
-        public async Task<BidResult> ProcessBidAsync(int auctionId, int memberId, decimal amount)
+        public async Task<BidResult> PlaceBidAsync(int auctionId, int memberId, decimal amount)
         {
-            // Step 1: Retrieve auction details via DTO
-            var auctionDto = await _bidService.GetAuctionByIdAsync(auctionId);
-            if (auctionDto == null)
+            // Validate the bid amount
+            if (amount <= 0)
             {
-                return new BidResult { IsSuccessful = false, ErrorMessage = "Auction not found." };
+                return BidResult.Failure("Bid amount must be greater than zero.");
             }
 
-            // Step 2: Validate bid amount
-            var currentBid = auctionDto.EndingBid ?? auctionDto.StartPrice;
-            if (amount <= currentBid)
-            {
-                return new BidResult
-                {
-                    IsSuccessful = false,
-                    ErrorMessage = $"Your bid must be higher than the current bid of {currentBid:C}."
-                };
-            }
-
-            if (amount < currentBid + auctionDto.MinBid)
-            {
-                return new BidResult
-                {
-                    IsSuccessful = false,
-                    ErrorMessage = $"Your bid must be at least {auctionDto.MinBid:C} higher than the current bid."
-                };
-            }
-
-            // Step 3: Ensure auction is active
-            if (auctionDto.Status != "Open")
-            {
-                return new BidResult
-                {
-                    IsSuccessful = false,
-                    ErrorMessage = "Bidding is closed for this auction."
-                };
-            }
-
-            // Step 4: Create a BidDto to send to the API
+            // Prepare the DTO
             var bidDto = new BidDto
             {
                 AuctionID = auctionId,
@@ -63,20 +30,16 @@ namespace WebApp.BusinessLogic
                 Amount = amount
             };
 
-            // Step 5: Submit the bid via the service layer
-            var serviceResult = await _bidService.PlaceBidAsync(bidDto);
-
-            if (!serviceResult.IsSuccessful)
+            try
             {
-                return new BidResult
-                {
-                    IsSuccessful = false,
-                    ErrorMessage = serviceResult.ErrorMessage ?? "Failed to place the bid due to an unknown error."
-                };
+                // Call the service layer
+                return await _bidService.PlaceBidAsync(bidDto);
             }
-
-            // Step 6: Return success
-            return new BidResult { IsSuccessful = true };
+            catch
+            {
+                // Return a failure result on error
+                return BidResult.Failure("An error occurred while processing the bid.");
+            }
         }
     }
 }

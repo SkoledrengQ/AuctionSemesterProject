@@ -1,9 +1,8 @@
-﻿namespace AuctionSemesterProject.BusinessLogicLayer;
-using AuctionSemesterProject.Interfaces;
-using AuctionSemesterProject.DTO;
+﻿using AuctionSemesterProject.DataAccess.Interfaces;
 using AuctionSemesterProject.AuctionModels;
-using AuctionSemesterProject.DataAccess;
+using API.Dtos;
 
+namespace API.BusinessLogicLayer;
 public class AddressLogic
 {
     private readonly IAddressAccess _addressAccess;

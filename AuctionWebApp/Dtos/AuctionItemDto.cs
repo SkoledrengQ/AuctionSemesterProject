@@ -1,4 +1,4 @@
-﻿namespace AuctionSemesterProject.DTO;
+﻿namespace API.Dtos;
 
 public class AuctionItemDto
 {
