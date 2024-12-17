@@ -6,7 +6,7 @@ using DataAccess.Interfaces;
 
 namespace DataAccess
 {
-    public class AuctionItemDAO(string connectionString) : IAuctionItemAccess
+    public class AuctionItemDBAccess(string connectionString) : IAuctionItemAccess
     {
         private readonly string _connectionString = connectionString;
 
@@ -41,6 +41,8 @@ namespace DataAccess
 
         public async Task<AuctionItem?> GetAuctionItemByIdAsync(int id)
         {
+            Console.WriteLine($"Fetching AuctionItem with ID: {id}");
+
             using var connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();
             var query = "SELECT * FROM AuctionItem WHERE ItemID = @ItemID;";
@@ -63,8 +65,10 @@ namespace DataAccess
                 };
             }
 
+            Console.WriteLine("No matching AuctionItem found.");
             return null;
         }
+
 
         public async Task CreateAuctionItemAsync(AuctionItem item)
         {
@@ -85,7 +89,7 @@ namespace DataAccess
             await command.ExecuteNonQueryAsync();
         }
 
-        public async Task UpdateAuctionItemAsync(AuctionItem item)
+        public async Task<bool> UpdateAuctionItemAsync(AuctionItem item)
         {
             using var connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();
@@ -103,7 +107,8 @@ namespace DataAccess
             command.Parameters.AddWithValue("@ItemType", item.ItemType);
             command.Parameters.AddWithValue("@ItemID", item.ItemID);
 
-            await command.ExecuteNonQueryAsync();
+            int rowsAffected = await command.ExecuteNonQueryAsync();
+            return rowsAffected > 0;
         }
 
         public async Task<bool> DeleteAuctionItemAsync(int id)

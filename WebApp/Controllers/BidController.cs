@@ -4,19 +4,14 @@ using WebApp.BusinessLogicLayer;
 
 namespace WebApp.Controllers
 {
-    public class BidController : Controller
+    public class BidController(BidLogic bidLogic) : Controller
     {
-        private readonly BidLogic _bidLogic;
-
-        public BidController()
-        {
-            _bidLogic = new BidLogic();
-        }
+        private readonly BidLogic _bidLogic = bidLogic;
 
         [HttpPost]
-        public async Task<IActionResult> PlaceBid(int auctionId, int memberId, decimal amount)
+        public async Task<IActionResult> PlaceBid(decimal amount, int auctionId, int memberId)
         {
-            var result = await _bidLogic.PlaceBidAsync(auctionId, memberId, amount);
+            var result = await _bidLogic.PlaceBidAsync(amount, auctionId, memberId);
 
             if (!result.IsSuccessful)
             {

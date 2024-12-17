@@ -4,82 +4,122 @@ using API.Dtos;
 using AuctionModels;
 using DataAccess.Interfaces;
 
-public class AuctionLogic(IAuctionAccess auctionAccess)
+public class AuctionLogic(IAuctionAccess auctionAccess, IAuctionItemAccess auctionItemAccess)
 {
     private readonly IAuctionAccess _auctionAccess = auctionAccess;
+    private readonly IAuctionItemAccess _auctionItemAccess = auctionItemAccess;
 
-    public async Task<List<AuctionDto>> GetAllAuctionsAsync()
+    // Fetch all auctions with their item details
+    public async Task<List<AuctionDetailsDto>> GetAllAuctionDetailsAsync()
     {
         var auctions = await _auctionAccess.GetAllAuctionsAsync();
-        return auctions.Select(a => new AuctionDto(
-            a.AuctionID,
-            a.StartPrice,
-            a.MinBid,
-            a.EndingBid,
-            a.CurrentHighestBid,
-            a.BuyNowPrice,
-            a.NoOfBids,
-            a.TimeExtension,
-            a.EmployeeID_FK,
-            a.ItemID_FK
-        )).ToList();
+
+        var auctionDetailsList = new List<AuctionDetailsDto>();
+
+        foreach (var auction in auctions)
+        {
+            var auctionItem = await _auctionItemAccess.GetAuctionItemByIdAsync(auction.ItemID_FK);
+
+            auctionDetailsList.Add(new AuctionDetailsDto
+            {
+                Auction = new AuctionDto(
+                    auction.AuctionID,
+                    auction.StartPrice,
+                    auction.MinBid,
+                    auction.EndingBid,
+                    auction.CurrentHighestBid,
+                    auction.BuyNowPrice,
+                    auction.NoOfBids,
+                    auction.TimeExtension,
+                    auction.EmployeeID_FK,
+                    auction.ItemID_FK
+                ),
+                AuctionItem = new AuctionItemDto(
+                    auctionItem.ItemID,
+                    auctionItem.Title,
+                    auctionItem.ReleaseDate,
+                    auctionItem.Author,
+                    auctionItem.Genre,
+                    auctionItem.Description
+                )
+            });
+        }
+
+        return auctionDetailsList;
     }
 
-    public async Task<AuctionDto?> GetAuctionByIdAsync(int id)
+    // Fetch auction details by ID
+    public async Task<AuctionDetailsDto?> GetAuctionDetailsByIdAsync(int id)
     {
         var auction = await _auctionAccess.GetAuctionByIdAsync(id);
         if (auction == null) return null;
 
-        return new AuctionDto(
-            auction.AuctionID,
-            auction.StartPrice,
-            auction.MinBid,
-            auction.EndingBid,
-            auction.CurrentHighestBid,
-            auction.BuyNowPrice,
-            auction.NoOfBids,
-            auction.TimeExtension,
-            auction.EmployeeID_FK,
-            auction.ItemID_FK
-        );
+        var auctionItem = await _auctionItemAccess.GetAuctionItemByIdAsync(auction.ItemID_FK);
+
+        return new AuctionDetailsDto
+        {
+            Auction = new AuctionDto(
+                auction.AuctionID,
+                auction.StartPrice,
+                auction.MinBid,
+                auction.EndingBid,
+                auction.CurrentHighestBid,
+                auction.BuyNowPrice,
+                auction.NoOfBids,
+                auction.TimeExtension,
+                auction.EmployeeID_FK,
+                auction.ItemID_FK
+            ),
+            AuctionItem = new AuctionItemDto(
+                auctionItem.ItemID,
+                auctionItem.Title,
+                auctionItem.ReleaseDate,
+                auctionItem.Author,
+                auctionItem.Genre,
+                auctionItem.Description
+            )
+        };
     }
 
-    public async Task CreateAuctionAsync(AuctionDto auctionDto)
+    // Create a new auction
+    public async Task CreateAuctionAsync(AuctionDetailsDto auctionDetailsDto)
     {
         var auction = new Auction
         {
-            StartPrice = auctionDto.StartPrice,
-            MinBid = auctionDto.MinBid,
-            EndingBid = auctionDto.EndingBid,
-            CurrentHighestBid = auctionDto.CurrentHighestBid,
-            BuyNowPrice = auctionDto.BuyNowPrice,
-            NoOfBids = auctionDto.NoOfBids,
-            TimeExtension = auctionDto.TimeExtension,
-            EmployeeID_FK = auctionDto.EmployeeID,
-            ItemID_FK = auctionDto.ItemID
+            StartPrice = auctionDetailsDto.Auction.StartPrice,
+            MinBid = auctionDetailsDto.Auction.MinBid,
+            EndingBid = auctionDetailsDto.Auction.EndingBid,
+            CurrentHighestBid = auctionDetailsDto.Auction.CurrentHighestBid,
+            BuyNowPrice = auctionDetailsDto.Auction.BuyNowPrice,
+            NoOfBids = auctionDetailsDto.Auction.NoOfBids,
+            TimeExtension = auctionDetailsDto.Auction.TimeExtension,
+            EmployeeID_FK = auctionDetailsDto.Auction.EmployeeID,
+            ItemID_FK = auctionDetailsDto.Auction.ItemID
         };
 
         await _auctionAccess.CreateAuctionAsync(auction);
     }
 
-    public async Task<bool> UpdateAuctionAsync(int id, AuctionDto auctionDto)
+    // Update an existing auction
+    public async Task<bool> UpdateAuctionAsync(int id, AuctionDetailsDto auctionDetailsDto)
     {
         var auction = await _auctionAccess.GetAuctionByIdAsync(id);
         if (auction == null) return false;
 
-        auction.StartPrice = auctionDto.StartPrice;
-        auction.MinBid = auctionDto.MinBid;
-        auction.EndingBid = auctionDto.EndingBid;
-        auction.CurrentHighestBid = auctionDto.CurrentHighestBid;
-        auction.BuyNowPrice = auctionDto.BuyNowPrice;
-        auction.NoOfBids = auctionDto.NoOfBids;
-        auction.TimeExtension = auctionDto.TimeExtension;
-        auction.EmployeeID_FK = auctionDto.EmployeeID;
-        auction.ItemID_FK = auctionDto.ItemID;
+        auction.StartPrice = auctionDetailsDto.Auction.StartPrice;
+        auction.MinBid = auctionDetailsDto.Auction.MinBid;
+        auction.EndingBid = auctionDetailsDto.Auction.EndingBid;
+        auction.CurrentHighestBid = auctionDetailsDto.Auction.CurrentHighestBid;
+        auction.BuyNowPrice = auctionDetailsDto.Auction.BuyNowPrice;
+        auction.NoOfBids = auctionDetailsDto.Auction.NoOfBids;
+        auction.TimeExtension = auctionDetailsDto.Auction.TimeExtension;
+        auction.EmployeeID_FK = auctionDetailsDto.Auction.EmployeeID;
+        auction.ItemID_FK = auctionDetailsDto.Auction.ItemID;
 
         return await _auctionAccess.UpdateAuctionWithConcurrencyCheckAsync(auction);
     }
 
+    // Delete an auction
     public async Task<bool> DeleteAuctionAsync(int id)
     {
         return await _auctionAccess.DeleteAuctionAsync(id);

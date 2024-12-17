@@ -1,55 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using WebApp.ServiceLayer;
+using API.Dtos;
 using System.Threading.Tasks;
-using AuctionModels;
-using WebApp.Models;
-using WebApp.ServiceLayer;
+using System.Collections.Generic;
 
 namespace WebApp.BusinessLogicLayer
 {
-    public class AuctionLogic(IAuctionService auctionService)
+    public class AuctionLogicWeb
     {
-        private readonly IAuctionService _auctionService = auctionService;
+        private readonly IAuctionService _auctionService;
 
-        public async Task<IEnumerable<AuctionItem>> GetActiveAuctionsAsync()
+        public AuctionLogicWeb(IAuctionService auctionService)
         {
-            try
-            {
-                // Call the service layer to fetch active auctions
-                return await _auctionService.GetAllAuctionItemsAsync();
-            }
-            catch
-            {
-                // Return an empty list in case of an error
-                return [];
-            }
+            _auctionService = auctionService;
         }
 
-        public async Task<AuctionDetailsViewModel?> GetAuctionDetailsAsync(int auctionId)
+        // Fetch active auctions
+        public async Task<IEnumerable<AuctionDetailsDto>> GetActiveAuctionsAsync()
         {
-            try
-            {
-                // Retrieve auction and auction item details
-                var auction = await _auctionService.GetAuctionByIdAsync(auctionId);
-                var auctionItem = await _auctionService.GetAuctionItemByIdAsync(auctionId);
+            return await _auctionService.GetAllAuctionsAsync();
+        }
 
-                // Check if both auction and auction item are valid
-                if (auction == null || auctionItem == null)
-                {
-                    return null;
-                }
-
-                // Construct and return the view model
-                return new AuctionDetailsViewModel
-                {
-                    Auction = auction,
-                    AuctionItem = auctionItem
-                };
-            }
-            catch
-            {
-                // Return null in case of an error
-                return null;
-            }
+        // Fetch auction details by ID
+        public async Task<AuctionDetailsDto?> GetAuctionDetailsAsync(int id)
+        {
+            return await _auctionService.GetAuctionDetailsAsync(id);
         }
     }
 }

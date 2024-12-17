@@ -51,10 +51,10 @@ public class AuctionItemLogic(IAuctionItemAccess auctionItemAccess)
         await _auctionItemAccess.CreateAuctionItemAsync(item);
     }
 
-    public async Task<bool> UpdateAuctionItemAsync(int id, AuctionItemDto auctionItemDto)
+    public async Task UpdateAuctionItemAsync(int id, AuctionItemDto auctionItemDto)
     {
         var item = await _auctionItemAccess.GetAuctionItemByIdAsync(id);
-        if (item == null) return false;
+        
 
         item.Title = auctionItemDto.Title;
         item.ReleaseDate = auctionItemDto.ReleaseDate;
@@ -62,7 +62,7 @@ public class AuctionItemLogic(IAuctionItemAccess auctionItemAccess)
         item.Genre = auctionItemDto.Genre;
         item.Description = auctionItemDto.Description;
 
-        return await _auctionItemAccess.UpdateAuctionItemAsync(item);
+        await _auctionItemAccess.UpdateAuctionItemAsync(item);
     }
 
     public async Task<bool> DeleteAuctionItemAsync(int id)

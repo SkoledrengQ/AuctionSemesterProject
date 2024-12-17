@@ -6,7 +6,7 @@ using DataAccess.Interfaces;
 
 namespace DataAccess
 {
-    public class BidDAO(string connectionString) : IBidAccess
+    public class BidDBAccess(string connectionString) : IBidAccess
     {
         private readonly string _connectionString = connectionString;
 

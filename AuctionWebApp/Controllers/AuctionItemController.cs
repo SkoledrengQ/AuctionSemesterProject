@@ -35,8 +35,7 @@ public class AuctionItemController(AuctionItemLogic auctionItemLogic) : Controll
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] AuctionItemDto auctionItemDto)
     {
-        var success = await _auctionItemLogic.UpdateAuctionItemAsync(id, auctionItemDto);
-        if (!success) return NotFound();
+        await _auctionItemLogic.UpdateAuctionItemAsync(id, auctionItemDto);
         return NoContent();
     }
 

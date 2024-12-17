@@ -2,14 +2,14 @@
 using System.Threading.Tasks;
 using AuctionModels;
 
-namespace   DataAccess.Interfaces
+namespace DataAccess.Interfaces
 {
     public interface IAuctionItemAccess
     {
         Task<List<AuctionItem>> GetAllAuctionItemsAsync();
         Task<AuctionItem?> GetAuctionItemByIdAsync(int id);
         Task CreateAuctionItemAsync(AuctionItem item);
-        Task UpdateAuctionItemAsync(AuctionItem item);
-        Task<bool> DeleteAuctionItemAsync(int id); // Changed to return Task<bool>
+        Task<bool> UpdateAuctionItemAsync(AuctionItem item);
+        Task<bool> DeleteAuctionItemAsync(int id);
     }
 }

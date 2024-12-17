@@ -6,7 +6,7 @@ using DataAccess.Interfaces;
 
 namespace DataAccess
 {
-    public class AddressDAO(string connectionString) : IAddressAccess
+    public class AddressDBAccess(string connectionString) : IAddressAccess
     {
         private readonly string _connectionString = connectionString;
 

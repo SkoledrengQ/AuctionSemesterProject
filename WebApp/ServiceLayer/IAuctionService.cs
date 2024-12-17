@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using API.Dtos; // Ensure this matches your namespace
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using AuctionModels;
 
 namespace WebApp.ServiceLayer
 {
     public interface IAuctionService
     {
-        Task<IEnumerable<AuctionItem>> GetAllAuctionItemsAsync();
-        Task<Auction> GetAuctionByIdAsync(int id);
-        Task<AuctionItem> GetAuctionItemByIdAsync(int id);
+        Task<IEnumerable<AuctionDetailsDto>> GetAllAuctionsAsync(); // Correct method name
+        Task<AuctionDetailsDto?> GetAuctionDetailsAsync(int id); // Correct method
     }
 }

@@ -9,7 +9,7 @@ namespace WebApp.BusinessLogicLayer
     {
         private readonly IBidService _bidService = bidService;
 
-        public async Task<BidResult> PlaceBidAsync(int auctionId, int memberId, decimal amount)
+        public async Task<BidResult> PlaceBidAsync(decimal amount,int auctionId, int memberId)
         {
             // Validate the bid amount
             if (amount <= 0)
@@ -18,12 +18,8 @@ namespace WebApp.BusinessLogicLayer
             }
 
             // Prepare the DTO
-            var bidDto = new BidDto
-            {
-                AuctionID = auctionId,
-                MemberID = memberId,
-                Amount = amount
-            };
+            var bidDto = new BidDto(amount, auctionId, memberId);
+          
 
             try
             {

@@ -1,51 +1,75 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using WebApp.BusinessLogicLayer;
 using WebApp.Models;
+using WebApp.ServiceLayer;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly AuctionLogic _auctionLogic;
+        private readonly IAuctionService _auctionService;
 
-        public HomeController()
+        public HomeController(IAuctionService auctionService)
         {
-            _auctionLogic = new AuctionLogic();
+            _auctionService = auctionService;
         }
 
-        // GET: /Home/Index
+        // Default action for Home/Index
         public async Task<IActionResult> Index()
         {
-            // Fetch active auctions from AuctionLogic
-            var auctions = await _auctionLogic.GetActiveAuctionsAsync();
-            return View(auctions);
+            var auctionDetails = await _auctionService.GetAllAuctionsAsync();
+
+            var viewModels = auctionDetails.Select(a => new AuctionDetailsViewModel
+            {
+                // Auction Information
+                AuctionID = a.Auction.AuctionID,
+                StartPrice = a.Auction.StartPrice,
+                MinBid = a.Auction.MinBid,
+                EndingBid = a.Auction.EndingBid,
+                CurrentHighestBid = a.Auction.CurrentHighestBid,
+                BuyNowPrice = a.Auction.BuyNowPrice,
+                NoOfBids = a.Auction.NoOfBids,
+                TimeExtension = a.Auction.TimeExtension,
+                EmployeeID = a.Auction.EmployeeID,
+
+                // Auction Item Information
+                Title = a.AuctionItem.Title,
+                Author = a.AuctionItem.Author,
+                Genre = a.AuctionItem.Genre,
+                Description = a.AuctionItem.Description
+            }).ToList();
+
+            return View(viewModels);
         }
 
-        // GET: /Home/AuctionDetails/{id}
+        // Auction details action
         public async Task<IActionResult> AuctionDetails(int id)
         {
-            // Fetch auction details from AuctionLogic
-            var auctionDetails = await _auctionLogic.GetAuctionDetailsAsync(id);
+            var auctionDetails = await _auctionService.GetAuctionDetailsAsync(id);
+
             if (auctionDetails == null)
-            {
                 return NotFound();
-            }
 
-            // Pass the auction details to the view
-            return View(auctionDetails);
-        }
+            var viewModel = new AuctionDetailsViewModel
+            {
+                // Auction Information
+                AuctionID = auctionDetails.Auction.AuctionID,
+                StartPrice = auctionDetails.Auction.StartPrice,
+                MinBid = auctionDetails.Auction.MinBid,
+                EndingBid = auctionDetails.Auction.EndingBid,
+                CurrentHighestBid = auctionDetails.Auction.CurrentHighestBid,
+                BuyNowPrice = auctionDetails.Auction.BuyNowPrice,
+                NoOfBids = auctionDetails.Auction.NoOfBids,
+                TimeExtension = auctionDetails.Auction.TimeExtension,
+                EmployeeID = auctionDetails.Auction.EmployeeID,
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+                // Auction Item Information
+                Title = auctionDetails.AuctionItem.Title,
+                Author = auctionDetails.AuctionItem.Author,
+                Genre = auctionDetails.AuctionItem.Genre,
+                Description = auctionDetails.AuctionItem.Description
+            };
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(viewModel);
         }
     }
 }

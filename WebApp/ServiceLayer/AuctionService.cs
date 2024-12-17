@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using API.Dtos;
 using System.Net.Http;
-using System.Text.Json;
+using System.Net.Http.Json;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using AuctionModels;
 
 namespace WebApp.ServiceLayer
 {
@@ -10,54 +10,21 @@ namespace WebApp.ServiceLayer
     {
         private readonly HttpClient _httpClient;
 
-        public AuctionService()
+        public AuctionService(HttpClient httpClient)
         {
-            _httpClient = new HttpClient(); // In a real app, consider injecting this via DI
+            _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<AuctionItem>> GetAllAuctionItemsAsync()
+        // Fetch all auctions - returns AuctionDetailsDto for richer data
+        public async Task<IEnumerable<AuctionDetailsDto>> GetAllAuctionsAsync()
         {
-            var response = await _httpClient.GetAsync("https://localhost:7005/api/AuctionItem");
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<AuctionItem>>(json, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-            }
-
-            return [];
+            return await _httpClient.GetFromJsonAsync<IEnumerable<AuctionDetailsDto>>("api/Auction");
         }
 
-        public async Task<Auction> GetAuctionByIdAsync(int id)
+        // Fetch auction details by ID
+        public async Task<AuctionDetailsDto?> GetAuctionDetailsAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"https://localhost:7005/api/Auction/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<Auction>(json, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-            }
-
-            return null;
-        }
-
-        public async Task<AuctionItem> GetAuctionItemByIdAsync(int id)
-        {
-            var response = await _httpClient.GetAsync($"https://localhost:7005/api/AuctionItem/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<AuctionItem>(json, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-            }
-
-            return null;
+            return await _httpClient.GetFromJsonAsync<AuctionDetailsDto?>($"api/Auction/{id}");
         }
     }
 }
