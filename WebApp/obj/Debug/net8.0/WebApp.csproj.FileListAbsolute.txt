@@ -137,11 +137,9 @@ C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\runtimes\wi
 C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\API.dll
 C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\AuctionModels.dll
 C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\DataAccess.dll
-C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\Services.dll
 C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\API.pdb
 C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\DataAccess.pdb
 C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\AuctionModels.pdb
-C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\bin\Debug\net8.0\Services.pdb
 C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\WebApp.csproj.AssemblyReference.cache
 C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\WebApp.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\morte\GitHub\AuctionSemesterProject\WebApp\obj\Debug\net8.0\WebApp.AssemblyInfoInputs.cache
