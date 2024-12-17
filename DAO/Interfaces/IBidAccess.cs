@@ -7,9 +7,9 @@ namespace DataAccess.Interfaces
 	public interface IBidAccess
 	{
 		Task<List<Bid>> GetAllBidsAsync();
-		Task<Bid?> GetBidByIdAsync(int auctionId, int memberId);
-		Task<bool> CreateBidAsync(Bid bid, decimal oldBid); // Updated to include OldBid for concurrency
+		Task<Bid?> GetBidByIdAsync(int bidId); // Updated to use BidID
+		Task<int> CreateBidAsync(Bid bid, decimal oldBid); // Returns BidID after creation
 		Task UpdateBidAsync(Bid bid);
-		Task<bool> DeleteBidAsync(int auctionId, int memberId); // Returns Task<bool> for success indication
+		Task<bool> DeleteBidAsync(int bidId); // Updated to use BidID
 	}
 }

@@ -12,39 +12,36 @@ public class BidLogic(IBidAccess bidAccess)
 	{
 		var bids = await _bidAccess.GetAllBidsAsync();
 		return bids.Select(b => new BidDto(
-		b.Amount,
-		b.MemberID_FK,
-		b.AuctionID_FK,
-		b.Auction?.CurrentHighestBid ?? 0 
-	)).ToList();
-
-
+			b.BidID,
+			b.Amount,
+			b.MemberID_FK,
+			b.AuctionID_FK,
+			b.Auction?.CurrentHighestBid ?? 0
+		)).ToList();
 	}
 
-	public async Task<BidDto?> GetBidByIdAsync(int auctionId, int memberId)
+	public async Task<BidDto?> GetBidByIdAsync(int bidId)
 	{
-		var bid = await _bidAccess.GetBidByIdAsync(auctionId, memberId);
+		var bid = await _bidAccess.GetBidByIdAsync(bidId);
 		if (bid == null) return null;
 
 		return new BidDto(
-		bid.Amount,
-		bid.MemberID_FK,
-		bid.AuctionID_FK,
-		bid.Auction?.CurrentHighestBid ?? 0 
-	);
-
-
+			bid.BidID,
+			bid.Amount,
+			bid.MemberID_FK,
+			bid.AuctionID_FK,
+			bid.Auction?.CurrentHighestBid ?? 0
+		);
 	}
 
-	public async Task<bool> CreateBidAsync(Bid bid, decimal oldBid)
+	public async Task<int> CreateBidAsync(Bid bid, decimal oldBid)
 	{
 		return await _bidAccess.CreateBidAsync(bid, oldBid);
 	}
 
-
-	public async Task<bool> UpdateBidAsync(int auctionId, int memberId, BidDto bidDto)
+	public async Task<bool> UpdateBidAsync(int bidId, BidDto bidDto)
 	{
-		var bid = await _bidAccess.GetBidByIdAsync(auctionId, memberId);
+		var bid = await _bidAccess.GetBidByIdAsync(bidId);
 		if (bid == null) return false;
 
 		bid.Amount = bidDto.Amount;
@@ -53,8 +50,8 @@ public class BidLogic(IBidAccess bidAccess)
 		return true;
 	}
 
-	public async Task<bool> DeleteBidAsync(int auctionId, int memberId)
+	public async Task<bool> DeleteBidAsync(int bidId)
 	{
-		return await _bidAccess.DeleteBidAsync(auctionId, memberId);
+		return await _bidAccess.DeleteBidAsync(bidId);
 	}
 }

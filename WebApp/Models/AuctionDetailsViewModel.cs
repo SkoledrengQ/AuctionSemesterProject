@@ -10,6 +10,7 @@
         public decimal? BuyNowPrice { get; set; }
         public int? NoOfBids { get; set; }
         public string? TimeExtension { get; set; }
+        public int BidID { get; set; }
         public int EmployeeID { get; set; }
 
         public string? Title { get; set; }
