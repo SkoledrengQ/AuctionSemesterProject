@@ -8,6 +8,7 @@ builder.Services.AddControllersWithViews();
 
 // Register AuctionLogicWeb as Scoped
 builder.Services.AddScoped<AuctionLogicWeb>();
+builder.Services.AddScoped<BidLogic>();
 
 // Register IAuctionService with HttpClient
 builder.Services.AddHttpClient<IAuctionService, AuctionService>((serviceProvider, httpClient) =>
@@ -20,6 +21,9 @@ builder.Services.AddHttpClient<IAuctionService, AuctionService>((serviceProvider
 
     httpClient.BaseAddress = new Uri(baseUrl);
 });
+
+// Register IBidService with BidService
+builder.Services.AddScoped<IBidService, BidService>();
 
 // Build the application
 var app = builder.Build();

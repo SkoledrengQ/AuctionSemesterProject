@@ -16,12 +16,14 @@ if (string.IsNullOrEmpty(connectionString))
 
 // Register IAuctionAccess with AuctionDBAccess
 builder.Services.AddSingleton<IAuctionAccess>(provider => new AuctionDBAccess(connectionString));
-
-// Register IAuctionItemAccess with AuctionItemDBAccess
+builder.Services.AddSingleton<IBidAccess>(provider => new BidDBAccess(connectionString));
 builder.Services.AddSingleton<IAuctionItemAccess>(provider => new AuctionItemDBAccess(connectionString));
 
 // Register the business logic layer
 builder.Services.AddSingleton<AuctionLogic>();
+builder.Services.AddSingleton<BidLogic>();
+builder.Services.AddSingleton<AuctionItemLogic>();
+
 
 // Add Swagger for API documentation
 builder.Services.AddEndpointsApiExplorer();

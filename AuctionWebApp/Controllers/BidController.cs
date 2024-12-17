@@ -3,6 +3,7 @@
 using API.Dtos;
 using API.BusinessLogicLayer;
 using Microsoft.AspNetCore.Mvc;
+using AuctionModels;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -25,14 +26,26 @@ public class BidController(BidLogic bidLogic) : ControllerBase
         return Ok(bid);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] BidDto bidDto)
-    {
-        await _bidLogic.CreateBidAsync(bidDto);
-        return CreatedAtAction(nameof(Get), new { auctionId = bidDto.AuctionID, memberId = bidDto.MemberID }, bidDto);
-    }
+	[HttpPost]
+	public async Task<IActionResult> CreateBidAsync([FromBody] BidDto bidDto)
+	{
+		var bid = new Bid
+		{
+			Amount = bidDto.Amount,
+			MemberID_FK = bidDto.MemberID,
+			AuctionID_FK = bidDto.AuctionID
+		};
 
-    [HttpPut("{auctionId}/{memberId}")]
+		var success = await _bidLogic.CreateBidAsync(bid, bidDto.OldBid);
+
+		if (!success)
+			return Conflict("Bid rejected: Another user has already placed a higher bid.");
+
+		return CreatedAtAction(nameof(Get), new { auctionId = bidDto.AuctionID, memberId = bidDto.MemberID }, bidDto);
+	}
+
+
+	[HttpPut("{auctionId}/{memberId}")]
     public async Task<IActionResult> Update(int auctionId, int memberId, [FromBody] BidDto bidDto)
     {
         var success = await _bidLogic.UpdateBidAsync(auctionId, memberId, bidDto);
