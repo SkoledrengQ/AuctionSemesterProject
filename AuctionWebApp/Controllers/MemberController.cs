@@ -1,55 +1,50 @@
-﻿using AuctionSemesterProject.Services;
-using AuctionSemesterProject.AuctionModels;
+﻿namespace API.Controllers;
+
+using API.Dtos;
+using API.BusinessLogicLayer;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-namespace AuctionSemesterProject.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class MemberController(MemberLogic memberLogic) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class MemberController : ControllerBase
+    private readonly MemberLogic _memberLogic = memberLogic;
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
     {
-        private readonly MemberService _memberService;
+        var members = await _memberLogic.GetAllMembersAsync();
+        return Ok(members);
+    }
 
-        public MemberController(MemberService memberService)
-        {
-            _memberService = memberService;
-        }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        var member = await _memberLogic.GetMemberByIdAsync(id);
+        if (member == null) return NotFound();
+        return Ok(member);
+    }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var members = await _memberService.GetAllMembersAsync();
-            return Ok(members);
-        }
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] MemberDto memberDto)
+    {
+        await _memberLogic.CreateMemberAsync(memberDto);
+        return CreatedAtAction(nameof(Get), new { id = memberDto.MemberID }, memberDto);
+    }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var member = await _memberService.GetMemberByIdAsync(id);
-            if (member == null) return NotFound();
-            return Ok(member);
-        }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] MemberDto memberDto)
+    {
+        var success = await _memberLogic.UpdateMemberAsync(id, memberDto);
+        if (!success) return NotFound();
+        return NoContent();
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(Member member)
-        {
-            await _memberService.CreateMemberAsync(member);
-            return Ok();
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Member member)
-        {
-            await _memberService.UpdateMemberAsync(id, member);
-            return Ok();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _memberService.DeleteMemberAsync(id);
-            return Ok();
-        }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var success = await _memberLogic.DeleteMemberAsync(id);
+        if (!success) return NotFound();
+        return NoContent();
     }
 }

@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionModels", "Model\AuctionModels.csproj", "{8D8048F7-683D-4BCD-BFD9-5E3968D2EF90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{8E4AAA1B-B933-4F67-98D6-C9B6D86EE766}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DAO\DataAccess.csproj", "{9B955776-80A9-41D1-8142-5148BF876034}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DAO\DataAccess.csproj", "{9B955776-80A9-41D1-8142-5148BF876034}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		{8D8048F7-683D-4BCD-BFD9-5E3968D2EF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D8048F7-683D-4BCD-BFD9-5E3968D2EF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D8048F7-683D-4BCD-BFD9-5E3968D2EF90}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E4AAA1B-B933-4F67-98D6-C9B6D86EE766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E4AAA1B-B933-4F67-98D6-C9B6D86EE766}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E4AAA1B-B933-4F67-98D6-C9B6D86EE766}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E4AAA1B-B933-4F67-98D6-C9B6D86EE766}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9B955776-80A9-41D1-8142-5148BF876034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B955776-80A9-41D1-8142-5148BF876034}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B955776-80A9-41D1-8142-5148BF876034}.Release|Any CPU.ActiveCfg = Release|Any CPU

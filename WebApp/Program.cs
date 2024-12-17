@@ -1,48 +1,45 @@
-using Microsoft.Extensions.DependencyInjection;
+using WebApp.BusinessLogicLayer;
+using WebApp.ServiceLayer;
 
-namespace WebApp
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container
+builder.Services.AddControllersWithViews();
+
+// Register AuctionLogicWeb as Scoped
+builder.Services.AddScoped<AuctionLogicWeb>();
+
+// Register IAuctionService with HttpClient
+builder.Services.AddHttpClient<IAuctionService, AuctionService>((serviceProvider, httpClient) =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var baseUrl = configuration["ApiSettings:BaseUrl"];
 
-            // Add services for controllers with views
-            builder.Services.AddControllersWithViews();
+    if (string.IsNullOrEmpty(baseUrl))
+        throw new ArgumentNullException(nameof(baseUrl), "API base URL is not configured in appsettings.json.");
 
-            // Register HttpClient for making API calls
-            builder.Services.AddHttpClient("ApiClient", client =>
-            {
-                client.BaseAddress = new Uri("https://your-api-url"); // Replace with your API base URL
-            });
+    httpClient.BaseAddress = new Uri(baseUrl);
+});
 
-            var app = builder.Build();
+// Build the application
+var app = builder.Build();
 
-            // Configure the HTTP request pipeline
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            // Configure default routing for MVC
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-
-            app.Run();
-        }
-    }
+// Configure the HTTP request pipeline
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

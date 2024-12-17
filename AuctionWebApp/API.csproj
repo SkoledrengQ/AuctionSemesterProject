@@ -17,7 +17,10 @@
   <ItemGroup>
     <ProjectReference Include="..\DAO\DataAccess.csproj" />
     <ProjectReference Include="..\Model\AuctionModels.csproj" />
-    <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ModelConversion\" />
   </ItemGroup>
 
 </Project>

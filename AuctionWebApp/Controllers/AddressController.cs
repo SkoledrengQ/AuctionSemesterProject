@@ -1,56 +1,50 @@
-﻿using AuctionSemesterProject.Services;
-using AuctionSemesterProject.AuctionModels;
+﻿namespace API.Controllers;
+
+using API.BusinessLogicLayer;
+using API.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace AuctionSemesterProject.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class AddressController(AddressLogic addressLogic) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AddressController : ControllerBase
+    private readonly AddressLogic _addressLogic = addressLogic;
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
     {
-        private readonly AddressService _addressService;
+        var addresses = await _addressLogic.GetAllAddressesAsync();
+        return Ok(addresses);
+    }
 
-        public AddressController(AddressService addressService)
-        {
-            _addressService = addressService;
-        }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        var address = await _addressLogic.GetAddressByIdAsync(id);
+        if (address == null) return NotFound();
+        return Ok(address);
+    }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var addresses = await _addressService.GetAllAddressesAsync();
-            return Ok(addresses);
-        }
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] AddressDto addressDto)
+    {
+        await _addressLogic.CreateAddressAsync(addressDto);
+        return CreatedAtAction(nameof(Get), new { id = addressDto.AddressID }, addressDto);
+    }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var address = await _addressService.GetAddressByIdAsync(id);
-            if (address == null) return NotFound();
-            return Ok(address);
-        }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] AddressDto addressDto)
+    {
+        await _addressLogic.UpdateAddressAsync(id, addressDto);
+        return NoContent();
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(Address address)
-        {
-            await _addressService.CreateAddressAsync(address);
-            return Ok();
-        }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Address address)
-        {
-            await _addressService.UpdateAddressAsync(id, address);
-            return Ok();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _addressService.DeleteAddressAsync(id);
-            return Ok();
-        }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var success = await _addressLogic.DeleteAddressAsync(id);
+        if (!success) return NotFound();
+        return NoContent();
     }
 }

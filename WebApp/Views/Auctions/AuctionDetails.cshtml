@@ -1,113 +1,85 @@
 ﻿@model WebApp.Models.AuctionDetailsViewModel
 
+@{
+    ViewData["Title"] = "Auction Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auction Details</title>
+    <title>@ViewData["Title"]</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #eafaf1;
-            color: #333333;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
+        main {
             max-width: 800px;
-            margin: 30px auto;
-            background-color: #ffffff;
+            margin: 20px auto;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
-            color: #006d5b;
-            text-align: center;
+        h2, h4 {
+            color: #333;
         }
 
-        .details {
-            margin-top: 20px;
+        .section {
+            margin-bottom: 20px;
         }
 
-            .details p {
-                margin: 8px 0;
-                font-size: 1.1rem;
-            }
-
-        .bid-section {
-            margin-top: 30px;
+        .form-group {
+            margin-bottom: 15px;
         }
 
-            .bid-section h2 {
-                color: #333333;
-                margin-bottom: 10px;
-            }
+        .btn {
+            padding: 10px 15px;
+            background-color: #006d5b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-            .bid-section form label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-
-            .bid-section form input, .bid-section form button {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border-radius: 5px;
-                border: 1px solid #cccccc;
-            }
-
-            .bid-section form button {
-                background-color: #33b29e;
-                color: #ffffff;
-                font-weight: bold;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
-
-                .bid-section form button:hover {
-                    background-color: #28a38b;
-                }
+        .btn-secondary {
+            background-color: #999;
+        }
     </style>
 </head>
 <body>
     <main>
-        <div class="container">
-            <h1>Auction Details</h1>
-            <div class="details">
-                <h2>Item Details</h2>
-                <p><strong>Title:</strong> @Model.Auction.AuctionItem.Title</p>
-                <p><strong>Author:</strong> @Model.Auction.AuctionItem.Author</p>
-                <p><strong>Genre:</strong> @Model.Auction.AuctionItem.Genre</p>
-                <p><strong>Description:</strong> @Model.Auction.AuctionItem.Description</p>
-            </div>
-            <div class="details">
-                <h2>Auction Information</h2>
-                <p><strong>Starting Price:</strong> @Model.Auction.StartPrice</p>
-                <p><strong>Current Bid:</strong> @(Model.Auction.EndingBid ?? Model.Auction.StartPrice)</p>
-                <p><strong>Minimum Bid Increment:</strong> @Model.Auction.MinBid</p>
-            </div>
-            <div class="bid-section">
-                <h2>Place a Bid</h2>
-                <form method="post" action="https://localhost:7005/api/Bid/PlaceBid">
-                    <!-- Hidden fields to pass AuctionID and LastUpdated -->
-                    <input type="hidden" name="AuctionID" value="@Model.Auction.AuctionID" />
-                    <input type="hidden" name="LastUpdated" value="@Model.Auction.LastUpdated" /> <!-- Pass LastUpdated for concurrency -->
-                    <!-- MemberID input field -->
-                    <label for="MemberID">Enter Your Member ID</label>
-                    <input type="number" name="MemberID" required />
+        <h2>@Model.Title</h2>
 
-                    <label for="Amount">Bid Amount</label>
-                    <input type="number" step="1" name="Amount" required />
-                    <button type="submit">Submit Bid</button>
-                </form>
-            </div>
+        <div class="section">
+            <h4>Item Details</h4>
+            <ul>
+                <li><strong>Author:</strong> @Model.Author</li>
+                <li><strong>Genre:</strong> @Model.Genre</li>
+                <li><strong>Description:</strong> @Model.Description</li>
+            </ul>
         </div>
+
+        <div class="section">
+            <h4>Auction Information</h4>
+            <ul>
+                <li><strong>Starting Price:</strong> @Model.StartPrice.ToString("C")</li>
+                <li><strong>Current Bid:</strong> @(Model.CurrentHighestBid ?? Model.StartPrice).ToString("C")</li>
+                <li><strong>Minimum Bid Increment:</strong> @Model.MinBid.ToString("C")</li>
+            </ul>
+        </div>
+
+        <h4>Place Your Bid</h4>
+        <form asp-action="PlaceBid" method="post">
+            <input type="hidden" name="AuctionID" value="@Model.AuctionID" />
+            <div class="form-group">
+                <label for="MemberID">Your Member ID</label>
+                <input type="number" name="MemberID" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="Amount">Your Bid Amount</label>
+                <input type="number" name="Amount" class="form-control" step="0.01" min="0" required />
+            </div>
+            <button type="submit" class="btn">Place Bid</button>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to Auctions</a>
+        </form>
     </main>
 </body>
 </html>
-

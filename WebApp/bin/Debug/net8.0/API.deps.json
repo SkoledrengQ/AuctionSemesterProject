@@ -12,7 +12,6 @@
           "DataAccess": "1.0.0",
           "Microsoft.Data.SqlClient": "5.2.2",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.21.0",
-          "Services": "1.0.0",
           "Swashbuckle.AspNetCore": "7.0.0"
         },
         "runtime": {
@@ -426,18 +425,6 @@
             "fileVersion": "1.0.0.0"
           }
         }
-      },
-      "Services/1.0.0": {
-        "dependencies": {
-          "DataAccess": "1.0.0",
-          "Microsoft.Data.SqlClient": "5.2.2"
-        },
-        "runtime": {
-          "Services.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
       }
     }
   },
@@ -740,11 +727,6 @@
       "sha512": ""
     },
     "DataAccess/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Services/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -1,90 +1,76 @@
-using AuctionSemesterProject.AuctionModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
 using WebApp.Models;
+using WebApp.ServiceLayer;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HttpClient _httpClient;
+        private readonly IAuctionService _auctionService;
 
-        public HomeController(HttpClient httpClient)
+        public HomeController(IAuctionService auctionService)
         {
-            _httpClient = httpClient;
+            _auctionService = auctionService;
         }
 
-        // Displays the homepage with all auction items
+        // Default action for Home/Index
         public async Task<IActionResult> Index()
         {
-            var apiUrl = "https://localhost:7005/api/AuctionItem";
-            var response = await _httpClient.GetAsync(apiUrl);
+            var auctionDetails = await _auctionService.GetAllAuctionsAsync();
 
-            if (response.IsSuccessStatusCode)
+            var viewModels = auctionDetails.Select(a => new AuctionDetailsViewModel
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var auctionItems = JsonSerializer.Deserialize<List<AuctionItem>>(jsonData, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+                // Auction Information
+                AuctionID = a.Auction.AuctionID,
+                StartPrice = a.Auction.StartPrice,
+                MinBid = a.Auction.MinBid,
+                EndingBid = a.Auction.EndingBid,
+                CurrentHighestBid = a.Auction.CurrentHighestBid,
+                BuyNowPrice = a.Auction.BuyNowPrice,
+                NoOfBids = a.Auction.NoOfBids,
+                TimeExtension = a.Auction.TimeExtension,
+                EmployeeID = a.Auction.EmployeeID,
 
-                return View(auctionItems);
-            }
+                // Auction Item Information
+                Title = a.AuctionItem.Title,
+                Author = a.AuctionItem.Author,
+                Genre = a.AuctionItem.Genre,
+                Description = a.AuctionItem.Description
+            }).ToList();
 
-            ViewBag.ErrorMessage = "Unable to load auction items.";
-            return View(new List<AuctionItem>());
+            return View(viewModels);
         }
 
-        // Displays details for a specific auction and its associated item
+        // Auction details action
         public async Task<IActionResult> AuctionDetails(int id)
         {
-            var auctionApiUrl = $"https://localhost:7005/api/Auction/{id}";
-            var auctionItemApiUrl = $"https://localhost:7005/api/AuctionItem/{id}";
+            var auctionDetails = await _auctionService.GetAuctionDetailsAsync(id);
 
-            var auctionResponse = await _httpClient.GetAsync(auctionApiUrl);
-            var auctionItemResponse = await _httpClient.GetAsync(auctionItemApiUrl);
+            if (auctionDetails == null)
+                return NotFound();
 
-            if (auctionResponse.IsSuccessStatusCode && auctionItemResponse.IsSuccessStatusCode)
+            var viewModel = new AuctionDetailsViewModel
             {
-                var auctionJson = await auctionResponse.Content.ReadAsStringAsync();
-                var auctionItemJson = await auctionItemResponse.Content.ReadAsStringAsync();
+                // Auction Information
+                AuctionID = auctionDetails.Auction.AuctionID,
+                StartPrice = auctionDetails.Auction.StartPrice,
+                MinBid = auctionDetails.Auction.MinBid,
+                EndingBid = auctionDetails.Auction.EndingBid,
+                CurrentHighestBid = auctionDetails.Auction.CurrentHighestBid,
+                BuyNowPrice = auctionDetails.Auction.BuyNowPrice,
+                NoOfBids = auctionDetails.Auction.NoOfBids,
+                TimeExtension = auctionDetails.Auction.TimeExtension,
+                EmployeeID = auctionDetails.Auction.EmployeeID,
 
-                var auction = JsonSerializer.Deserialize<Auction>(auctionJson, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+                // Auction Item Information
+                Title = auctionDetails.AuctionItem.Title,
+                Author = auctionDetails.AuctionItem.Author,
+                Genre = auctionDetails.AuctionItem.Genre,
+                Description = auctionDetails.AuctionItem.Description
+            };
 
-                var auctionItem = JsonSerializer.Deserialize<AuctionItem>(auctionItemJson, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-
-                var viewModel = new AuctionDetailsViewModel
-                {
-                    Auction = auction,
-                    AuctionItem = auctionItem
-                };
-
-                return View("~/Views/Auctions/AuctionDetails.cshtml", viewModel);
-            }
-
-            ViewBag.ErrorMessage = "Unable to load auction details.";
-            return RedirectToAction("Index");
+            return View("~/Views/Auctions/AuctionDetails.cshtml", viewModel);
         }
 
-        // Privacy page
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        // Error handling
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View();
-        }
     }
 }

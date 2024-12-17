@@ -14,7 +14,6 @@
     <ProjectReference Include="..\AuctionWebApp\API.csproj" />
     <ProjectReference Include="..\DAO\DataAccess.csproj" />
     <ProjectReference Include="..\Model\AuctionModels.csproj" />
-    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
 </Project>
