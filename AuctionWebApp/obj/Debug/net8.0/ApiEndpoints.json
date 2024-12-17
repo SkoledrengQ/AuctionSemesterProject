@@ -248,7 +248,7 @@
   },
   {
     "ContainingType": "API.Controllers.BidController",
-    "Method": "Create",
+    "Method": "CreateBidAsync",
     "RelativePath": "api/Bid",
     "HttpMethod": "POST",
     "IsController": true,

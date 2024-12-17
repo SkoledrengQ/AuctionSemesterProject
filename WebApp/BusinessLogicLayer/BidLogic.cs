@@ -9,28 +9,25 @@ namespace WebApp.BusinessLogicLayer
     {
         private readonly IBidService _bidService = bidService;
 
-        public async Task<BidResult> PlaceBidAsync(decimal amount,int auctionId, int memberId)
-        {
-            // Validate the bid amount
-            if (amount <= 0)
-            {
-                return BidResult.Failure("Bid amount must be greater than zero.");
-            }
+		public async Task<BidResult> PlaceBidAsync(decimal amount, int auctionId, int memberId, decimal oldBid)
+		{
+			if (amount <= 0)
+			{
+				return BidResult.Failure("Bid amount must be greater than zero.");
+			}
 
-            // Prepare the DTO
-            var bidDto = new BidDto(amount, auctionId, memberId);
-          
+			var bidDto = new BidDto(amount, memberId, auctionId, oldBid);
 
-            try
-            {
-                // Call the service layer
-                return await _bidService.PlaceBidAsync(bidDto);
-            }
-            catch
-            {
-                // Return a failure result on error
-                return BidResult.Failure("An error occurred while processing the bid.");
-            }
-        }
-    }
+
+			try
+			{
+				return await _bidService.PlaceBidAsync(bidDto);
+			}
+			catch
+			{
+				return BidResult.Failure("An error occurred while processing the bid.");
+			}
+		}
+
+	}
 }
