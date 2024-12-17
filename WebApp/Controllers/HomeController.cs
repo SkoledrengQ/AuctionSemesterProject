@@ -69,7 +69,8 @@ namespace WebApp.Controllers
                 Description = auctionDetails.AuctionItem.Description
             };
 
-            return View(viewModel);
+            return View("~/Views/Auctions/AuctionDetails.cshtml", viewModel);
         }
+
     }
 }
