@@ -9,7 +9,7 @@ namespace DataAccess.Interfaces
         Task<List<Auction>> GetAllAuctionsAsync();
         Task<Auction?> GetAuctionByIdAsync(int id);
         Task CreateAuctionAsync(Auction auction);
-        Task<bool> UpdateAuctionWithConcurrencyCheckAsync(Auction auction);
+        Task<bool> UpdateAuctionAsync(Auction auction);
         Task<bool> DeleteAuctionAsync(int id);
     }
 }

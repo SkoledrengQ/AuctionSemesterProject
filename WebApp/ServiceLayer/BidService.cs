@@ -13,7 +13,7 @@ namespace WebApp.ServiceLayer
 
 		public BidService()
 		{
-			_httpClient = new HttpClient(); // In a real app, consider injecting this via DI
+			_httpClient = new HttpClient(); 
 		}
 
 		public async Task<BidResult> PlaceBidAsync(BidDto bidDto)

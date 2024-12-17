@@ -66,7 +66,7 @@
 	<main>
 		<h2>@Model.Title</h2>
 
-		<!-- Success/Error Messages -->
+		
 		@if (TempData["SuccessMessage"] != null)
 		{
 			<div class="alert alert-success">@TempData["SuccessMessage"]</div>
@@ -76,7 +76,7 @@
 			<div class="alert alert-danger">@TempData["ErrorMessage"]</div>
 		}
 
-		<!-- Item Details -->
+		
 		<div class="section">
 			<h4>Item Details</h4>
 			<ul>
@@ -86,7 +86,7 @@
 			</ul>
 		</div>
 
-		<!-- Auction Information -->
+		
 		<div class="section">
 			<h4>Auction Information</h4>
 			<ul>
@@ -103,7 +103,6 @@
 			</ul>
 		</div>
 
-		<!-- Bid Form -->
 		<h4>Place Your Bid</h4>
 		<form asp-action="PlaceBid" method="post">
 			<input type="hidden" name="AuctionID" value="@Model.AuctionID" />

@@ -4,28 +4,28 @@ using API.BusinessLogicLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
+
 builder.Services.AddControllers();
 
-// Retrieve and validate the connection string
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new ArgumentNullException(nameof(connectionString), "Database connection string is missing in appsettings.json.");
 }
 
-// Register IAuctionAccess with AuctionDBAccess
+
 builder.Services.AddSingleton<IAuctionAccess>(provider => new AuctionDBAccess(connectionString));
 builder.Services.AddSingleton<IBidAccess>(provider => new BidDBAccess(connectionString));
 builder.Services.AddSingleton<IAuctionItemAccess>(provider => new AuctionItemDBAccess(connectionString));
 
-// Register the business logic layer
+
 builder.Services.AddSingleton<AuctionLogic>();
 builder.Services.AddSingleton<BidLogic>();
 builder.Services.AddSingleton<AuctionItemLogic>();
 
 
-// Add Swagger for API documentation
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -39,14 +39,14 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Auction API V1");
-        options.RoutePrefix = "swagger"; // Accessible at /swagger
+        options.RoutePrefix = "swagger"; 
     });
 }
 

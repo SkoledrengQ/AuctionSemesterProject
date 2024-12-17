@@ -17,14 +17,14 @@ namespace WebApp.Controllers
             _bidLogic = bidLogic;
         }
 
-        // Default action for Home/Index
+        
         public async Task<IActionResult> Index()
         {
             var auctionDetails = await _auctionService.GetAllAuctionsAsync();
 
             var viewModels = auctionDetails.Select(a => new AuctionDetailsViewModel
             {
-                // Auction Information
+                
                 AuctionID = a.Auction.AuctionID,
                 StartPrice = a.Auction.StartPrice,
                 MinBid = a.Auction.MinBid,
@@ -35,7 +35,7 @@ namespace WebApp.Controllers
                 TimeExtension = a.Auction.TimeExtension,
                 EmployeeID = a.Auction.EmployeeID,
 
-                // Auction Item Information
+                
                 Title = a.AuctionItem.Title,
                 Author = a.AuctionItem.Author,
                 Genre = a.AuctionItem.Genre,
@@ -52,10 +52,10 @@ namespace WebApp.Controllers
             if (auctionDetails == null)
                 return NotFound();
 
-            // Map the DTO to a ViewModel
+           
             var viewModel = new AuctionDetailsViewModel
             {
-                // Auction Properties
+               
                 AuctionID = auctionDetails.Auction.AuctionID,
                 StartPrice = auctionDetails.Auction.StartPrice,
                 MinBid = auctionDetails.Auction.MinBid,
@@ -66,21 +66,21 @@ namespace WebApp.Controllers
                 TimeExtension = auctionDetails.Auction.TimeExtension,
                 EmployeeID = auctionDetails.Auction.EmployeeID,
 
-                // Auction Item Properties
+                
                 Title = auctionDetails.AuctionItem.Title,
                 Author = auctionDetails.AuctionItem.Author,
                 Genre = auctionDetails.AuctionItem.Genre,
                 Description = auctionDetails.AuctionItem.Description
             };
 
-            // Pass the ViewModel instead of the DTO
+            
             return View("~/Views/Auctions/AuctionDetails.cshtml", viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> PlaceBid(decimal Amount, int AuctionID, int MemberID)
         {
-            // Retrieve the auction details to get the current highest bid
+            
             var auctionDetails = await _auctionService.GetAuctionDetailsAsync(AuctionID);
             if (auctionDetails == null)
             {
@@ -90,7 +90,7 @@ namespace WebApp.Controllers
 
             var currentHighestBid = auctionDetails.Auction.CurrentHighestBid ?? auctionDetails.Auction.StartPrice;
 
-            // Call the business logic layer with OldBid
+       
             var result = await _bidLogic.PlaceBidAsync(Amount, AuctionID, MemberID, currentHighestBid);
 
             if (result.IsSuccessful)

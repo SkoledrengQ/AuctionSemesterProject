@@ -15,7 +15,7 @@ public class BidLogic(IBidAccess bidAccess)
 		b.Amount,
 		b.MemberID_FK,
 		b.AuctionID_FK,
-		b.Auction?.CurrentHighestBid ?? 0 // OldBid set to currentHighestBid
+		b.Auction?.CurrentHighestBid ?? 0 
 	)).ToList();
 
 
@@ -30,7 +30,7 @@ public class BidLogic(IBidAccess bidAccess)
 		bid.Amount,
 		bid.MemberID_FK,
 		bid.AuctionID_FK,
-		bid.Auction?.CurrentHighestBid ?? 0 // OldBid set to currentHighestBid
+		bid.Auction?.CurrentHighestBid ?? 0 
 	);
 
 

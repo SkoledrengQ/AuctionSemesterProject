@@ -105,7 +105,7 @@ namespace DataAccess
 
 			try
 			{
-				// Step 1: Verify currentHighestBid matches the OldBid value
+				// Verify currentHighestBid matches the OldBid value
 				var checkBidQuery = @"
             SELECT currentHighestBid 
             FROM Auction
@@ -126,7 +126,7 @@ namespace DataAccess
 					return false; // Signal the bid was rejected due to concurrency
 				}
 
-				// Step 2: Insert the new bid
+				// Insert the new bid
 				var insertBidQuery = @"
             INSERT INTO Bid (Amount, MemberID_FK, AuctionID_FK)
             VALUES (@Amount, @MemberID_FK, @AuctionID_FK);";
@@ -137,7 +137,7 @@ namespace DataAccess
 				insertCommand.Parameters.AddWithValue("@AuctionID_FK", bid.AuctionID_FK);
 				await insertCommand.ExecuteNonQueryAsync();
 
-				// Step 3: Update the Auction table
+				// Update the Auction table
 				var updateAuctionQuery = @"
             UPDATE Auction
             SET currentHighestBid = @NewHighestBid,

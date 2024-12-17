@@ -41,5 +41,4 @@ public class Auction
     [ForeignKey(nameof(ItemID_FK))]
     public virtual AuctionItem? AuctionItem { get; set; }
 
-    public DateTime LastUpdated { get; set; } 
 }

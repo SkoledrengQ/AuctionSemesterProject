@@ -14,13 +14,11 @@ namespace WebApp.BusinessLogicLayer
             _auctionService = auctionService;
         }
 
-        // Fetch active auctions
         public async Task<IEnumerable<AuctionDetailsDto>> GetActiveAuctionsAsync()
         {
             return await _auctionService.GetAllAuctionsAsync();
         }
 
-        // Fetch auction details by ID
         public async Task<AuctionDetailsDto?> GetAuctionDetailsAsync(int id)
         {
             return await _auctionService.GetAuctionDetailsAsync(id);

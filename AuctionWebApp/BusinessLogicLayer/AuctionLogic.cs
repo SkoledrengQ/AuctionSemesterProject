@@ -48,7 +48,6 @@ public class AuctionLogic(IAuctionAccess auctionAccess, IAuctionItemAccess aucti
         return auctionDetailsList;
     }
 
-    // Fetch auction details by ID
     public async Task<AuctionDetailsDto?> GetAuctionDetailsByIdAsync(int id)
     {
         var auction = await _auctionAccess.GetAuctionByIdAsync(id);
@@ -81,7 +80,6 @@ public class AuctionLogic(IAuctionAccess auctionAccess, IAuctionItemAccess aucti
         };
     }
 
-    // Create a new auction
     public async Task CreateAuctionAsync(AuctionDetailsDto auctionDetailsDto)
     {
         var auction = new Auction
@@ -116,7 +114,7 @@ public class AuctionLogic(IAuctionAccess auctionAccess, IAuctionItemAccess aucti
         auction.EmployeeID_FK = auctionDetailsDto.Auction.EmployeeID;
         auction.ItemID_FK = auctionDetailsDto.Auction.ItemID;
 
-        return await _auctionAccess.UpdateAuctionWithConcurrencyCheckAsync(auction);
+        return await _auctionAccess.UpdateAuctionAsync(auction);
     }
 
     // Delete an auction
