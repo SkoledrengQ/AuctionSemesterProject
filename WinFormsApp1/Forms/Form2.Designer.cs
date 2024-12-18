@@ -62,9 +62,8 @@ namespace WinFormsApp
             checkBoxBook.AutoSize = true;
             checkBoxBook.Location = new Point(19, 47);
             checkBoxBook.Name = "checkBoxBook";
-            checkBoxBook.Size = new Size(83, 19);
+            checkBoxBook.Size = new Size(15, 14);
             checkBoxBook.TabIndex = 1;
-            checkBoxBook.Text = "checkBox1";
             checkBoxBook.UseVisualStyleBackColor = true;
             // 
             // checkBoxManga
@@ -72,9 +71,8 @@ namespace WinFormsApp
             checkBoxManga.AutoSize = true;
             checkBoxManga.Location = new Point(19, 87);
             checkBoxManga.Name = "checkBoxManga";
-            checkBoxManga.Size = new Size(83, 19);
+            checkBoxManga.Size = new Size(15, 14);
             checkBoxManga.TabIndex = 2;
-            checkBoxManga.Text = "checkBox2";
             checkBoxManga.UseVisualStyleBackColor = true;
             // 
             // checkBoxComic
@@ -82,9 +80,8 @@ namespace WinFormsApp
             checkBoxComic.AutoSize = true;
             checkBoxComic.Location = new Point(19, 128);
             checkBoxComic.Name = "checkBoxComic";
-            checkBoxComic.Size = new Size(83, 19);
+            checkBoxComic.Size = new Size(15, 14);
             checkBoxComic.TabIndex = 3;
-            checkBoxComic.Text = "checkBox3";
             checkBoxComic.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
@@ -98,6 +95,7 @@ namespace WinFormsApp
             // 
             // listBox1
             // 
+            listBox1.ForeColor = SystemColors.WindowText;
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 15;
             listBox1.Location = new Point(652, 236);
@@ -108,11 +106,11 @@ namespace WinFormsApp
             // 
             // button1
             // 
-            button1.Location = new Point(697, 404);
+            button1.Location = new Point(666, 404);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(106, 23);
             button1.TabIndex = 7;
-            button1.Text = "push auction";
+            button1.Text = "Push Auction";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -184,7 +182,6 @@ namespace WinFormsApp
             domainUpDown1.Name = "domainUpDown1";
             domainUpDown1.Size = new Size(120, 23);
             domainUpDown1.TabIndex = 16;
-            domainUpDown1.Text = "domainUpDown1";
             // 
             // label6
             // 
@@ -273,9 +270,9 @@ namespace WinFormsApp
             // 
             button2.Location = new Point(19, 404);
             button2.Name = "button2";
-            button2.Size = new Size(75, 23);
+            button2.Size = new Size(93, 23);
             button2.TabIndex = 26;
-            button2.Text = "add all details";
+            button2.Text = "Add All Details";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click_1;
             // 
