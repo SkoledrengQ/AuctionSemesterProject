@@ -100,53 +100,55 @@ namespace DataAccess
 		}
 
 		public async Task<int> CreateBidAsync(Bid bid, decimal oldBid)
-{
-    using var connection = new SqlConnection(_connectionString);
-    await connection.OpenAsync();
+		{
+			using var connection = new SqlConnection(_connectionString);
+			await connection.OpenAsync();
 
-    using var transaction = await connection.BeginTransactionAsync();
-    try
-    {
-        // Update auction with the new highest bid
-        var updateAuctionQuery = @"
+			using var transaction = await connection.BeginTransactionAsync();
+			try
+			{
+				// Update auction with the new highest bid
+				var updateAuctionQuery = @"
             UPDATE Auction
             SET CurrentHighestBid = @NewHighestBid, NoOfBids = ISNULL(NoOfBids, 0) + 1
             WHERE AuctionID = @AuctionID AND CurrentHighestBid = @OldBid";
 
-        using var updateCommand = new SqlCommand(updateAuctionQuery, connection, (SqlTransaction)transaction);
-        updateCommand.Parameters.AddWithValue("@NewHighestBid", bid.Amount);
-        updateCommand.Parameters.AddWithValue("@AuctionID", bid.AuctionID_FK);
-        updateCommand.Parameters.AddWithValue("@OldBid", oldBid);
+				using var updateCommand = new SqlCommand(updateAuctionQuery, connection, (SqlTransaction)transaction);
+				updateCommand.Parameters.AddWithValue("@NewHighestBid", bid.Amount);
+				updateCommand.Parameters.AddWithValue("@AuctionID", bid.AuctionID_FK);
+				updateCommand.Parameters.AddWithValue("@OldBid", oldBid);
 
-        var rowsAffected = await updateCommand.ExecuteNonQueryAsync();
-        if (rowsAffected == 0)
-        {
-            await transaction.RollbackAsync();
-            return 0; // Concurrency conflict detected
-        }
+				var rowsAffected = await updateCommand.ExecuteNonQueryAsync();
+				if (rowsAffected == 0)
+				{
+					await transaction.RollbackAsync();
+					return 0; // Concurrency conflict detected
+				}
 
-        // Insert new bid
-        var insertBidQuery = @"
+				// Insert new bid
+				var insertBidQuery = @"
             INSERT INTO Bid (Amount, MemberID_FK, AuctionID_FK)
             OUTPUT INSERTED.BidID
             VALUES (@Amount, @MemberID_FK, @AuctionID_FK)";
 
-        using var insertCommand = new SqlCommand(insertBidQuery, connection, (SqlTransaction)transaction);
-        insertCommand.Parameters.AddWithValue("@Amount", bid.Amount);
-        insertCommand.Parameters.AddWithValue("@MemberID_FK", bid.MemberID_FK);
-        insertCommand.Parameters.AddWithValue("@AuctionID_FK", bid.AuctionID_FK);
+				using var insertCommand = new SqlCommand(insertBidQuery, connection, (SqlTransaction)transaction);
+				insertCommand.Parameters.AddWithValue("@Amount", bid.Amount);
+				insertCommand.Parameters.AddWithValue("@MemberID_FK", bid.MemberID_FK);
+				insertCommand.Parameters.AddWithValue("@AuctionID_FK", bid.AuctionID_FK);
 
 				var bidId = (int)await insertCommand.ExecuteScalarAsync();
 
-        await transaction.CommitAsync();
-        return bidId;
-    }
-    catch
-    {
-        await transaction.RollbackAsync();
-        throw;
-    }
-}
+				await transaction.CommitAsync();
+				return bidId;
+			}
+			catch
+			{
+				await transaction.RollbackAsync();
+				throw;
+			}
+		}
+
+
 
 
 
