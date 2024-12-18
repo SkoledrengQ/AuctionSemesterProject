@@ -13,29 +13,31 @@ public class BidLogic(IBidAccess bidAccess, AuctionLogic auctionLogic)
 	{
 		var bids = await _bidAccess.GetAllBidsAsync();
 		return bids.Select(b => new BidDto(
-			b.BidID,
-			b.Amount,
-			b.MemberID_FK,
-			b.AuctionID_FK,
-			b.Auction?.CurrentHighestBid ?? 0
-		)).ToList();
+		b.Amount,
+		b.MemberID_FK,
+		b.AuctionID_FK,
+		b.Auction?.CurrentHighestBid ?? 0 
+	)).ToList();
+
+
 	}
 
-	public async Task<BidDto?> GetBidByIdAsync(int bidId)
+	public async Task<BidDto?> GetBidByIdAsync(int auctionId, int memberId)
 	{
-		var bid = await _bidAccess.GetBidByIdAsync(bidId);
+		var bid = await _bidAccess.GetBidByIdAsync(auctionId, memberId);
 		if (bid == null) return null;
 
 		return new BidDto(
-			bid.BidID,
-			bid.Amount,
-			bid.MemberID_FK,
-			bid.AuctionID_FK,
-			bid.Auction?.CurrentHighestBid ?? 0
-		);
+		bid.Amount,
+		bid.MemberID_FK,
+		bid.AuctionID_FK,
+		bid.Auction?.CurrentHighestBid ?? 0 
+	);
+
+
 	}
 
-	public async Task<int> CreateBidAsync(Bid bid, decimal oldBid)
+	public async Task<bool> CreateBidAsync(Bid bid, decimal oldBid)
 	{
 		// Use AuctionLogic's existing method to fetch auction details
 		var auctionDetails = await _auctionLogic.GetAuctionDetailsByIdAsync(bid.AuctionID_FK);
@@ -55,9 +57,10 @@ public class BidLogic(IBidAccess bidAccess, AuctionLogic auctionLogic)
 		return await _bidAccess.CreateBidAsync(bid, oldBid);
 	}
 
-	public async Task<bool> UpdateBidAsync(int bidId, BidDto bidDto)
+
+	public async Task<bool> UpdateBidAsync(int auctionId, int memberId, BidDto bidDto)
 	{
-		var bid = await _bidAccess.GetBidByIdAsync(bidId);
+		var bid = await _bidAccess.GetBidByIdAsync(auctionId, memberId);
 		if (bid == null) return false;
 
 		bid.Amount = bidDto.Amount;
@@ -66,8 +69,8 @@ public class BidLogic(IBidAccess bidAccess, AuctionLogic auctionLogic)
 		return true;
 	}
 
-	public async Task<bool> DeleteBidAsync(int bidId)
+	public async Task<bool> DeleteBidAsync(int auctionId, int memberId)
 	{
-		return await _bidAccess.DeleteBidAsync(bidId);
+		return await _bidAccess.DeleteBidAsync(auctionId, memberId);
 	}
 }

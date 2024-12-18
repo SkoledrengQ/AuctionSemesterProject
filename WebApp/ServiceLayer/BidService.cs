@@ -13,7 +13,7 @@ namespace WebApp.ServiceLayer
 
 		public BidService()
 		{
-			_httpClient = new HttpClient();
+			_httpClient = new HttpClient(); 
 		}
 
 		public async Task<BidResult> PlaceBidAsync(BidDto bidDto)
@@ -29,23 +29,9 @@ namespace WebApp.ServiceLayer
 			{
 				return BidResult.Success();
 			}
-			else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
-			{
-				var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
-				return BidResult.Failure(error?.Message ?? "Bid rejected due to a concurrency conflict.");
-			}
-			else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-			{
-				var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
-				return BidResult.Failure(error?.Message ?? "Bid validation failed.");
-			}
 
-			return BidResult.Failure("An unexpected error occurred. Please try again.");
+			var error = await response.Content.ReadAsStringAsync();
+			return BidResult.Failure($"Failed to place bid: {error}");
 		}
-	}
-
-	public class ErrorResponse
-	{
-		public string Message { get; set; }
 	}
 }

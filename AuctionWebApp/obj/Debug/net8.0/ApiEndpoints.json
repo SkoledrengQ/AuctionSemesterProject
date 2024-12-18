@@ -265,13 +265,18 @@
   {
     "ContainingType": "API.Controllers.BidController",
     "Method": "Get",
-    "RelativePath": "api/Bid/{bidId}",
+    "RelativePath": "api/Bid/{auctionId}/{memberId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "bidId",
+        "Name": "auctionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "memberId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -281,13 +286,18 @@
   {
     "ContainingType": "API.Controllers.BidController",
     "Method": "Update",
-    "RelativePath": "api/Bid/{bidId}",
+    "RelativePath": "api/Bid/{auctionId}/{memberId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "bidId",
+        "Name": "auctionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "memberId",
         "Type": "System.Int32",
         "IsRequired": true
       },
@@ -302,13 +312,18 @@
   {
     "ContainingType": "API.Controllers.BidController",
     "Method": "Delete",
-    "RelativePath": "api/Bid/{bidId}",
+    "RelativePath": "api/Bid/{auctionId}/{memberId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "bidId",
+        "Name": "auctionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "memberId",
         "Type": "System.Int32",
         "IsRequired": true
       }
