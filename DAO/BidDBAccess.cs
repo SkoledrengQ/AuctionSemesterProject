@@ -99,83 +99,56 @@ namespace DataAccess
 			return null;
 		}
 
-		// Create a new bid
 		public async Task<int> CreateBidAsync(Bid bid, decimal oldBid)
-		{
-			using var connection = new SqlConnection(_connectionString);
-			await connection.OpenAsync();
+{
+    using var connection = new SqlConnection(_connectionString);
+    await connection.OpenAsync();
 
-			using var transaction = await connection.BeginTransactionAsync();
-			try
-			{
-				// Step 1: Validate bid amount against StartPrice
-				var checkAuctionQuery = @"
-                    SELECT StartPrice, CurrentHighestBid
-                    FROM Auction
-                    WHERE AuctionID = @AuctionID";
+    using var transaction = await connection.BeginTransactionAsync();
+    try
+    {
+        // Update auction with the new highest bid
+        var updateAuctionQuery = @"
+            UPDATE Auction
+            SET CurrentHighestBid = @NewHighestBid, NoOfBids = ISNULL(NoOfBids, 0) + 1
+            WHERE AuctionID = @AuctionID AND CurrentHighestBid = @OldBid";
 
-				using var checkCommand = new SqlCommand(checkAuctionQuery, connection, (SqlTransaction)transaction);
-				checkCommand.Parameters.AddWithValue("@AuctionID", bid.AuctionID_FK);
+        using var updateCommand = new SqlCommand(updateAuctionQuery, connection, (SqlTransaction)transaction);
+        updateCommand.Parameters.AddWithValue("@NewHighestBid", bid.Amount);
+        updateCommand.Parameters.AddWithValue("@AuctionID", bid.AuctionID_FK);
+        updateCommand.Parameters.AddWithValue("@OldBid", oldBid);
 
-				using var reader = await checkCommand.ExecuteReaderAsync();
-				if (!await reader.ReadAsync())
-				{
-					await transaction.RollbackAsync();
-					throw new InvalidOperationException("Auction not found.");
-				}
+        var rowsAffected = await updateCommand.ExecuteNonQueryAsync();
+        if (rowsAffected == 0)
+        {
+            await transaction.RollbackAsync();
+            return 0; // Concurrency conflict detected
+        }
 
-				var startPrice = reader.GetDecimal(0);
-				var currentHighestBid = reader.IsDBNull(1) ? 0 : reader.GetDecimal(1); // Treat NULL as 0
-				reader.Close();
+        // Insert new bid
+        var insertBidQuery = @"
+            INSERT INTO Bid (Amount, MemberID_FK, AuctionID_FK)
+            OUTPUT INSERTED.BidID
+            VALUES (@Amount, @MemberID_FK, @AuctionID_FK)";
 
-				if (bid.Amount < startPrice)
-				{
-					await transaction.RollbackAsync();
-					throw new InvalidOperationException("Bid rejected: Bid amount cannot be lower than the start price.");
-				}
-
-				// Step 2: Atomic Update for Concurrency
-				var updateAuctionQuery = @"
-                    UPDATE Auction
-                    SET CurrentHighestBid = @NewHighestBid,
-                        NoOfBids = ISNULL(NoOfBids, 0) + 1
-                    WHERE AuctionID = @AuctionID AND CurrentHighestBid = @OldBid";
-
-				using var updateCommand = new SqlCommand(updateAuctionQuery, connection, (SqlTransaction)transaction);
-				updateCommand.Parameters.AddWithValue("@NewHighestBid", bid.Amount);
-				updateCommand.Parameters.AddWithValue("@AuctionID", bid.AuctionID_FK);
-				updateCommand.Parameters.AddWithValue("@OldBid", oldBid);
-
-				var rowsAffected = await updateCommand.ExecuteNonQueryAsync();
-
-				if (rowsAffected == 0)
-				{
-					await transaction.RollbackAsync();
-					return 0; // Concurrency conflict
-				}
-
-				// Step 3: Insert the new bid and return BidID
-				var insertBidQuery = @"
-                    INSERT INTO Bid (Amount, MemberID_FK, AuctionID_FK)
-                    OUTPUT INSERTED.BidID
-                    VALUES (@Amount, @MemberID_FK, @AuctionID_FK);";
-
-				using var insertCommand = new SqlCommand(insertBidQuery, connection, (SqlTransaction)transaction);
-				insertCommand.Parameters.AddWithValue("@Amount", bid.Amount);
-				insertCommand.Parameters.AddWithValue("@MemberID_FK", bid.MemberID_FK);
-				insertCommand.Parameters.AddWithValue("@AuctionID_FK", bid.AuctionID_FK);
+        using var insertCommand = new SqlCommand(insertBidQuery, connection, (SqlTransaction)transaction);
+        insertCommand.Parameters.AddWithValue("@Amount", bid.Amount);
+        insertCommand.Parameters.AddWithValue("@MemberID_FK", bid.MemberID_FK);
+        insertCommand.Parameters.AddWithValue("@AuctionID_FK", bid.AuctionID_FK);
 
 				var bidId = (int)await insertCommand.ExecuteScalarAsync();
 
-				await transaction.CommitAsync();
-				return bidId; // Return the new BidID
-			}
-			catch
-			{
-				await transaction.RollbackAsync();
-				throw;
-			}
-		}
+        await transaction.CommitAsync();
+        return bidId;
+    }
+    catch
+    {
+        await transaction.RollbackAsync();
+        throw;
+    }
+}
+
+
 
 		// Update an existing bid
 		public async Task UpdateBidAsync(Bid bid)

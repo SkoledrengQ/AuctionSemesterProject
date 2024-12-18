@@ -4,9 +4,10 @@ using AuctionModels;
 using DataAccess.Interfaces;
 using API.Dtos;
 
-public class BidLogic(IBidAccess bidAccess)
+public class BidLogic(IBidAccess bidAccess, AuctionLogic auctionLogic)
 {
 	private readonly IBidAccess _bidAccess = bidAccess;
+	private readonly AuctionLogic _auctionLogic = auctionLogic;
 
 	public async Task<List<BidDto>> GetAllBidsAsync()
 	{
@@ -36,6 +37,21 @@ public class BidLogic(IBidAccess bidAccess)
 
 	public async Task<int> CreateBidAsync(Bid bid, decimal oldBid)
 	{
+		// Use AuctionLogic's existing method to fetch auction details
+		var auctionDetails = await _auctionLogic.GetAuctionDetailsByIdAsync(bid.AuctionID_FK);
+		if (auctionDetails == null)
+			throw new InvalidOperationException("Auction not found.");
+
+		var auction = auctionDetails.Auction;
+
+		// Concurrency checks
+		if (bid.Amount < auction.StartPrice)
+			throw new InvalidOperationException("Bid amount cannot be lower than the start price.");
+
+		if (auction.CurrentHighestBid != oldBid)
+			return 0; // Concurrency conflict
+
+		// Delegate database updates to BidDBAccess
 		return await _bidAccess.CreateBidAsync(bid, oldBid);
 	}
 
