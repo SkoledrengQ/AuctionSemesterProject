@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {}
+    "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
+    "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj",
+        "projectUniqueName": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj",
         "projectName": "AuctionModels",
-        "projectPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj",
-        "packagesPath": "C:\\Users\\dehns\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dehns\\Documents\\GitHub\\AuctionSemesterProject\\Model\\obj\\",
+        "projectPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\AuctionModels.csproj",
+        "packagesPath": "C:\\Users\\Mads\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mads\\Documents\\GitHub\\AuctionSemesterProject\\Model\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\dehns\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Mads\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
