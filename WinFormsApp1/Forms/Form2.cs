@@ -312,17 +312,16 @@ namespace WinFormsApp
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-
+            listBox1.Items.Clear();
 
 
             if (!string.IsNullOrWhiteSpace(Text))
             {
-
-                listBox1.Items.Add("genre: " + domainUpDown1.Text);
+                listBox1.Items.Add("Genre: " + domainUpDown1.Text);
                 listBox1.Items.Add("Title: " + textBox3.Text);
-                listBox1.Items.Add("size: " + textBox2.Text + " pages");
+                listBox1.Items.Add("Size: " + textBox2.Text + " pages");
                 listBox1.Items.Add("ReleaseDate:  " + textBox4.Text);
-                listBox1.Items.Add("summery: " + richTextBox1.Text);
+                listBox1.Items.Add("Summary: " + richTextBox1.Text);
 
             }
             else
